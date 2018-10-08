@@ -8,7 +8,7 @@
 </p>
 
 ## Sicario
-- Sistema de Controle, Análise e Resposta Integrada Operacional
+- Sistema de Controle, Análise e Relatório de Informação Operacional
 
 ## Test
 
