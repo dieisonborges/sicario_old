@@ -1,9 +1,9 @@
 <p align="center"><img src="https://drive.google.com/file/d/1B6D4Nh7HlL5MTuLcZsjmOrYL98B8k6yA/view?usp=sharing"></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://travis-ci.org/dieisonborges/sicario"><img src="https://travis-ci.org/dieisonborges/sicario.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+<a href="http://escolhaumalicenca.com.br/licencas/mit/"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
 # SICARIO
