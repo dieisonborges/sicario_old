@@ -2,15 +2,14 @@
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## SICARIO
+# SICARIO
 Sistema de Controle, Análise e Relatório de Informação Operacional
 
-### Obejtivo
+## Obejtivo
 
 O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de órgãos de manutenção com foco em traego aéreo:
 
@@ -20,24 +19,24 @@ O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de 
 - [Inventário de Equipamentos]
 
 
-### Valores
+## Valores
 
 - Facilitar a rotina de manutenções corretivas
-- Centrliuzar o conhecimento técnico
+- Centralizar o conhecimento técnico
 - Possibilitar pronta resposta em atividades de manutenção
 
 
-### Tecnologia Utilizadas
+## Tecnologia Utilizadas
 
 - PHP 7
 - Laravel [documentation](https://laravel.com/docs)
 - Git (Github)
 - Vagrant (Ambiente de Desenvolvimento)
 
-### Quero Participar do Projeto
+## Quero Participar do Projeto
 Caso você tenha interesse em contribuir neste projeto, entre em contato [dieisoncomix@gmail.com] (mailto: dieisoncomix@gmail.com).
 
-### Como utilizar
+## Como utilizar
 
 Para utlizar:
 
@@ -47,11 +46,11 @@ Para utlizar:
 
 - Popule o banco com os Seeders
 
-### Vulnerabilidades de segurança
+## Vulnerabilidades de segurança
 
 Se você descobrir uma vulnerabilidade de segurança no SICARIO, envie um e-mail para Dieison S. Borges por meio de [dieisoncomix@gmail.com] (mailto: dieisoncomix@gmail.com). Todas as vulnerabilidades de segurança serão prontamente endereçadas.
 
-### Licença
+## Licença
 
 O SICARIO é um software de código aberto licenciado sob o [MIT license](https://opensource.org/licenses/MIT).
 
