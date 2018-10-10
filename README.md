@@ -41,6 +41,8 @@ Para utlizar:
 
 - Efetue o gitclone
 
+- Configure o .env
+
 - Rode as Migrations
 
 - Popule o banco com os Seeders
