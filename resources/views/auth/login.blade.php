@@ -7,7 +7,7 @@
 
     <a href="/">
         <b style="display:none;">e-Cardume</b>
-        <img src="{{ asset('img/logo/logo-ecardume-borda-externa.png') }}" width="100%">
+        <img src="{{ asset('img/logo/logo-branco-preto.jpg') }}" width="100%">
     </a>
 
     <hr>
