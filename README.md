@@ -27,10 +27,11 @@ O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de 
 
 ## Tecnologia Utilizadas
 
-- PHP 7
-- Laravel [documentation](https://laravel.com/docs)
-- Git (Github)
-- Vagrant (Ambiente de Desenvolvimento)
+- PHP 7 [documentação](http://www.php.net/)
+- Laravel [documentação](https://laravel.com/docs)
+- Git [documentação](https://git-scm.com/)
+- Vagrant [documentação](https://www.vagrantup.com/)
+- MariaDB [documentação](https://mariadb.org/)
 
 ## Quero Participar do Projeto
 Caso você tenha interesse em contribuir neste projeto, entre em contato [dieisoncomix@gmail.com] (mailto: dieisoncomix@gmail.com).
