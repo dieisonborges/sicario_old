@@ -62,6 +62,7 @@ php artisan db:seed --class=DatabaseSeeder
 
 
 ```console
+composer update
 composer dump-autoload
 ```
 
