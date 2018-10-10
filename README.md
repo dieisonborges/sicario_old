@@ -14,8 +14,8 @@ O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de 
 
 - [Base de Dados de Conhecimento Técnico](https://pt.wikipedia.org/wiki/Base_de_conhecimento).
 - [Controle de ticket's de Manutenção](https://pt.wikipedia.org/wiki/Manuten%C3%A7%C3%A3o).
-- [Controle de Escalas Técnicas]
-- [Inventário de Equipamentos]
+- [Controle de Escalas Técnicas](https://pt.wikipedia.org/wiki/Jornada_de_trabalho)
+- [Inventário de Equipamentos](https://pt.wikipedia.org/wiki/Invent%C3%A1rio)
 
 
 ## Valores
