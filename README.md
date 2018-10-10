@@ -45,6 +45,9 @@ Para utlizar:
 - Configure o .env
 
 - Rode as Migrations
+Antes de rodar as migrações, comente o bloco do authserviceprovider que busca as permissions
+
+"""php artisan migrate"""
 
 - Popule o banco com os Seeders
 
