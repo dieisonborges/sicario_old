@@ -34,7 +34,7 @@ O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de 
 - MariaDB [documentação](https://mariadb.org/)
 
 ## Quero Participar do Projeto
-Caso você tenha interesse em contribuir neste projeto, entre em contato [dieisoncomix@gmail.com] (mailto: dieisoncomix@gmail.com).
+Caso você tenha interesse em contribuir neste projeto, entre em contato [dieisoncomix@gmail.com](mailto: dieisoncomix@gmail.com).
 
 ## Como utilizar
 
@@ -50,7 +50,7 @@ Para utlizar:
 
 ## Vulnerabilidades de segurança
 
-Se você descobrir uma vulnerabilidade de segurança no SICARIO, envie um e-mail para Dieison S. Borges por meio de [dieisoncomix@gmail.com] (mailto: dieisoncomix@gmail.com). Todas as vulnerabilidades de segurança serão prontamente endereçadas.
+Se você descobrir uma vulnerabilidade de segurança no SICARIO, envie um e-mail para Dieison S. Borges por meio de [dieisoncomix@gmail.com](mailto: dieisoncomix@gmail.com). Todas as vulnerabilidades de segurança serão prontamente endereçadas.
 
 ## Licença
 
