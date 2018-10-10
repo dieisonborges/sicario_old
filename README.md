@@ -48,6 +48,10 @@ Para utlizar:
 
 - Popule o banco com os Seeders
 
+- Rode o composer
+
+""" composer dump-autoload """
+
 ## Vulnerabilidades de segurança
 
 Se você descobrir uma vulnerabilidade de segurança no SICARIO, envie um e-mail para Dieison S. Borges por meio de [dieisoncomix@gmail.com](mailto: dieisoncomix@gmail.com). Todas as vulnerabilidades de segurança serão prontamente endereçadas.
