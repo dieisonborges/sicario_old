@@ -8,7 +8,7 @@
 # SICARIO
 Sistema de Controle, Análise e Relatório de Informação Operacional
 
-## Obejtivo
+## Objetivo
 
 O sistema foi iniciado com a perpectiva de atender as seguintes necessidades de órgãos de manutenção com foco em traego aéreo:
 
@@ -45,12 +45,26 @@ Para utlizar:
 - Configure o .env
 
 - Rode as Migrations
+Antes de rodar as migrações, comente o bloco do authserviceprovider que busca as permissions
+
+
+```console
+php artisan migrate
+```
 
 - Popule o banco com os Seeders
 
+```console
+php artisan db:seed --class=DatabaseSeeder
+```
+
 - Rode o composer
 
-""" composer dump-autoload """
+
+```console
+composer update
+composer dump-autoload
+```
 
 ## Vulnerabilidades de segurança
 
