@@ -82,6 +82,52 @@ class PermissionsTableSeeder extends Seeder
         ]);        
         // ------------------------------------------------------------
 
+        //Área - Gerência de Equipamentos
+        //Create
+        Permission::create([
+            'name'=>'create_equipamento',
+            'label'=>'Create - Gerência de Equipamentos',
+        ]);
+        //Read
+        Permission::create([
+            'name'=>'read_equipamento',
+            'label'=>'Read - Gerência de Equipamentos',
+        ]);
+        //Update
+        Permission::create([
+            'name'=>'update_equipamento',
+            'label'=>'Update - Gerência de Equipamentos',
+        ]);
+        //Delete
+        Permission::create([
+            'name'=>'delete_equipamento',
+            'label'=>'Delete - Gerência de Equipamentos',
+        ]);        
+        // ------------------------------------------------------------
+
+        //Área - Gerência de Tickets
+        //Create
+        Permission::create([
+            'name'=>'create_ticket',
+            'label'=>'Create - Gerência de Tickets de Manutenção',
+        ]);
+        //Read
+        Permission::create([
+            'name'=>'read_ticket',
+            'label'=>'Read - Gerência de Tickets de Manutenção',
+        ]);
+        //Update
+        Permission::create([
+            'name'=>'update_ticket',
+            'label'=>'Update - Gerência de Tickets de Manutenção',
+        ]);
+        //Delete
+        Permission::create([
+            'name'=>'delete_ticket',
+            'label'=>'Delete - Gerência de Tickets de Manutenção',
+        ]);        
+        // ------------------------------------------------------------
+
 
     }
 }

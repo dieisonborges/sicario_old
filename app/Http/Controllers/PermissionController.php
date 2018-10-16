@@ -94,8 +94,10 @@ class PermissionController extends Controller
 
     public function edit($id){  
         if(!(Gate::denies('read_permission'))){
-        
+            
             $permission = Permission::find($id);
+
+            return view('permission.edit', compact('permission','id'));
         }
         else{
             return redirect('home')->with('permission_error', '403');

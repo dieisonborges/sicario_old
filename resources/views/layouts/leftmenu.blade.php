@@ -64,63 +64,75 @@
             </ul>
           </li>
           @endcan
-          @can('read_nicho')
+
+          @can('read_equipamento')
+
+           <!-- ************************ Administrador ********************* -->        
+
+          <li class="header">Configurações</li> 
+
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-sitemap"></i> <span>Nichos</span>
+              <i class="fa fa-wrench"></i> <span>Equipamentos</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('nichos/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('nichos/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('equipamentos/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('equipamentos/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
-          @endcan
+          @endcan    
 
-          @can('read_webinar')
-
-          <li class="header">Webinar</li>
+          @can('read_escala')
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-desktop"></i> <span>Webinar</span>
+              <i class="fa fa-male"></i> <span>Escalas Técnicas</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              
-              <li><a href="https://webinar.ecardume.com/b/" target="_blank"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('escalas/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('escalas/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
+          @endcan    
 
-          @endcan
-
-          @can('read_produto')
-
-          <!-- ************************ Cardume VIP ********************* -->
-
-          <li class="header">e-Cardume VIP</li>
-
+          @can('read_ticket')
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-codepen"></i> <span>Produtos</span>
+              <i class="fa fa-ticket"></i> <span>Tickets de Manutenção</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('produtos/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('produtos/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
+          @endcan   
 
-          @endcan
+          @can('read_livro')
 
-          
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-book"></i> <span>Livros de Serviço</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan  
+
           
 
           <!-- ************************ Atendimento ********************* -->

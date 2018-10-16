@@ -3,10 +3,10 @@
     <a href="{{ url('home/') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">
-          <img src="{{ asset('img/logo/logo-peixe-transparente.png') }}" width="100%">
+          <img src="{{ asset('img/logo/favicon-transp.png') }}" width="70%">
       </span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="{{ asset('img/logo/logo-peixe-transparente.png') }}" width="20%"> <b>e-Cardume</b></span>
+      <span class="logo-lg"><img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="60%"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -33,7 +33,7 @@
 
                     <p>
                       {{ Auth::user()->name }}
-                      <small>e-Cardume</small>
+                      <small>Sicário</small>
                     </p>
                   </li>
                   <!-- Menu Body -->

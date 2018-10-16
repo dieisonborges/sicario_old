@@ -8,7 +8,8 @@
   <div class="col-md-2">
     <a href="/">
         <b style="display:none;">e-Cardume</b>
-        <img src="{{ asset('img/logo/logo-ecardume-transparente.png') }}" width="100%">
+        <br>
+        <img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="100%">
         
     </a>     
   </div>

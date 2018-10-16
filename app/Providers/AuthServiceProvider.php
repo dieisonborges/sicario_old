@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         
-        /*
+        
         $this->registerPolicies($gate);
 
         //
@@ -45,17 +45,25 @@ class AuthServiceProvider extends ServiceProvider
                  
 
                     return $user->hasPermission($permission);
+                    
 
 
 
                 }
 
-            );        
+            );  
+
+
+            /* Permissão total para o Grupo adm */
+            Gate::before(function ($user) {
+                if ($user->hasRole('adm')) {
+                    return true;
+                }
+            });        
 
 
         }
-
-        */
+        
 
     }
 }
