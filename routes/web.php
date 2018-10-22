@@ -59,7 +59,10 @@ Route::get('/storage/produto/{slug}.jpeg', [
     'middleware' => 'auth', 
     ]);
 // NichoController 
-Route::resource('nichos', 'NichoController');
-Route::post('nichos/enviar', 'NichoController@enviar');
+Route::resource('equipamentos', 'EquipamentoController');
+Route::post('equipamentos/busca', 'EquipamentoController@busca');
+
+// TicketController
+Route::resource('tickets', 'TicketController');
     
 

@@ -104,7 +104,7 @@
           @can('read_ticket')
 
           <li class="treeview">
-            <a href="#">
+            <a href="#">  
               <i class="fa fa-ticket"></i> <span>Tickets de Manutenção</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
