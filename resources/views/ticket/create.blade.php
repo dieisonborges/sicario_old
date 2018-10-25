@@ -1,41 +1,72 @@
-@can('create_equipamento')   
+@can('create_ticket')   
 	@extends('layouts.app')
-	@section('title', 'Novo Usuário')
+	@section('title', 'Novo Ticket')
 	@section('content')
 			<h1>
-		        Novo Equipamento
+		        Novo Ticket
 		        <small>+</small>
 		    </h1>
 			
 
-			<form method="POST" action="{{url('equipamentos')}}">
-				@csrf			
-				<div class="form-group mb-12">
-				    <label for="nome">Nome</label>
-				    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome completo..." required>
+			<form method="POST" action="{{url('tickets')}}" enctype="multipart/form-data" id="formSubmit">
+				@csrf
+				<div class="form-group col-md-4">
+				    <label for="status">Status</label>
+				    <select class="form-control" name="status">
+						<option value="0">Fechado</option>
+						<option value="1" selected="selected">Aberto</option>				
+					</select>
+			 	</div> 				 	
+
+			 	<div class="form-group col-md-4">					
+				    <label for="rotulo">Rótulo (Criticidade)</label>				    
+					<select class="form-control" name="rotulo">
+						<option value="4">Nenhum</option>
+						<option value="3">Baixo - Rotina de Manutenção</option>
+						<option value="2">Médio - Intermediária (avaliar componente)</option>
+						<option value="1">Alto - Urgência (reparar o mais rápido possível)</option>
+						<option value="0">Crítico - Emergência (reparar imediatamente) </option>					
+					</select>
 			 	</div>
-			 	<div class="form-group mb-12">
-				    <label for="part_number">Part Number</label>
-				    <input type="text" class="form-control" id="part_number" name="part_number" value="" placeholder="Digite o PN..." >
+
+			 	<div class="form-group  col-md-4">
+				    <label for="tipo">Tipo</label>				    
+					<select class="form-control" name="tipo">
+						<option value="0">Técnico</option>
+						<option value="1">Administrativo</option>						
+					</select>
 			 	</div>
+
 			 	<div class="form-group mb-12">
-				    <label for="serial_number">Serial Number</label>
-				    <input type="text" class="form-control" id="serial_number" name="serial_number" value="" placeholder="Digite o Serial..." >
+				    <label for="equipamento_id">Equipamento</label>
+				    <select class="form-control" name="equipamento_id">
+				    	<option selected="selected" value="">Nenhum</option>
+				    	@forelse ($equipamentos as $equipamento)
+				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
+					    @empty                    
+	                	@endforelse 			
+					</select>			    
+				    
 			 	</div>
+
 			 	<div class="form-group mb-12">
-				    <label for="descricao">Descrição</label>
-				    <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite a Descrição.." required="required"></textarea>
+				    <label for="descricao">Descrição</label>				    
+					<!-- /.box-header -->
+		            <div class="box-body pad">
+		              <form>
+		                <textarea class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
+		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+		              </form>
+		            </div>
 			 	</div>
-			 	<div class="form-group mb-12">
-				    <label for="sistema">Sistema</label>
-				    <input type="text" class="form-control" id="sistema" name="sistema" value="" placeholder="Digite o Sistema..." >
-			 	</div>			 	
+
+			 	
 
 			 	<div>
 			 		<hr>
 			 	</div>
 
-			 	<button type="submit" class="btn btn-primary">Cadastrar</button>
+			 	<button type="submit" class="btn btn-primary" onclick="document.getElementById('formSubmit').submit();">Cadastrar</button>
 			</form>
 	@endsection
 @endcan

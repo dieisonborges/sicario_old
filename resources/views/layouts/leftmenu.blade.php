@@ -67,7 +67,7 @@
 
           @can('read_equipamento')
 
-           <!-- ************************ Administrador ********************* -->        
+           <!-- ************************ Configurações ********************* -->        
 
           <li class="header">Configurações</li> 
 
@@ -103,9 +103,13 @@
 
           @can('read_ticket')
 
+          <!-- ************************ Serviço ********************* -->        
+
+          <li class="header">Serviço</li> 
+
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-ticket"></i> <span>Tickets de Manutenção</span>
+              <i class="fa fa-ticket"></i> <span style="color: #33ccff;">Tickets de <b>Manutenção</b></span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
