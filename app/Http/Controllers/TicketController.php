@@ -18,8 +18,20 @@ class TicketController extends Controller
     {
         //
         if(!(Gate::denies('read_ticket'))){
-            $tickets = Ticket::paginate(40);         
-            return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
+
+            $tickets = Ticket::paginate(40);
+
+            //recuperar equipamentos
+            //$equipamentos = $tickets->equipamentos()->get();
+
+            $equipamentos = "test";
+
+            //recuperar usuários
+            //$users = $tickets->users()->get();
+
+            $users = "test";
+
+            return view('ticket.index', array('tickets' => $tickets, 'buscar' => null, 'equipamentos'=> $equipamentos, 'users'=> $users));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -115,9 +127,10 @@ class TicketController extends Controller
         if(!(Gate::denies('create_ticket'))){
             //Validação
             $this->validate($request,[
-                    'status' => 'required|integer|min:0|max:2',
+                    'status' => 'required|integer',
+                    'titulo' => 'required|string|max:30',
                     'descricao' => 'required|string|min:15',
-                    'rotulo' => 'required|integer|min:1|max:4',
+                    'rotulo' => 'required|integer',
                     'tipo' => 'required|integer|min:0|max:2',
                     
             ]);
@@ -125,6 +138,7 @@ class TicketController extends Controller
 
             $ticket = new Ticket();
             $ticket->status = $request->input('status');
+            $ticket->titulo = $request->input('titulo');
             $ticket->descricao = $request->input('descricao');
             $ticket->rotulo = $request->input('rotulo');
             $ticket->tipo = $request->input('tipo');
