@@ -6,7 +6,7 @@
           <img src="{{ asset('img/logo/favicon-transp.png') }}" width="70%">
       </span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="60%"></span>
+      <span class="logo-lg"><img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="125"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

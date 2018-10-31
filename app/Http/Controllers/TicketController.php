@@ -2,10 +2,15 @@
  
 namespace App\Http\Controllers;
 
+
+//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+//use Request;
+use Gate;
 use App\Ticket;
 use App\Equipamento;
-use Illuminate\Http\Request;
-use Gate;
 
 class TicketController extends Controller
 {
@@ -19,24 +24,17 @@ class TicketController extends Controller
         //
         if(!(Gate::denies('read_ticket'))){
 
+
             $tickets = Ticket::paginate(40);
 
-            //recuperar equipamentos
-            //$equipamentos = $tickets->equipamentos()->get();
-
-            $equipamentos = "test";
-
-            //recuperar usuários
-            //$users = $tickets->users()->get();
-
-            $users = "test";
-
-            return view('ticket.index', array('tickets' => $tickets, 'buscar' => null, 'equipamentos'=> $equipamentos, 'users'=> $users));
+            return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+    
 
     private function ticketTipo()
     {
@@ -53,14 +51,25 @@ class TicketController extends Controller
     {
         //
         $rotulo = array(
-                0   =>  "Crítico - Emergência (reparar imediatamente)",
-                1   =>  "Administrativo",
-                2   =>  "Médio - Intermediária (avaliar componente)",
-                3   =>  "Baixo - Rotina de Manutenção",
+                0   =>  "Crítico - Emergência (resolver imediatamente)",
+                1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+                2   =>  "Médio - Intermediária (avaliar situação)",
+                3   =>  "Baixo - Rotineiro ou Planejado",
                 4   =>  "Nenhum",
             );
 
         return $rotulo;
+    }
+
+    private function ticketStatus()
+    {
+        //
+        $status = array(
+                0  => "Fechado",
+                1  => "Aberto",                
+            );
+
+        return $status;
     }
 
     private function protocolo()
@@ -83,10 +92,9 @@ class TicketController extends Controller
     public function busca (Request $request){
         if(!(Gate::denies('read_ticket'))){
             $buscaInput = $request->input('busca');
-            $tickets = Ticket::where('nome', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('part_number', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('serial_number', 'LIKE', '%'.$buscaInput.'%')
+            $tickets = Ticket::where('titulo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
                                 ->paginate(40);        
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => $buscaInput ));
         }
@@ -106,7 +114,17 @@ class TicketController extends Controller
         //
         if(!(Gate::denies('create_ticket'))){
             $equipamentos = Equipamento::all(); 
-            return view('ticket.create', compact('equipamentos'));
+            //Tipos
+            $tipos = $this->ticketTipo();
+
+            //Rotulos
+            $rotulos = $this->ticketRotulo();
+
+            //Status
+            $status = $this->ticketStatus();
+
+
+            return view('ticket.create', compact('equipamentos', 'tipos', 'rotulos', 'status'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -127,31 +145,36 @@ class TicketController extends Controller
         if(!(Gate::denies('create_ticket'))){
             //Validação
             $this->validate($request,[
-                    'status' => 'required|integer',
+                    'status' => 'required',
+                    'rotulo' => 'required',
+                    'tipo' => 'required',
                     'titulo' => 'required|string|max:30',
                     'descricao' => 'required|string|min:15',
-                    'rotulo' => 'required|integer',
-                    'tipo' => 'required|integer|min:0|max:2',
                     
             ]);
            
 
             $ticket = new Ticket();
             $ticket->status = $request->input('status');
-            $ticket->titulo = $request->input('titulo');
-            $ticket->descricao = $request->input('descricao');
+
             $ticket->rotulo = $request->input('rotulo');
+
+            if ($request->input('equipamento_id')) {
+                $ticket->equipamento_id = $request->input('equipamento_id');
+            }
+
             $ticket->tipo = $request->input('tipo');
+
+            $ticket->titulo = $request->input('titulo');
+
+            $ticket->descricao = $request->input('descricao');
+            
 
             //usuário
             $ticket->user_id = auth()->user()->id;
 
             //protocolo humano
-            $ticket->protocolo = $this->protocolo();
-
-            if ($request->input('equipamento_id')) {
-                $ticket->equipamento_id = $request->input('equipamento_id');
-            }
+            $ticket->protocolo = $this->protocolo();          
             
 
 
@@ -166,18 +189,50 @@ class TicketController extends Controller
         }
     }
 
+    private function calcDatas($data_ini, $data_fim){
+        //Compara duas datas e retorna a diferença entre dias
+
+        //$data_ini = "2013-08-01";
+        //$data_fim = "2013-08-16";
+
+        $diferenca = strtotime($data_fim) - strtotime($data_ini);
+
+        //Calcula a diferença em dias
+        $dias = floor($diferenca / (60 * 60 * 24));
+
+        return $dias;
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
         //
         if(!(Gate::denies('read_ticket'))){
             $ticket = Ticket::find($id);
-            return view('ticket.show', array('ticket' => $ticket));
+
+            //Tipos
+            $tipos = $this->ticketTipo();
+
+            //Rotulos
+            $rotulos = $this->ticketRotulo();
+
+            //Status
+            $status = $this->ticketStatus();
+
+            //Verifica o ticket em dias
+            $data_aberto = $this->calcDatas(date('Y-m-d', strtotime($ticket->created_at)), date ("Y-m-d"));
+
+            $prontuarios = $ticket->prontuarioTickets()->get();
+
+            //dd($ticket, $prontuarios);
+
+
+            return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -203,13 +258,13 @@ class TicketController extends Controller
             //Rotulos
             $rotulos = $this->ticketRotulo();
 
-            //recuperar permissões
-            $equipamentos = $ticket->equipamentos()->get();
+            //Status
+            $status = $this->ticketStatus();
 
-            //Captura os dados do equipamento vinculado
-            $equipamento = $equipamentos[0];
+            //recuperar todos equipapmentos
+            $equipamentos = Equipamento::all(); 
 
-            return view('ticket.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamento'));
+            return view('ticket.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -231,23 +286,27 @@ class TicketController extends Controller
 
             //Validação
             $this->validate($request,[
-                    'nome' => 'required|min:3',
-                    /*'part_number' => 'unique:tickets',*/
-                    'serial_number' => '',
-                    'descricao' => 'required|min:15',
+                    'status' => 'required',
+                    'rotulo' => 'required',
+                    'tipo' => 'required',
+                    'titulo' => 'required|string|max:30',
+                    'descricao' => 'required|string|min:15',
             ]);
-                    
-        
-            
-            $ticket->nome = $request->get('nome');
-            $ticket->part_number = $request->get('part_number');
-            $ticket->serial_number = $request->get('serial_number');
-            $ticket->descricao = $request->get('descricao');
 
-            if ($request->get('sistema_id')) {
-                $ticket->sistema_id = $request->get('sistema_id');
+
+            $ticket->status = $request->get('status');
+
+            $ticket->rotulo = $request->get('rotulo');
+
+            $ticket->tipo = $request->get('tipo');
+
+            if ($request->get('equipamento_id')) {
+                $ticket->equipamento_id = $request->get('equipamento_id');
             }
 
+            $ticket->titulo = $request->get('titulo');
+
+            $ticket->descricao = $request->get('descricao');
 
             if($ticket->save()){
                 return redirect('tickets/')->with('success', 'Ticket atualizado com sucesso!');
@@ -279,4 +338,8 @@ class TicketController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+
+
+
 }

@@ -6,73 +6,95 @@
 		        Editar Ticket
 		        <small>{{$ticket->protocolo}}</small>
 		    </h1>
+
+		    <div class="box-body">              
+              <div class="callout callout-info">
+                <h5>Usuário: <b>{{$ticket->users->name}}</b></h5>
+                <h5>Número de Protocolo: <b>{{$ticket->protocolo}}</b></h5>
+                <h5>Aberto em: <b>{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</b></h5>
+              </div>              
+              
+            </div>
+
+
 			
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('TicketController@update',$id)}}">
+			<form method="POST" enctype="multipart/form-data" action="{{action('TicketController@update',$id)}}" id="form-edit">
 				@csrf
-				<input type="hidden" name="_method" value="PATCH">
-				<div class="form-group mb-12">
+				<input type="hidden" name="_method" value="PATCH">				
+
+			 	<div class="form-group col-md-2">
 				    <label for="status">Status</label>
-				    <input type="text" class="form-control" id="status" name="status" value="{{$ticket->status}}" placeholder="Digite o Status..." required>
-			 	</div>
-
-			 	<div class="form-group mb-12">
-				    <label for="user_id">Usuário</label>
-				    <input type="text" class="form-control" id="user_id" name="user_id" value="{{$ticket->user_id}}" placeholder="Digite o usuário..." required>
-			 	</div>
-
-			 	<div class="box">
-		            <div class="box-header">
-		              <h3 class="box-title">Descrição 
-		                <small>Detalhada</small>
-		              </h3>
-		              
-		              <!-- /. tools -->
-		            </div>
-		            <!-- /.box-header -->
-		            <div class="box-body pad">
-		              <form>
-		                <textarea class="textarea" placeholder="Detalhe o problema ou serviço."
-		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" id="descricao" name="descricao"  required="required">{{$ticket->descricao}}</textarea>
-		              </form>
-		            </div>
-		        </div>
-
-			 	<div class="form-group mb-12">
-				    <label for="equipamento_id">Equipamento</label>
-				    <input type="text" class="form-control" id="equipamento_id" name="equipamento_id" value="{{$equipamento->nome}}" placeholder="Digite o Equipamento..." required>
-			 	</div>
-
-			 	<div class="form-group mb-12">
-				    <label for="rotulo">Rótulo</label>
-					
-				    <label for="rotulo">Rótulo</label>				    
-					<select class="form-control" name="rotulo">
-
-						<option selected="selected" value="{{$ticket->rotulo}}">{{$rotulos[$ticket->rotulo]}}</option>
-						<option value="4">Nenhum</option>
-						<option value="3">Baixo - Rotina de Manutenção</option>
-						<option value="2">Médio - Intermediária (avaliar componente)</option>
-						<option value="1">Alto - Urgência (reparar o mais rápido possível)</option>
-						<option value="0">Crítico - Emergência (reparar imediatamente) </option>					
+				    <select class="form-control" name="status">
+						<option value="{{$ticket->status}}">{{$status[$ticket->status]}}</option>
+						@foreach ($status as $Key => $statu)
+						   <option value="{{$Key}}"> {{$statu}} - {{$Key}}</option>
+						@endforeach 	
 					</select>
 			 	</div>
 
-			 	<div class="form-group mb-12">
+			 	<div class="form-group col-md-4">					
+				    <label for="rotulo">Rótulo (Criticidade)</label>				    
+					<select class="form-control" name="rotulo">						
+						<option value="{{$ticket->rotulo}}" selected="selected">{{$rotulos[$ticket->rotulo]}}</option>
+
+	                	@foreach ($rotulos as $Key => $rotulo)
+						   <option value="{{$Key}}"> {{$rotulo}} - {{$Key}}</option>
+						@endforeach 
+											
+					</select>
+			 	</div>			 	
+
+			 	<div class="form-group col-md-2">
 				    <label for="tipo">Tipo</label>				    
 					<select class="form-control" name="tipo">
-						<option selected="selected" value="{{$ticket->tipo}}">{{$tipos[$ticket->tipo]}}</option>
-						<option value="0">Técnico</option>
-						<option value="1">Administrativo</option>						
+						<option selected="selected" value="{{$ticket->tipo}}">{{$tipos[$ticket->tipo]}}</option>						
+						@foreach ($tipos as $Key => $tipo)
+						   <option value="{{$Key}}"> {{$tipo}} - {{$Key}}</option>
+						@endforeach 				
+					</select>
+			 	</div>
+
+			 	<div class="form-group col-md-4">
+				    <label for="equipamento_id">Equipamento</label>
+				    <select class="form-control" name="equipamento_id">
+				    	<option selected="selected" value="{{$ticket->equipamentos->id}}">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}} </option>
+				    	@forelse ($equipamentos as $equipamento)
+				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
+					    @empty                    
+	                	@endforelse 			
 					</select>
 			 	</div>
 			 	
+
+		        <div class="form-group col-md-12">
+				    <label for="titulo">Título (Descrição Resumida)</label>
+				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{$ticket->titulo}}">
+			 	</div>
+
+			 	<div class="form-group col-md-12">
+				    <label for="descricao">Descrição</label>				    
+					<!-- /.box-header -->
+		            <div class="box-body pad">
+		              <form>
+		                <textarea class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
+		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$ticket->descricao}}</textarea>
+		              </form>
+		            </div>
+			 	</div> 	
+
 
 			 	<div>
 			 		<hr>
 			 	</div>
 
-			 	<button type="submit" class="btn btn-primary">Atualizar</button>
+			 	<input type="submit" form="form-edit" class="btn btn-primary" value="Atualizar">
+
 			</form>
+
+
+
+
+			
 	@endsection
 @endcan

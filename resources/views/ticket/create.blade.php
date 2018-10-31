@@ -8,32 +8,34 @@
 		    </h1>
 			
 
-			<form method="POST" action="{{url('tickets')}}" enctype="multipart/form-data" id="formSubmit">
+			<form method="POST" action="{{url('tickets')}}" enctype="multipart/form-data" id="form-create">
 				@csrf
 				<div class="form-group col-md-2">
 				    <label for="status">Status</label>
 				    <select class="form-control" name="status">
-						<option value="0">Fechado</option>
-						<option value="1" selected="selected">Aberto</option>				
-					</select>
-			 	</div> 				 	
-
-			 	<div class="form-group col-md-4">					
-				    <label for="rotulo">Rótulo (Criticidade)</label>				    
-					<select class="form-control" name="rotulo">
-						<option value="4">Nenhum</option>
-						<option value="3">Baixo - Rotina de Manutenção</option>
-						<option value="2">Médio - Intermediária (avaliar componente)</option>
-						<option value="1">Alto - Urgência (reparar o mais rápido possível)</option>
-						<option value="0">Crítico - Emergência (reparar imediatamente) </option>					
+						@foreach ($status as $Key => $statu)
+						   <option value="{{$Key}}"> {{$statu}}</option>
+						@endforeach 	
 					</select>
 			 	</div>
 
-			 	<div class="form-group  col-md-2">
+			 	<div class="form-group col-md-4">					
+				    <label for="rotulo">Rótulo (Criticidade)</label>				    
+					<select class="form-control" name="rotulo">						
+
+	                	@foreach ($rotulos as $Key => $rotulo)
+						   <option value="{{$Key}}"> {{$rotulo}}</option>
+						@endforeach 
+											
+					</select>
+			 	</div>			 	
+
+			 	<div class="form-group col-md-2">
 				    <label for="tipo">Tipo</label>				    
 					<select class="form-control" name="tipo">
-						<option value="0">Técnico</option>
-						<option value="1">Administrativo</option>						
+						@foreach ($tipos as $Key => $tipo)
+						   <option value="{{$Key}}"> {{$tipo}}</option>
+						@endforeach 				
 					</select>
 			 	</div>
 
@@ -68,7 +70,9 @@
 
 			 	<div class="col-md-12">
 			 		
-			 		<button type="submit" class="btn btn-primary" onclick="document.getElementById('formSubmit').submit();">Cadastrar</button>
+			 		<!--<button type="submit" class="btn btn-primary" onclick="document.getElementById('formSubmit').submit();">Cadastrar</button>-->
+			 		
+			 		<input type="submit" form="form-create" class="btn btn-primary" value="Cadastrar">
 			 		<hr>
 			 	</div>
 

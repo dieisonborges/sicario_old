@@ -56,41 +56,40 @@
                             -->
                             @switch($ticket->status)
                                 @case(0)
-                                    <span>Fechado</span>
+                                    <span class="btn btn-success btn-xs">Fechado</span>
                                     @break                                                               
                                 @default
                                     <span class="btn btn-warning btn-xs">Aberto</span>
                             @endswitch
                         </a>
                     </td>
-                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->user_id}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->users->name}}</a></td>
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->titulo}}</a></td>
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</a></td>
-                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->equipamento_id}}</a></td>
+                    <td>
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->equipamentos['nome']}}</a></td>
                     <td>
                         <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
                             <!--
-                            0   =>  "Crítico - Emergência (reparar imediatamente)",
-                            1   =>  "Administrativo",
-                            2   =>  "Médio - Intermediária (avaliar componente)",
-                            3   =>  "Baixo - Rotina de Manutenção",
-                            4   =>  "Nenhum",
+                            0   =>  "Crítico - Emergência (resolver imediatamente)",
+                            1   =>  "Alto - Urgência (resolver o mais rápido possível)",
+                            2   =>  "Médio - Intermediária (avaliar situação)",
+                            3   =>  "Baixo - Rotineiro ou Planejado",
                             -->
                             @switch($ticket->rotulo)
                                 @case(0)
                                     <span class="btn btn-danger btn-xs">Crítico</span>
                                     @break
                                 @case(1)
-                                    <span class="btn btn-primary btn-xs">Administrativo</span>
+                                    <span class="btn btn-warning btn-xs">Alto</span>
                                     @break
                                 @case(2)
-                                    <span class="btn btn-warning btn-xs">Médio</span>
+                                    <span class="btn btn-info btn-xs">Médio</span>
                                     @break
                                 @case(3)
-                                    <span class="btn btn-info btn-xs">Baixo</span>
-                                    @break
-                                @default
-                                    <span class="btn btn-primary btn-xs">Nenhum</span>
+                                    <span class="btn btn-xs">Baixo</span>
+                                    @break                            
+
                             @endswitch
                         </a>
                     </td>

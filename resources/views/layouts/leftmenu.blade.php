@@ -10,9 +10,9 @@
                 
           @can('read_user')
 
-          <!-- ************************ Administrador ********************* -->        
+          <!-- ************************ Administrador | Acesso ********************* -->        
 
-          <li class="header">Administrador</li> 
+          <li class="header">Administrador | Acesso</li> 
 
           @endcan
           @can('read_user')
@@ -65,11 +65,27 @@
           </li>
           @endcan
 
+          @can('read_setor')
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-black-tie"></i> <span>Setor de Trabalho</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('setores/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('setores/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan
+
           @can('read_equipamento')
 
-           <!-- ************************ Configurações ********************* -->        
+           <!-- ************************ Administrador | Configurações ********************* -->        
 
-          <li class="header">Configurações</li> 
+          <li class="header">Administrador | Configurações</li> 
 
           <li class="treeview">
             <a href="#">
@@ -103,13 +119,13 @@
 
           @can('read_ticket')
 
-          <!-- ************************ Serviço ********************* -->        
+          <!-- ************************ Administrador | Tickets ********************* -->        
 
-          <li class="header">Serviço</li> 
+          <li class="header">Administrador | Tickets</li> 
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-ticket"></i> <span style="color: #33ccff;">Tickets de <b>Manutenção</b></span>
+              <i class="fa fa-ticket"></i> <span>Tickets <i class="fa fa-certificate text-red"></i> Adm</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -125,7 +141,47 @@
 
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-book"></i> <span>Livros de Serviço</span>
+              <i class="fa fa-book"></i> <span>Livros de Serviço <i class="fa fa-certificate text-red"></i> Adm</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan          
+
+          @can('read_supervisor')
+
+          <!-- ************************ TIOP - Supervisor ********************* -->
+
+          <li class="header">TIOP - Supervisor</li>
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-book"></i> <span>Livro de Serviço</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan 
+
+          @can('read_hardware')
+
+          <!-- ************************ TIOP - Hardware ********************* -->
+
+          <li class="header">TIOP - Hardware</li>
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -135,7 +191,75 @@
               <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
-          @endcan  
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-book"></i> <span>Livro de Serviço</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan
+          
+
+          @can('read_gbds')
+
+          <!-- ************************ TIOP - GBDS - Base de Dados ********************* -->
+
+          <li class="header">TIOP - GBDS - Base de Dados</li>
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-book"></i> <span>Livro de Serviço</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          @endcan
+
+          <!-- ************************ Cliente ********************* -->
+
+          <li class="header">Cliente</li>
+
+          @can('read_cliente')
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+            </ul>
+          </li>
+          
+          @endcan
 
           
 
