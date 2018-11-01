@@ -8,8 +8,6 @@ class Ticket extends Model
 {
     //
 
-	
-
     public function equipamentos(){        
         return $this->belongsTo('App\Equipamento', 'equipamento_id', 'id');
     }
@@ -22,23 +20,5 @@ class Ticket extends Model
         return $this->belongsToMany('App\Ticket','prontuario_tickets');
     }
 
-
-
-    /*
-    public function equipamentos(){
-    	return $this->belongsTo(\App\Equipamento::class);
-    }
-    */
-
-    /*
-    public function equipamentos(){        
-        return $this->belongsTo('App\Equipamento', 'id');
-    }
-
-    public function users(){        
-        return $this->belongsTo('App\User', 'id');
-    }
-
-    */
 
 }

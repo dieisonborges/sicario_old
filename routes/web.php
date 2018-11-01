@@ -65,5 +65,7 @@ Route::post('equipamentos/busca', 'EquipamentoController@busca');
 // TicketController
 Route::resource('tickets', 'TicketController');
 Route::post('tickets/busca', 'TicketController@busca');
+Route::get('tickets/{id}/acao', 'TicketController@acao');
+Route::post('tickets/storeAcao', 'TicketController@storeAcao');
     
 

@@ -13,9 +13,7 @@
 				<div class="form-group col-md-2">
 				    <label for="status">Status</label>
 				    <select class="form-control" name="status">
-						@foreach ($status as $Key => $statu)
-						   <option value="{{$Key}}"> {{$statu}}</option>
-						@endforeach 	
+						   <option value=""> Aberto</option>
 					</select>
 			 	</div>
 

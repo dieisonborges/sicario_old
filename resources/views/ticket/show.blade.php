@@ -128,6 +128,24 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+            @foreach ($prontuarios as $prontuario)
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-comments bg-blue"></i>
+
+                  <div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i> WWW</span>
+
+                    <h3 class="timeline-header"><a href="#">WWW</a> WWW</h3>
+
+                    <div class="timeline-body">
+                     {!!html_entity_decode($prontuario->descricao)!!}
+                    </div>                    
+                  </div>
+                </li>
+                <!-- END timeline item -->
+            @endforeach 
             
             
             <!-- timeline item -->
@@ -148,7 +166,7 @@
     <!-- /.content -->
 
     <section class="content">
-    	<a class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+    	<a href="{{URL::to('tickets')}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
     	<a class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
     </section>

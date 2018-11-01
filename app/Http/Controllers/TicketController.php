@@ -145,7 +145,6 @@ class TicketController extends Controller
         if(!(Gate::denies('create_ticket'))){
             //Validação
             $this->validate($request,[
-                    'status' => 'required',
                     'rotulo' => 'required',
                     'tipo' => 'required',
                     'titulo' => 'required|string|max:30',
@@ -155,7 +154,7 @@ class TicketController extends Controller
            
 
             $ticket = new Ticket();
-            $ticket->status = $request->input('status');
+            $ticket->status = 1;
 
             $ticket->rotulo = $request->input('rotulo');
 
@@ -229,10 +228,10 @@ class TicketController extends Controller
 
             $prontuarios = $ticket->prontuarioTickets()->get();
 
-            //dd($ticket, $prontuarios);
+            //dd($prontuarios);
 
 
-            return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto'));
+            return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -338,6 +337,61 @@ class TicketController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+    public function acao($id)
+    {
+        //
+         if(!(Gate::denies('update_ticket'))){            
+            $ticket = Ticket::find($id); 
+
+            return view('ticket.acao', compact('ticket'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+
+    public function storeAcao(Request $request)
+    {
+
+        //
+        if(!(Gate::denies('create_ticket'))){
+            //Validação
+            $this->validate($request,[
+                    'descricao' => 'required|string|min:15',
+                    
+            ]);
+                                 
+
+            $ticket_id = $request->input('ticket_id');
+
+            //usuário
+            $user_id = auth()->user()->id;
+
+            $descricao = $request->input('descricao'); 
+
+            $ticket = Ticket::find($ticket_id);
+
+            $status = $ticket->prontuarioTickets()->attach([[
+                'ticket_id' => $ticket_id, 
+                'user_id' => $user_id, 
+                'descricao' => $descricao,
+                'created_at' => date ("Y-m-d h:i:s"),
+                'updated_at' => date ("Y-m-d h:i:s")
+            ]]); 
+
+            if(!$status){
+                return redirect('tickets/'.$ticket_id)->with('success', ' Ação adicionada com sucesso!');
+            }else{
+                return redirect('tickets/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
 
 
 

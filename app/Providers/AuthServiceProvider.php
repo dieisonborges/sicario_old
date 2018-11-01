@@ -33,7 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         
         $this->registerPolicies($gate);
 
-        //
+        //Comente esse bloco no primeiro migrate
+
+        /* --------------------- Primeiro Migrate ----------------- */
     
         $permissions = Permission::with('roles')->get();
 
@@ -53,17 +55,20 @@ class AuthServiceProvider extends ServiceProvider
 
             );  
 
-
+        
             /* Permissão total para o Grupo adm */
+
+        
             Gate::before(function ($user) {
                 if ($user->hasRole('adm')) {
                     return true;
                 }
             });        
-
+        
 
         }
         
+        /*--------------------------------Primeiro Migrate----------------*/
 
     }
 }
