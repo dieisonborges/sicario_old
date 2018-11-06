@@ -20,5 +20,10 @@ class Ticket extends Model
         return $this->belongsToMany('App\Ticket','prontuario_tickets');
     }
 
+    public function prontuarioTicketsShow(){        
+        return $this->hasMany(\App\ProntuarioTickets::class);
+    }
+ 
+
 
 }

@@ -226,9 +226,7 @@ class TicketController extends Controller
             //Verifica o ticket em dias
             $data_aberto = $this->calcDatas(date('Y-m-d', strtotime($ticket->created_at)), date ("Y-m-d"));
 
-            $prontuarios = $ticket->prontuarioTickets()->get();
-
-            //dd($prontuarios);
+            $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
 
             return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
@@ -369,7 +367,7 @@ class TicketController extends Controller
             //usuário
             $user_id = auth()->user()->id;
 
-            $descricao = $request->input('descricao'); 
+            $descricao = $request->input('descricao');
 
             $ticket = Ticket::find($ticket_id);
 

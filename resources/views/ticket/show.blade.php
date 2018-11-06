@@ -123,25 +123,35 @@
                  {!!html_entity_decode($ticket->descricao)!!}
                 </div>
                 <div class="timeline-footer">
-                  <span class="btn btn-primary btn-xs">Abertura</span>
+                  <span class="btn btn-warning btn-xs">Abertura</span>
                 </div>
               </div>
             </li>
             <!-- END timeline item -->
 
             @foreach ($prontuarios as $prontuario)
+                <!-- timeline time label -->
+                <li class="time-label">
+                      <span class="bg-red">
+                        {{date('d M. Y', strtotime($prontuario->created_at))}}
+                      </span>
+                </li>
+                <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
                   <i class="fa fa-comments bg-blue"></i>
 
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> WWW</span>
+                    <span class="time"><i class="fa fa-clock-o"></i> {{date('h:i:s', strtotime($prontuario->created_at))}}</span>
 
-                    <h3 class="timeline-header"><a href="#">WWW</a> WWW</h3>
+                    <h3 class="timeline-header"><a href="#">{{$prontuario->users->name}}</a></h3>
 
                     <div class="timeline-body">
                      {!!html_entity_decode($prontuario->descricao)!!}
-                    </div>                    
+                    </div>
+                        <div class="timeline-footer">
+                      <span class="btn btn-primary btn-xs">Ação</span>
+                    </div>                   
                   </div>
                 </li>
                 <!-- END timeline item -->
