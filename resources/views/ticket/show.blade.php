@@ -139,7 +139,7 @@
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
-                  <i class="fa fa-comments bg-blue"></i>
+                  <i class="fa fa-comments  bg-gray"></i>
 
                   <div class="timeline-item">
                     <span class="time"><i class="fa fa-clock-o"></i> {{date('h:i:s', strtotime($prontuario->created_at))}}</span>
@@ -160,9 +160,41 @@
             
             <!-- timeline item -->
             
+            
+
+            @if (($ticket->status)==1)
+
             <li>
               <i class="fa fa-clock-o bg-gray"></i>
-            </li>            
+            </li>
+
+            
+
+            @else
+
+            <!-- -------------- ENCERRAMENTO ------------- -->
+
+            
+
+            <!-- timeline time label -->
+            
+            <!-- /.timeline-label -->
+            <!-- timeline item -->
+            <li>
+              <i class="fa fa-close bg-gray"></i>
+              <div class="timeline-item">
+                <h3 class="timeline-header"><a href="#">Encerrado</a></h3>
+              </div>
+            </li>
+            <!-- END timeline item -->
+
+            <li>
+              <i class="fa fa-flag-checkered bg-green"></i>
+            </li>
+
+            <!-- -------------- FIM ENCERRAMENTO ------------- -->
+    
+            @endif  
 
           </ul>
 
@@ -175,11 +207,17 @@
     </section>
     <!-- /.content -->
 
+    @if (($ticket->status)==1)
     <section class="content">
-    	<a href="{{URL::to('tickets')}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+      <a href="{{URL::to('tickets')}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
-    	<a class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
+      <a href="{{URL::to('tickets')}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
     </section>
+    @else
+        
+    @endif
+
+    
 
 	
   @endsection

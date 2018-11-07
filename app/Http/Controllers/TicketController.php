@@ -390,6 +390,66 @@ class TicketController extends Controller
         }
     }
 
+    public function encerrar($id)
+    {
+        //
+         if(!(Gate::denies('update_ticket'))){            
+            $ticket = Ticket::find($id); 
+
+            return view('ticket.encerrar', compact('ticket'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+
+    public function storeEncerrar(Request $request)
+    {
+
+        //
+        if(!(Gate::denies('create_ticket'))){
+            //Validação
+            $this->validate($request,[
+                    'descricao' => 'required|string|min:15',
+                    
+            ]);
+                                 
+
+            $ticket_id = $request->input('ticket_id');
+
+            //usuário
+            $user_id = auth()->user()->id;
+
+            $descricao = $request->input('descricao');
+
+            $ticket = Ticket::find($ticket_id);
+
+            $status = $ticket->prontuarioTickets()->attach([[
+                'ticket_id' => $ticket_id, 
+                'user_id' => $user_id, 
+                'descricao' => $descricao,
+                'created_at' => date ("Y-m-d h:i:s"),
+                'updated_at' => date ("Y-m-d h:i:s")
+            ]]); 
+
+            /* ----------------- Encerra -------------*/
+            
+            $ticket->status = 0;
+
+            /* ---------------------- Encerra FIM ----------*/
+
+            if((!$status)and($ticket->save())){
+                return redirect('tickets/'.$ticket_id)->with('success', ' Ticket Encerrado com sucesso!');
+            }else{
+                return redirect('tickets/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
 
 
 
