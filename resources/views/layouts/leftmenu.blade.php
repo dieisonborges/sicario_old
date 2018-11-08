@@ -75,8 +75,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('setores/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('setores/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('setors/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('setors/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan

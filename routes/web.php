@@ -48,7 +48,7 @@ Route::post('user/roleUpdate', 'UserController@roleUpdate');
 Route::post('user/roleDestroy', 'UserController@roleDestroy');
 
 //TEST
-Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
+//Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
 
 Route::resource('equipamentos', 'EquipamentoController');
 Route::post('equipamentos/busca', 'EquipamentoController@busca');
@@ -63,5 +63,10 @@ Route::get('tickets/{id}/encerrar', 'TicketController@encerrar');
 Route::post('tickets/storeEncerrar', 'TicketController@storeEncerrar');
 
 Route::get('tickets/{status}/status', 'TicketController@status');
+
+
+Route::resource('setors', 'SetorController');
+Route::post('setors/busca', 'SetorController@busca');
+
     
 

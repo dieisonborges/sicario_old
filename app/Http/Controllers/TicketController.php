@@ -178,7 +178,7 @@ class TicketController extends Controller
 
 
             if($ticket->save()){
-                return redirect('tickets/')->with('success', 'Ticket cadastrado com sucesso!');
+                return redirect('tickets/1/status')->with('success', 'Ticket cadastrado com sucesso!');
             }else{
                 return redirect('tickets/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
             }

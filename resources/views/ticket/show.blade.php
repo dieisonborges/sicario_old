@@ -69,7 +69,11 @@
 
 			 	<div class="form-group col-md-4">
 				    <label for="equipamento_id">Equipamento</label>
+            @if($ticket->equipamento_id)
 				    <span class="col-md-12 form-control">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}}</span>
+            @else
+            <span class="col-md-12 form-control">Nenhum</span>
+            @endif
 				    
 			 	</div>
 		 	

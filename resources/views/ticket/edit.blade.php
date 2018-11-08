@@ -58,7 +58,11 @@
 			 	<div class="form-group col-md-4">
 				    <label for="equipamento_id">Equipamento</label>
 				    <select class="form-control" name="equipamento_id">
-				    	<option selected="selected" value="{{$ticket->equipamentos->id}}">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}} </option>
+				    	@if($ticket->equipamento_id)
+				    		<option selected="selected" value="{{$ticket->equipamentos->id}}">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}} </option>
+				    	@else
+				    		<option selected="selected" value="">Nenhum</option>
+            			@endif
 				    	@forelse ($equipamentos as $equipamento)
 				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
 					    @empty                    
