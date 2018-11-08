@@ -131,7 +131,9 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tickets/1/status') }}"><i class="fa fa-circle-o"></i> Abertos</a></li>
+              <li><a href="{{ url('tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
+              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
               <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
@@ -240,11 +242,13 @@
           </li>
           @endcan
 
+
+
+          @can('read_cliente')
+
           <!-- ************************ Cliente ********************* -->
 
           <li class="header">Cliente</li>
-
-          @can('read_cliente')
 
           <li class="treeview">
             <a href="#">  

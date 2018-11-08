@@ -34,7 +34,7 @@ class TicketController extends Controller
         }
     }
 
-    
+        
 
     private function ticketTipo()
     {
@@ -449,6 +449,23 @@ class TicketController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+
+    public function status($status)
+    {
+        //
+        if(!(Gate::denies('read_ticket'))){
+
+
+            $tickets = Ticket::where('status', $status)->paginate(40);
+
+            return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
 
 
 

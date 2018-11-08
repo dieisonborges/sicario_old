@@ -50,17 +50,9 @@ Route::post('user/roleDestroy', 'UserController@roleDestroy');
 //TEST
 Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
 
-// ProdutosController - Antigo Produtos
-Route::resource('/produtos', 'ProdutosController');
-Route::post('/produtos/busca', 'ProdutosController@busca'); 
-Route::get('/storage/produto/{slug}.jpeg', [
-    'as' => 'produto.mostra',
-    'uses' => 'ProdutosController@mostra',
-    'middleware' => 'auth', 
-    ]);
-// NichoController 
 Route::resource('equipamentos', 'EquipamentoController');
 Route::post('equipamentos/busca', 'EquipamentoController@busca');
+
 
 // TicketController
 Route::resource('tickets', 'TicketController');
@@ -69,5 +61,7 @@ Route::get('tickets/{id}/acao', 'TicketController@acao');
 Route::post('tickets/storeAcao', 'TicketController@storeAcao');
 Route::get('tickets/{id}/encerrar', 'TicketController@encerrar');
 Route::post('tickets/storeEncerrar', 'TicketController@storeEncerrar');
+
+Route::get('tickets/{status}/status', 'TicketController@status');
     
 
