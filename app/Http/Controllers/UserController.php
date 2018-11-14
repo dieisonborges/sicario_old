@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Role;
+use App\Setor;
 use Gate;
 use DB;
 
@@ -227,26 +228,7 @@ class UserController extends Controller
 
     }
 
-    public function roleUpdateTest(){
 
-        //Request $request
-            
-        //$role_id = $request->input('role_id');
-        //$user_id = $request->input('user_id');    
-
-        $role_id = "1";
-        $user_id = "22";    
-
-        $user  = User::find($user_id);
-
-        if(Role::find($role_id)->roleUser()->attach($user->id)){
-            dd("ok");
-        }else{
-            dd("problem");
-        }
-        
-
-    }
 
 
 
@@ -298,7 +280,101 @@ class UserController extends Controller
         }
     }
 
+
+    public function setors($id){        
+        if(!(Gate::denies('read_user'))){        
+            //Recupera User
+            $user = $this->user->find($id);
+
+            //recuperar setors
+            $setors = $user->setors()->get();
+
+            //todas permissoes
+            $all_setors = Setor::all();
+
+            return view('user.setor', compact('user', 'setors', 'all_setors'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+
+    }
+
+
+    public function setorUpdate(Request $request){
+
+        if(!(Gate::denies('update_setor'))){            
+                    
+            
+            $setor_id = $request->input('setor_id');
+            $user_id = $request->input('user_id'); 
+
+            $user  = User::find($user_id);
+
+            $status = Setor::find($setor_id)->setorUser()->attach($user->id);
+          
+            if(!$status){
+                return redirect('user/'.$user_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+            }else{
+                return redirect('user/'.$user_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+
+    }
+
+    public function setorDestroy(Request $request){
+
+        if(!(Gate::denies('delete_setor'))){
+
+            $setor_id = $request->input('setor_id');
+            $user_id = $request->input('user_id');  
+
+            $user = User::find($user_id); 
+            $setor = Setor::find($setor_id);
+
+            $status = $setor ->setorUser()->detach($user->id);
+
+            
+            if($status){
+                return redirect('user/'.$user_id.'/setors')->with('success', 'Setor (Regra) excluída com sucesso!');
+            }else{
+                return redirect('user/'.$user_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
     
+
+        /*
+
+    public function roleUpdateTest(){
+
+        //Request $request
+            
+        //$role_id = $request->input('role_id');
+        //$user_id = $request->input('user_id');    
+
+        $role_id = "1";
+        $user_id = "22";    
+
+        $user  = User::find($user_id);
+
+        if(Role::find($role_id)->roleUser()->attach($user->id)){
+            dd("ok");
+        }else{
+            dd("problem");
+        }
+        
+
+    }
+
+    */
     
     
 }

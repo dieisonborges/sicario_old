@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class Ticket extends Model 
 {
     //
 
@@ -22,6 +22,11 @@ class Ticket extends Model
 
     public function prontuarioTicketsShow(){        
         return $this->hasMany(\App\ProntuarioTickets::class);
+    }
+
+    public function setors(){
+        
+        return $this->belongsToMany(\App\Setor::class);
     }
  
 

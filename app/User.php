@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Role::class);
     }
 
+    public function setors(){
+        
+        return $this->belongsToMany(\App\Setor::class);
+    }
+
 
     public function hasPermission(Permission $permission){        
         return $this->hasAnyRoles($permission->roles);

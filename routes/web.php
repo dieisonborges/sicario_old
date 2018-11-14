@@ -46,6 +46,10 @@ Route::get('user/{id}/roles', 'UserController@roles');
 //Route::get('user/{id}/userroles', 'UserController@createUserRole');
 Route::post('user/roleUpdate', 'UserController@roleUpdate');
 Route::post('user/roleDestroy', 'UserController@roleDestroy');
+//Setor User
+Route::get('user/{id}/setors', 'UserController@setors');
+Route::post('user/setorUpdate', 'UserController@setorUpdate');
+Route::post('user/setorDestroy', 'UserController@setorDestroy');
 
 //TEST
 //Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
@@ -61,12 +65,25 @@ Route::get('tickets/{id}/acao', 'TicketController@acao');
 Route::post('tickets/storeAcao', 'TicketController@storeAcao');
 Route::get('tickets/{id}/encerrar', 'TicketController@encerrar');
 Route::post('tickets/storeEncerrar', 'TicketController@storeEncerrar');
-
 Route::get('tickets/{status}/status', 'TicketController@status');
+
+//Setor Ticket
+Route::get('tickets/{id}/setors', 'TicketController@setors');
+Route::post('tickets/setorUpdate', 'TicketController@setorUpdate');
+Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
 
 
 Route::resource('setors', 'SetorController');
 Route::post('setors/busca', 'SetorController@busca');
+
+// ClientController
+Route::resource('clients', 'ClientController');
+Route::post('clients/busca', 'ClientController@busca');
+Route::get('clients/{id}/encerrar', 'ClientController@encerrar');
+Route::post('clients/storeAcao', 'ClientController@storeAcao');
+Route::post('clients/storeEncerrar', 'ClientController@storeEncerrar');
+Route::get('clients/{status}/status', 'ClientController@status');
+Route::get('clients/{id}/acao', 'ClientController@acao');
 
     
 

@@ -41,6 +41,7 @@
                     <th>Login<br> (Max 15)</th>
                     <th>Desativar <br>Ativar</th>
                     <th>Roles <br> Grupo</th>
+                    <th>Setor de <br> Trabalho</th>
                     <th>Editar</th>
                     <th>Excluir</th>
                 </tr>
@@ -86,6 +87,9 @@
                     </td>
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/roles')}}"><i class="fa fa-lock"></i> Roles</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('user/'.$user->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>
                     <td>
                         <a class="btn btn-warning btn-xs" href="{{URL::to('users/'.$user->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>

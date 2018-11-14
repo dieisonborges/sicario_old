@@ -11,9 +11,17 @@ use Illuminate\Support\Facades\Storage;
 use Gate;
 use App\Ticket;
 use App\Equipamento;
+use App\Setor;
 
 class TicketController extends Controller
 {
+    
+    private $ticket;
+
+    public function __construct(Ticket $ticket){
+        $this->ticket = $ticket;        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -466,9 +474,71 @@ class TicketController extends Controller
         }
     }
 
+    public function setors($id){        
+        if(!(Gate::denies('read_ticket'))){        
+            //Recupera User
+            $ticket = $this->ticket->find($id);
+
+            //recuperar setors
+            $setors = $ticket->setors()->get();
+
+            //todas permissoes
+            $all_setors = Setor::all();
+
+            return view('ticket.setor', compact('ticket', 'setors', 'all_setors'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+
+    }
 
 
+    public function setorUpdate(Request $request){
 
+        if(!(Gate::denies('update_setor'))){            
+                    
+            $setor_id = $request->input('setor_id');
+            $ticket_id = $request->input('ticket_id'); 
 
+            $ticket  = Ticket::find($ticket_id);
+
+            $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+          
+            if(!$status){
+                return redirect('tickets/'.$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+            }else{
+                return redirect('tickets/'.$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+
+    }
+
+    public function setorDestroy(Request $request){
+
+        if(!(Gate::denies('delete_setor'))){
+
+            $setor_id = $request->input('setor_id');
+            $ticket_id = $request->input('ticket_id');  
+
+            $ticket = Ticket::find($ticket_id); 
+            $setor = Setor::find($setor_id);
+
+            $status = $setor ->setorTicket()->detach($ticket->id);
+
+            
+            if($status){
+                return redirect('tickets/'.$ticket_id.'/setors')->with('success', 'Setor (Regra) excluída com sucesso!');
+            }else{
+                return redirect('tickets/'.$ticket_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
 
 }

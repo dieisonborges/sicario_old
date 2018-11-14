@@ -1,6 +1,6 @@
 
 
-@can('read_ticket')   
+@can('read_client')   
 	@extends('layouts.app')
 	@section('title', 'Visualizar Ticket')
 	@section('content')
@@ -212,9 +212,9 @@
 
     @if (($ticket->status)==1)
     <section class="content">
-      <a href="{{URL::to('tickets')}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+      <a href="{{URL::to('clients')}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
-      <a href="{{URL::to('tickets')}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
+      <a href="{{URL::to('clients')}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
     </section>
     @else
         
