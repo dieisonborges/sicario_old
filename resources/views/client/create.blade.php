@@ -1,4 +1,4 @@
-@can('create_client')   
+ 
 	@extends('layouts.app')
 	@section('title', 'Novo Ticket')
 	@section('content')
@@ -72,4 +72,3 @@
 			 	
 			</form>
 	@endsection
-@endcan

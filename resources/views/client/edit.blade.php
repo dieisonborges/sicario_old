@@ -1,4 +1,4 @@
-@can('update_client')   
+
 	@extends('layouts.app')
 	@section('title', 'Editar Ticket')
 	@section('content')
@@ -95,10 +95,5 @@
 			 	<input type="submit" form="form-edit" class="btn btn-primary" value="Atualizar">
 
 			</form>
-
-
-
-
 			
 	@endsection
-@endcan

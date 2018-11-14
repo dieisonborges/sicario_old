@@ -15,6 +15,10 @@
 				    <input type="text" class="form-control" id="name" name="name" value="" placeholder="Digite o nome completo..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
+				    <label for="cargo">Cargo/Posto/Graduação/Formação</label>
+				    <input type="text" class="form-control" id="cargo" name="cargo" value="" placeholder="Digite o Cargo, Posto, Graduação ou Formação..." required>
+			 	</div>
+			 	<div class="form-group mb-12">
 				    <label for="email">E-mail</label>
 				    <input type="email" class="form-control" id="email" name="email" value="" placeholder="Digite o E-mail..." required>
 			 	</div>

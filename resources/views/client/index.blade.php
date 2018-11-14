@@ -1,4 +1,4 @@
-@can('read_client')    
+  
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
@@ -131,4 +131,4 @@
         {{$tickets->links()}}
 
     @endsection
-@endcan
+

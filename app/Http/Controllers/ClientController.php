@@ -90,7 +90,7 @@ class ClientController extends Controller
     public function index()
     {
         //
-        if(!(Gate::denies('read_client'))){
+        if(auth()->user()->id){
 
         	//usuário
             $user_id = auth()->user()->id;
@@ -105,7 +105,7 @@ class ClientController extends Controller
     }
 
     public function busca (Request $request){
-        if(!(Gate::denies('read_client'))){
+        if(auth()->user()->id){
 
         	//usuário
             $user_id = auth()->user()->id;
@@ -132,7 +132,7 @@ class ClientController extends Controller
         public function status($status)
     {
         //
-        if(!(Gate::denies('read_client'))){
+        if(auth()->user()->id){
 
         	//usuário
             $user_id = auth()->user()->id;
@@ -151,7 +151,7 @@ class ClientController extends Controller
     public function create()
     {
         //
-        if(!(Gate::denies('create_client'))){
+        if(auth()->user()->id){
             $equipamentos = Equipamento::all(); 
             //Tipos
             $tipos = $this->ticketTipo();
@@ -175,7 +175,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         //
-        if(!(Gate::denies('create_client'))){
+        if(auth()->user()->id){
             //Validação
             $this->validate($request,[
                     'rotulo' => 'required',
@@ -222,7 +222,7 @@ class ClientController extends Controller
     public function show($id)
     {
         //
-        if(!(Gate::denies('read_client'))){
+        if(auth()->user()->id){
 
         	//usuário
             $user_id = auth()->user()->id;
@@ -267,7 +267,7 @@ class ClientController extends Controller
     public function acao($id)
     {
         //
-         if(!(Gate::denies('update_client'))){            
+         if(auth()->user()->id){            
             $ticket = Ticket::find($id); 
 
             return view('client.acao', compact('ticket'));
@@ -282,7 +282,7 @@ class ClientController extends Controller
     {
 
         //
-        if(!(Gate::denies('create_client'))){
+        if(auth()->user()->id){
             //Validação
             $this->validate($request,[
                     'descricao' => 'required|string|min:15',
@@ -321,7 +321,7 @@ class ClientController extends Controller
     public function encerrar($id)
     {
         //
-         if(!(Gate::denies('update_client'))){            
+         if(auth()->user()->id){            
             $ticket = Ticket::find($id); 
 
             return view('client.encerrar', compact('ticket'));
@@ -336,7 +336,7 @@ class ClientController extends Controller
     {
 
         //
-        if(!(Gate::denies('create_client'))){
+        if(auth()->user()->id){
             //Validação
             $this->validate($request,[
                     'descricao' => 'required|string|min:15',                    

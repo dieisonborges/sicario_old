@@ -25,6 +25,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="cargo" class="col-md-4 col-form-label text-md-right">{{ __('Cargo/Posto/Graduação/Formação') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="cargo" type="text" class="form-control{{ $errors->has('cargo') ? ' is-invalid' : '' }}" name="cargo" placeholder="Eng" value="{{ old('cargo') }}" required autofocus>
+
+                                @if ($errors->has('cargo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('cargo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>
 
                             <div class="col-md-6">
@@ -57,7 +71,7 @@
                             <label for="telefone" class="col-md-4 col-form-label text-md-right">{{ __('Celular com DDD') }}</label>
 
                             <div class="col-md-6">
-                                <input id="telefone" type="text" class="form-control{{ $errors->has('telefone') ? ' is-invalid' : '' }}" name="telefone" placeholder="21 99123-4560" required>
+                                <input id="telefone" type="text" class="form-control{{ $errors->has('telefone') ? ' is-invalid' : '' }}" name="telefone" placeholder="21 99123-4560" value="{{ old('telefone') }}" required>
 
                                 @if ($errors->has('telefone'))
                                     <span class="invalid-feedback" role="alert">

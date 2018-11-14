@@ -76,6 +76,7 @@ class UserController extends Controller
             //Validação
             $this->validate($request,[
                     'name' => 'required|min:3',
+                    'cargo' => 'required|min:3',
                     'email' => 'required|min:3|unique:users',
                     'cpf' => 'required|min:3|unique:users',
                     'telefone' => 'required|min:3',
@@ -87,6 +88,7 @@ class UserController extends Controller
                     
             $user = new User();
             $user->name = $request->input('name');
+            $user->cargo = $request->input('cargo');
             $user->email = $request->input('email');
             $user->cpf = $request->input('cpf');
             $user->telefone = $request->input('telefone');
@@ -139,6 +141,7 @@ class UserController extends Controller
             //Validação
             $this->validate($request,[
                     'name' => 'required|min:3',
+                    'cargo' => 'required|min:3',
                     'email' => 'required|min:3',
                     'cpf' => 'required|min:3',
                     'telefone' => 'required|min:3',
@@ -148,6 +151,7 @@ class UserController extends Controller
                     
         
             $user->name = $request->get('name');
+            $user->cargo = $request->get('cargo');
             $user->email = $request->get('email');
             $user->cpf = $request->get('cpf');
             $user->telefone = $request->get('telefone');

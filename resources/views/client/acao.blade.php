@@ -1,4 +1,4 @@
-@can('update_client')   
+ 
 	@extends('layouts.app')
 	@section('title', 'Adicionar Ação ao Ticket')
 	@section('content')
@@ -46,4 +46,3 @@
 
 			
 	@endsection
-@endcan

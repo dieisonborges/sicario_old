@@ -1,6 +1,4 @@
-
-
-@can('read_client')   
+   
 	@extends('layouts.app')
 	@section('title', 'Visualizar Ticket')
 	@section('content')
@@ -224,6 +222,3 @@
 
 	
   @endsection
-
-
-@endcan

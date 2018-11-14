@@ -70,6 +70,7 @@ class RegisterController extends Controller
 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'cargo' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',            
             'cpf' => 'required|string|cpf|unique:users',
             'telefone' => 'required|string|celular_com_ddd',
@@ -87,11 +88,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         //Remove toda a pontuação do CPF
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
         
         return User::create([
             'name' => $data['name'],
+            'cargo' => $data['cargo'],
             'email' => $data['email'],
             'cpf' => $data['cpf'],
             'telefone' => $data['telefone'],
