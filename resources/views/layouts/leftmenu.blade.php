@@ -175,7 +175,7 @@
           </li>
           @endcan 
 
-          @can('read_hardware')
+          @can('read_tiop_hardware')
 
           <!-- ************************ TIOP - Hardware ********************* -->
 
@@ -189,8 +189,9 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
 
@@ -255,10 +256,11 @@
             </a>
             
             <ul class="treeview-menu">
-              <li><a href="{{ url('clients/1/status') }}"><i class="fa fa-circle-o"></i> Abertos</a></li>
+              <li><a href="{{ url('clients/create') }}"><i class="fa fa-circle-o text-red"></i> Novo</a></li>
+              <li><a href="{{ url('clients/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
               <li><a href="{{ url('clients/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
               <li><a href="{{ url('clients/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
-              <li><a href="{{ url('clients/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              
             </ul>
           </li>          
 

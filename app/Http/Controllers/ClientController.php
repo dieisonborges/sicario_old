@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Gate;
 use App\Ticket;
 use App\Equipamento;
-use App\Setor;
+use App\Setor; 
 
 class ClientController extends Controller
 {
