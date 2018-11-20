@@ -91,7 +91,7 @@ class TecnicoController extends Controller
     {
         
         //
-        if(!(Gate::denies('create_'.$setor))){
+        if(!(Gate::denies('read_'.$setor))){
 
             //usuário
             $user_id = auth()->user()->id;
@@ -114,6 +114,28 @@ class TecnicoController extends Controller
         else{
             return redirect('home')->with('permission_error', '403');
         }
+    }
+
+    public function setors($setor, $id){     
+
+        dd($setor, $id);
+
+        if(!(Gate::denies('read_'.$setor))){        
+            //Recupera User
+            $ticket = $this->ticket->find($id);
+
+            //recuperar setors
+            $setors = $ticket->setors()->get();
+
+            //todas permissoes
+            $all_setors = Setor::all();
+
+            return view('ticket.setor', compact('ticket', 'setors', 'all_setors'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+
     }
 
 }

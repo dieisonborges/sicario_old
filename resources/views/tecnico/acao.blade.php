@@ -1,4 +1,4 @@
- 
+@can('update_ticket')   
 	@extends('layouts.app')
 	@section('title', 'Adicionar Ação ao Ticket')
 	@section('content')
@@ -16,7 +16,7 @@
               
             </div>
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('ClientController@storeAcao')}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{action('TicketController@storeAcao')}}" id="form-edit">
 				@csrf
 
 				<input type="hidden" name="ticket_id" value="{{$ticket->id}}">				
@@ -46,3 +46,4 @@
 
 			
 	@endsection
+@endcan

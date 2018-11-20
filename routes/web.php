@@ -94,5 +94,10 @@ Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
 //Route::get('tecnicos/{status}/status', 'TecnicoController@status');
 //Route::get('tecnicos/{id}/acao', 'TecnicoController@acao');
 
+//Setor Tecnico
+Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
+//Route::post('tickets/setorUpdate', 'TicketController@setorUpdate');
+//Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
+
     
 

@@ -1,16 +1,16 @@
-  
+@can('read_tecnico')    
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
-    <h1>Tickets <b>{{$setor->label}}</b> <a href="{{url('tecnicos/'.$setor->name.'/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
+    <h1>Tickets <a href="{{url('tecnicos/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
 
 
 
-        <div class="col-md-12">	
+        <div class="col-md-12"> 
 
-            <form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/'.$setor->name.'/busca')}}">
+            <form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/busca')}}">
                 @csrf
-                <div class="input-group input-group-lg">			
+                <div class="input-group input-group-lg">            
                     <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
                         <span class="input-group-btn">
                           <button type="submit" class="btn btn-info btn-flat">Buscar</button>
@@ -25,7 +25,8 @@
 
         
         <div class="box-header">
-            <h3 class="box-title">Gerênciar Tickets</h3>
+            <h3 class="box-title">{{$setor->label}} <small>Gerência de Tickets</small></h3>
+
             
         </div>
         <!-- /.box-header -->
@@ -41,16 +42,16 @@
                     <th>Equipamento</th>
                     <th>Rótulo</th>
                     <th>Tipo</th>
-                    <!--
-                    <th>Setor de <br> Trabalho <br> Vinculado</th>
-                    -->
+                    <th>Setor de <br> Trabalho</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
                 </tr>
                 @forelse ($tickets as $ticket)
                 <tr>
                     <td>{{$ticket->id}}</td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">{{$ticket->protocolo}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->protocolo}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
                             <!--
                             0  => "Fechado",
                             1  => "Aberto",  
@@ -64,13 +65,13 @@
                             @endswitch
                         </a>
                     </td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">{{$ticket->users->name}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">{{$ticket->titulo}}</a></td>
-                    <td><a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->users->name}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->titulo}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">{{$ticket->equipamentos['nome']}}</a></td>
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->equipamentos['nome']}}</a></td>
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
                             <!--
                             0   =>  "Crítico - Emergência (resolver imediatamente)",
                             1   =>  "Alto - Urgência (resolver o mais rápido possível)",
@@ -96,7 +97,7 @@
                     </td>
 
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$ticket->id}}">
+                        <a href="{{URL::to('tickets')}}/{{$ticket->id}}">
                             <!--
                             0  => "Técnico",
                             1  => "Administrativo",  
@@ -113,12 +114,37 @@
                             @endswitch
                         </a>
                     </td>
-                    <!--
                     <td>
-                        <a class="btn btn-primary btn-xs" href="{{URL::to('tickets/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
+                        <a class="btn btn-primary btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>
-                    -->
-                    
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{{URL::to('tecnicos/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                    </td>
+                    <td>
+
+                        <form method="POST" action="{{action('TicketController@destroy', $ticket->id)}}" id="formDelete{{$ticket->id}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
+                            <!--<input type="submit" name="Excluir">-->
+
+                            <a href="javascript:confirmDelete{{$ticket->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
+                        </form> 
+
+                        <script>
+                           function confirmDelete{{$ticket->id}}() {
+
+                            var result = confirm('Tem certeza que deseja excluir?');
+
+                            if (result) {
+                                    document.getElementById("formDelete{{$ticket->id}}").submit();
+                                } else {
+                                    return false;
+                                }
+                            } 
+                        </script>
+
+                    </td>
                 </tr>                
                 @empty
                     
@@ -131,4 +157,4 @@
         {{$tickets->links()}}
 
     @endsection
-
+@endcan

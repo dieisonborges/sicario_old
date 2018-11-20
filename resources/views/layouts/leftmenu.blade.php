@@ -170,7 +170,6 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan 
@@ -183,15 +182,25 @@
 
           <li class="treeview">
             <a href="#">  
-              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
+              <i class="fa fa-tachometer"></i> <span>Dashboard</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('tecnicos/tiop_hardware/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+            </ul>
+          </li>
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
               <li><a href="{{ url('tecnicos/tiop_hardware/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
 
@@ -225,7 +234,6 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('tickets/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
 
@@ -238,7 +246,6 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan
