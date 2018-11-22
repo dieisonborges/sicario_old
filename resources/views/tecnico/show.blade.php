@@ -1,4 +1,4 @@
-   
+@can('read_tecnico')      
 	@extends('layouts.app')
 	@section('title', 'Visualizar Ticket')
 	@section('content')
@@ -216,9 +216,6 @@
     </section>
     @else
         
-    @endif
-
-    
-
-	
+    @endif	
   @endsection
+@endcan

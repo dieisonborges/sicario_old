@@ -87,7 +87,14 @@ Route::get('clients/{id}/acao', 'ClientController@acao');
 
 // TecnicoController
 //Route::resource('tecnicos/', 'TecnicoController');
-//Route::post('tecnicos/busca', 'TecnicoController@busca');
+Route::get('tecnicos/{setor}/{id}/edit', 'TecnicoController@edit');
+Route::get('tecnicos/{setor}/{id}/show', 'TecnicoController@show');
+
+Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
+
+//Route::get('tecnicos/update/', 'TecnicoController@update');
+
+Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
 Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
 //Route::post('tecnicos/storeAcao', 'TecnicoController@storeAcao');
 //Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');
@@ -96,8 +103,8 @@ Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
 
 //Setor Tecnico
 Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
-//Route::post('tickets/setorUpdate', 'TicketController@setorUpdate');
-//Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
+Route::post('tecnicos/setorUpdate', 'TecnicoController@setorUpdate');
+Route::post('tecnicos/setorDestroy', 'TecnicoController@setorDestroy');
 
     
 

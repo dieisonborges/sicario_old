@@ -1,4 +1,4 @@
-@can('update_ticket')   
+@can('update_tecnico')   
 	@extends('layouts.app')
 	@section('title', 'Editar Ticket')
 	@section('content')
@@ -19,9 +19,10 @@
 
 			
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('TicketController@update',$id)}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/'.$setor.'/'.$id.'/update')}}" id="form-edit">
 				@csrf
-				<input type="hidden" name="_method" value="PATCH">				
+
+				<input type="hidden" name="my_setor" value="{{$setor}}">			
 
 			 	<div class="form-group col-md-2">
 				    <label for="status">Status</label>
@@ -66,7 +67,7 @@
 				    	@forelse ($equipamentos as $equipamento)
 				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
 					    @empty                    
-	                	@endforelse 			
+	                	@endforelse			
 					</select>
 			 	</div>
 			 	

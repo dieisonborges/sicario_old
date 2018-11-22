@@ -1,4 +1,4 @@
-@can('update_ticket')  
+@can('read_tecnico')  
     @extends('layouts.app')
     @section('title', 'Regras')
     @section('content')
@@ -15,9 +15,10 @@
 
 
         <div class="col-md-12">  
-            <form method="POST" action="{{action('TicketController@setorUpdate')}}">
+            <form method="POST" action="{{action('TecnicoController@setorUpdate')}}">
                 @csrf
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                <input type="hidden" name="my_setor" value="{{$my_setor}}">
                 <label>Adicionar Setor:</label>
                 <select name="setor_id">
                     @forelse ($all_setors as $all_setor)
@@ -59,10 +60,11 @@
                     
                     <td>
 
-                        <form method="POST" action="{{action('TicketController@setorDestroy')}}" id="formDelete{{$setor->id}}">
+                        <form method="POST" action="{{action('TecnicoController@setorDestroy')}}" id="formDelete{{$setor->id}}">
                             @csrf
                             <input type="hidden" name="setor_id" value="{{$setor->id}}">
                             <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                            <input type="hidden" name="my_setor" value="{{$my_setor}}">
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 
