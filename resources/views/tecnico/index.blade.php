@@ -116,9 +116,16 @@
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>
+
+                    @if(($ticket->status)!=0)
                     <td>
                         <a class="btn btn-warning btn-xs" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
                     </td>
+                    @else
+                    <td>
+                        <span class="btn btn-success btn-xs"> Fechado </span>
+                    </td>
+                    @endif
                     
                 </tr>                
                 @empty

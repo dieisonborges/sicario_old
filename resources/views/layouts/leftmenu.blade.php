@@ -155,11 +155,43 @@
           </li>
           @endcan          
 
-          @can('read_supervisor')
+          @can('read_tiop_supervisao')
 
           <!-- ************************ TIOP - Supervisor ********************* -->
 
           <li class="header">TIOP - Supervisor</li>
+
+          
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-tachometer"></i> <span>Dashboard</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tecnicos/tiop_supervisao/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+            </ul>
+          </li>
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-ticket text-red"></i> <span>Tickets</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tecnicos/tiop_supervisao/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+
+              <li><a href="{{ url('tecnicos/tiop_supervisao/tickets/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
+              <li><a href="{{ url('tecnicos/tiop_supervisao/tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
+              <li><a href="{{ url('tecnicos/tiop_supervisao/tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+              
+            </ul>
+          </li>
+
+
 
           <li class="treeview">
             <a href="#">
@@ -170,6 +202,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan 
@@ -201,8 +234,15 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('tecnicos/tiop_hardware/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+
+              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+              
             </ul>
           </li>
+
+
 
           <li class="treeview">
             <a href="#">
@@ -219,11 +259,23 @@
           @endcan
           
 
-          @can('read_gbds')
+          @can('read_tiop_gbds')
 
           <!-- ************************ TIOP - GBDS - Base de Dados ********************* -->
 
           <li class="header">TIOP - GBDS - Base de Dados</li>
+
+          <li class="treeview">
+            <a href="#">  
+              <i class="fa fa-tachometer"></i> <span>Dashboard</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('tecnicos/tiop_gbds/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+            </ul>
+          </li>
 
           <li class="treeview">
             <a href="#">  
@@ -233,9 +285,16 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('tecnicos/tiop_gbds/tickets/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+
+              <li><a href="{{ url('tecnicos/tiop_gbds/tickets/1/status') }}"><i class="fa fa-circle-o text-yellow"></i> Abertos</a></li>
+              <li><a href="{{ url('tecnicos/tiop_gbds/tickets/0/status') }}"><i class="fa fa-circle-o"></i> Fechados</a></li>
+              <li><a href="{{ url('tecnicos/tiop_gbds/tickets/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+              
             </ul>
           </li>
+
+
 
           <li class="treeview">
             <a href="#">
@@ -246,6 +305,7 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan

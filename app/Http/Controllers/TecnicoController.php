@@ -107,7 +107,6 @@ class TecnicoController extends Controller
 
             $tickets = $setor->tickets()->paginate(40);
 
-            //$tickets = Ticket::where('setor_id', $setor->id)->paginate(40);
 
             return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
@@ -119,7 +118,9 @@ class TecnicoController extends Controller
     public function busca (Request $request, $setor){
         if(!(Gate::denies('read_'.$setor))){
 
-            //usuário
+            $buscaInput = $request->input('busca');
+
+             //usuário
             //$user_id = auth()->user()->id;
 
             //setor
@@ -131,14 +132,43 @@ class TecnicoController extends Controller
 
             $setor = $temp_setor;
 
-            $buscaInput = $request->input('busca');
-
-            $tickets = $setor->tickets()->where('titulo', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')->paginate(40);
+            $tickets = $setor->tickets()
+                                ->where(function($query) use ($buscaInput) {
+                                    $query->where('titulo','LIKE' , '%'.$buscaInput.'%')
+                                    ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%');
+                                })
+                                ->paginate(40);
 
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+    public function status($status, $setor)
+    {
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+
+            $tickets = Ticket::where('status', $status)->paginate(40);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -150,6 +180,18 @@ class TecnicoController extends Controller
         //
         if(!(Gate::denies('read_'.$setor))){
             $ticket = Ticket::find($id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
 
             //Tipos
             $tipos = $this->ticketTipo();
@@ -166,7 +208,7 @@ class TecnicoController extends Controller
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
 
-            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
+            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -377,6 +419,175 @@ class TecnicoController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+    public function acao($setor, $id)
+    {
+        //
+        if(!(Gate::denies('update_'.$setor))){           
+            $ticket = Ticket::find($id); 
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            return view('tecnico.acao', array('ticket' => $ticket, 'setor' => $setor));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+    public function storeAcao(Request $request)
+    {
+
+        
+        $setor = $request->input('setor');
+
+        //
+        if(!(Gate::denies('update_'.$setor))){ 
+            //Validação
+            $this->validate($request,[
+                    'descricao' => 'required|string|min:15',
+                    
+            ]);
+                                 
+
+            $ticket_id = $request->input('ticket_id');
+
+            //usuário
+            $user_id = auth()->user()->id;
+
+            $descricao = $request->input('descricao');
+
+            $ticket = Ticket::find($ticket_id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+
+
+            $status = $ticket->prontuarioTickets()->attach([[
+                'ticket_id' => $ticket_id, 
+                'user_id' => $user_id, 
+                'descricao' => $descricao,
+                'created_at' => date ("Y-m-d h:i:s"),
+                'updated_at' => date ("Y-m-d h:i:s")
+            ]]); 
+
+            if(!$status){
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+    public function encerrar($setor, $id)
+    {
+        //
+        if(!(Gate::denies('update_'.$setor))){           
+            $ticket = Ticket::find($id); 
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            return view('tecnico.encerrar', compact('ticket', 'setor'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+
+    public function storeEncerrar(Request $request)
+    {
+
+        $setor = $request->input('setor');
+
+        //
+        if(!(Gate::denies('update_'.$setor))){  
+            //Validação
+            $this->validate($request,[
+                    'descricao' => 'required|string|min:15',
+                    
+            ]);
+                                 
+
+            $ticket_id = $request->input('ticket_id');
+
+            //usuário
+            $user_id = auth()->user()->id;
+
+            $descricao = $request->input('descricao');
+
+            $ticket = Ticket::find($ticket_id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->get();
+            foreach ($setors_security as $setor_sec ) {
+                $setors_security = $setor_sec;
+            }
+
+            if(!(isset($setors_security->id))){
+                return redirect('home')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            $status = $ticket->prontuarioTickets()->attach([[
+                'ticket_id' => $ticket_id, 
+                'user_id' => $user_id, 
+                'descricao' => $descricao,
+                'created_at' => date ("Y-m-d h:i:s"),
+                'updated_at' => date ("Y-m-d h:i:s")
+            ]]); 
+
+            /* ----------------- Encerra -------------*/
+            
+            $ticket->status = 0;
+
+            /* ---------------------- Encerra FIM ----------*/
+
+            if((!$status)and($ticket->save())){
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
 
 
 

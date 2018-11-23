@@ -1,4 +1,4 @@
- 
+@can('read_tecnico')   
 	@extends('layouts.app')
 	@section('title', 'Adicionar Ação ao Ticket')
 	@section('content')
@@ -16,10 +16,11 @@
               
             </div>
 
-			<form method="POST" enctype="multipart/form-data" action="{{action('ClientController@storeEncerrar')}}" id="form-edit">
+			<form method="POST" enctype="multipart/form-data" action="{{action('TecnicoController@storeEncerrar')}}" id="form-edit">
 				@csrf
 
-				<input type="hidden" name="ticket_id" value="{{$ticket->id}}">				
+				<input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+				<input type="hidden" name="setor" value="{{$setor}}">	
 			 	
 			 	<div class="form-group col-md-12">
 				    <label for="descricao">Deixe uma mensagem de encerramento</label>				    
@@ -43,3 +44,4 @@
 
 			
 	@endsection
+@endcan
