@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+ 
 // Login
 Route::get('/', function () {
     return view('/auth/login');
@@ -97,7 +97,7 @@ Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
 
 Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
 Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
-Route::get('tecnicos/{setor}/{status}/status', 'TecnicoController@status');
+Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status');
 Route::post('tecnicos/storeAcao', 'TecnicoController@storeAcao');
 Route::get('tecnicos/{setor}/{id}/encerrar', 'TecnicoController@encerrar');
 Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');

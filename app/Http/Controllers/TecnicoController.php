@@ -148,28 +148,70 @@ class TecnicoController extends Controller
         }
     }
 
-    public function status($status, $setor)
+    public function status($setor, $status)
     {
         //
         if(!(Gate::denies('read_'.$setor))){
 
 
-            $tickets = Ticket::where('status', $status)->paginate(40);
+            //$tickets = Ticket::where('status', $status)->paginate(40);
 
-            /* ------------------------------ Security --------------------------------*/
-            //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
             }
 
-            if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
-            }
-            /* ------------------------------ END Security --------------------------------*/
+            $setor = $temp_setor;
 
-            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null));
+            $tickets = $setor->tickets()                                
+                                ->where('status', $status)
+                                ->paginate(40);
+            
+
+            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null, 'setor' => $setor));
         }
+
+
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+
+    public function buscaStatus($setor, $status)
+    {
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            $buscaInput = $request->input('busca');
+
+
+            //$tickets = Ticket::where('status', $status)->paginate(40);
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $tickets = $setor->tickets()
+                                ->where(function($query) use ($buscaInput) {
+                                    $query->where('titulo','LIKE' , '%'.$buscaInput.'%')
+                                    ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%');
+                                })
+                                ->where('status', $status)
+                                ->paginate(40);
+            
+
+            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+        }
+
+        
         else{
             return redirect('home')->with('permission_error', '403');
         }

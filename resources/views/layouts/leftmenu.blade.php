@@ -8,7 +8,7 @@
         <ul class="sidebar-menu" data-widget="tree">
 
                 
-          @can('read_user')
+          @can('read_user') 
 
           <!-- ************************ Administrador | Acesso ********************* -->        
 
