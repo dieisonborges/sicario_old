@@ -7,7 +7,7 @@
 <div class="wrapper">
   <div class="col-md-2">
     <a href="/">
-        <b style="display:none;">e-Cardume</b>
+        <b style="display:none;">SICARIO</b>
         <br>
         <img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="100%">
         

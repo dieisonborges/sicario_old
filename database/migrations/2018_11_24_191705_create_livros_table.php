@@ -36,7 +36,6 @@ class CreateLivrosTable extends Migration
             $table->dateTime('inicio');
             $table->dateTime('fim');
 
-
             $table->timestamps(); 
         });
     }

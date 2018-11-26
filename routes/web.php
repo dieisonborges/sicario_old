@@ -109,5 +109,12 @@ Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
 Route::post('tecnicos/setorUpdate', 'TecnicoController@setorUpdate');
 Route::post('tecnicos/setorDestroy', 'TecnicoController@setorDestroy');
 
+//LIVROS Técnicos
+
+Route::get('livros/{setor}/', 'LivroController@index');
+Route::post('livros/{setor}/busca', 'LivroController@busca');
+Route::get('livros/{setor}/{id}/show', 'LivroController@show');
+
+
     
 

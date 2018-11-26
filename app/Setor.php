@@ -16,6 +16,10 @@ class Setor extends Model
     	return $this->belongsToMany(\App\Ticket::class);
     }
 
+    public function livros(){
+        return $this->hasMany(\App\Livro::class);
+    }
+
     public function setorUser(){        
         return $this->belongsToMany('App\Setor','setor_user', 'setor_id', 'user_id')->withPivot(['status']);
     }
