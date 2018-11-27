@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Gate;
 use App\Equipamento;
 use App\Setor;
+use App\Ticket;
 
 class LivroController extends Controller
 {
@@ -72,9 +73,24 @@ class LivroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($setor) 
     {
         //
+        if(!(Gate::denies('read_'.$setor))){
+
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            return view('livro.create', compact('setor'));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        } 
     }
 
     /**

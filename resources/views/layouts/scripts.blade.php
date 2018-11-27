@@ -31,14 +31,23 @@
 <script src="{{ asset('abower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{ asset('abower_components/fastclick/lib/fastclick.js')}}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js')}}"></script>
+<!-- InputMask -->
+<script src="{{ asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{ asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{ asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+
+<!-- bootstrap color picker -->
+<script src="{{ asset('abower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
+<!-- bootstrap time picker -->
+<script src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('dist/js/demo.js')}}"></script>
-
-
 
 <script>
   $(function () {
