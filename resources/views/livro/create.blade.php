@@ -19,12 +19,12 @@
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
-						<input type="date" class="form-control pull-right" id="inicio_data" name="inicio_data">
+						<input type="date" class="form-control pull-right" id="inicio_data" name="inicio_data" value="{{date('Y-m-d',strtotime('-1 day', strtotime(date('Y-m-d'))))}}">
 					
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora">
+						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora" value="{{date('h:i')}}">
 					</div>
 					<!-- /.input group -->
 				</div>
@@ -38,12 +38,12 @@
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
-						<input type="date" class="form-control pull-right" id="fim_data" name="fim_data">
+						<input type="date" class="form-control pull-right" id="fim_data" name="fim_data" value="{{date('Y-m-d')}}">
 					
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora">
+						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora" value="{{date('h:i')}}">
 					</div>
 					<!-- /.input group -->
 				</div>
@@ -52,7 +52,7 @@
 			 	
 
 			 	<div class="form-group col-md-12">
-				    <label for="tecnicos">Tecnicos de Serviço:</label>				    
+				    <label for="tecnicos">Técnicos de Serviço:</label>				    
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
