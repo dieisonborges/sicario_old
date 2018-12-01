@@ -3,13 +3,18 @@
 	@section('title', 'Novo Ticket')
 	@section('content')
 			<h1>
-		        Gerar Livro de Serviço
-		        <small>+</small>
+		        <i class="fa fa-book"></i> Gerar Livro de Serviço <small>{{$setor->label}}</small>
+
 		    </h1>
 			
 
-			<form method="POST" action="{{url('livros')}}" enctype="multipart/form-data" id="form-create">
+			<form method="POST" action="{{action('LivroController@store')}}" enctype="multipart/form-data" id="form-create">
+
 				@csrf
+
+				<input type="hidden" name="setor" value="{{$setor->name}}">
+
+				<input type="hidden" name="setor_id" value="{{$setor->id}}">
 
 				<!-- Date and time range -->
 				<div class="form-group col-md-4">
@@ -47,26 +52,29 @@
 					</div>
 					<!-- /.input group -->
 				</div>
-				<!-- /.form group -->
+				<!-- /.form group -->				
 
+				<div class="col-md-12">
+	              <div class="form-group">
+	                <label for="tecnicos">Técnicos de Serviço:</label>
+	                <select name="tecnicos[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais técnicos:" style="width: 100%;">
+	                	@forelse ($users as $user)
+		                  <option value="{{$user->id}}">{{$user->cargo}} {{$user->name}}</option>
+		                @empty
+                    
+                		@endforelse  
+	                </select>
+	              </div>
+	              <!-- /.form-group -->	              
+	            </div>
+	            <!-- /.col -->
 			 	
-
-			 	<div class="form-group col-md-12">
-				    <label for="tecnicos">Técnicos de Serviço:</label>				    
-					<!-- /.box-header -->
-		            <div class="box-body pad">
-		              <form>
-		                <textarea class="textarea" placeholder="Nomes dos técnicos separados por vírgula." required="required" name="tecnicos" 
-		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('tecnicos') }}</textarea>
-		              </form>
-		            </div>
-			 	</div>
 
 			 	<div class="col-md-12">
 			 		
 			 		<!--<button type="submit" class="btn btn-primary" onclick="document.getElementById('formSubmit').submit();">Cadastrar</button>-->
 			 		
-			 		<input type="submit" form="form-create" class="btn btn-primary" value="Cadastrar">
+			 		<input type="submit" form="form-create" class="btn btn-primary" value="Visualizar Livro">
 			 		<hr>
 			 	</div>
 

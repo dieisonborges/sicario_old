@@ -1,8 +1,13 @@
 @can('read_tecnico')    
     @extends('layouts.app')
     @section('title', 'Livros')
-    @section('content')    
-    <h1>Livros de Serviço</h1>
+    @section('content')   
+
+    <h1>Livros de Serviço
+         
+                <a href="{{url('livros/'.$setor->name.'/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  
+
+    </h1>
 
         <div class="col-md-12"> 
 
@@ -33,24 +38,28 @@
                 <tr>
                     <th>ID</th>
                     <th>Protocolo</th>
+                    <th>Início do Serviço</th>
+                    <th>Término do Serviço</th> 
                     <th>Responsável</th>
                     <th>Autenticação</th>
-                    <th>Início do Serviço</th>
-                    <th>Término do Serviço</th>                    
+                                       
                 </tr>
                 @forelse ($livros as $livro)
                 <tr>
                     <td>{{$livro->id}}</td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->protocolo}}</a></td>                    
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->autenticacao}}</a></td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{date('d/m/Y h:i:s', strtotime($livro->inicio))}}
-                    {{date('l', strtotime($livro->inicio))}}
-                    </a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{str_replace('/'.$setor->name,'', $livro->protocolo)}}</a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
+                    {{date('d/m/Y h:i:s', strtotime($livro->inicio))}}
+                    {{$week[date('l', strtotime($livro->inicio))]}}</a>
+                    </td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
                     {{date('d/m/Y h:i:s', strtotime($livro->fim))}}
-                    {{date('l', strtotime($livro->fim))}}
-                    </a></td>
+                    {{$week[date('l', strtotime($livro->fim))]}}
+                    </a>
+                    </td>                  
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->autenticacao}}</a></td>
+
                 @empty
                     
                 @endforelse            

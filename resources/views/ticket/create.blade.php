@@ -62,9 +62,7 @@
 		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('descricao') }}</textarea>
 		              </form>
 		            </div>
-			 	</div>
-
-			 	
+			 	</div>		 	
 
 			 	<div class="col-md-12">
 			 		

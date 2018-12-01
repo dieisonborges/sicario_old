@@ -7,9 +7,9 @@
 		        <small>{{$livro->protocolo}}</small>
 		    </h1>
 
-		    <div class="box-body col-md-4">              
+		    <div class="box-body col-md-6">              
               <div class="callout callout-info">
-                <h5>Responsável: <b>{{$livro->users->name}}</b></h5>
+                <h5>Responsável: {{$livro->users->cargo}} <b>{{$livro->users->name}}</b></h5>
                 <h5>Número de Protocolo: <b>{{$livro->protocolo}}</b></h5>                
                 <h5>Início do Serviço: <b>{{date('d/m/Y h:i:s', strtotime($livro->inicio))}}</b></h5>
                 <h5>Fim do Serviço: <b>{{date('d/m/Y h:i:s', strtotime($livro->fim))}}</b></h5>
@@ -22,6 +22,25 @@
 			
     <!-- Main content -->
     <section class="content">
+
+      @if (($livro->status)==0)
+
+      <div class="box-body col-md-12">              
+              <div class="callout callout-danger">
+                <h5>Este livro não foi aprovado pelo técnico de serviço: {{$livro->users->cargo}} <b>{{$livro->users->name}}.</h5>
+              </div>
+      </div>  
+
+      @else
+
+      <div class="box-body col-md-12">              
+              <div class="callout callout-success">
+                <h5>Este livro foi aprovado pelo técnico de serviço: {{$livro->users->cargo}} <b>{{$livro->users->name}}</b> através de senha pessoal.</h5>
+              </div>
+      </div> 
+        
+      @endif  
+
 
       <!-- row -->
       <div class="row">
@@ -73,60 +92,62 @@
                   </tr>
                   <tr>
                     <td align="center">
-                      <h4>Ministério da Defesa</h4>                      
-                      <h4>Comando da Aeronáutica</h4>
-                      <h4>Segundo Centro Integrado de Defesa Aérea e Controle de Trafégo Aéreo</h4>
+                      <h5><b>Ministério da Defesa</b><br>                     
+                      Comando da Aeronáutica<br>
+                      Segundo Centro Integrado de Defesa Aérea e Controle de Tráfego Aéreo<br>                     
+                      Divisão Técnica<br>
+                      Subdivisão de Tecnologia da Informação / Informática Operacional</h5>
                     </td>
                   </tr>
                   <tr>
-                    <td align="right">Livro nº <b>{{$livro->protocolo}}/{{$setor}}</b></td>
+                    <td align="right"><p>Livro nº <b>{{$livro->protocolo}}</b></p></td>
+                  </tr>
+                  <tr>
+                    <td></td>
                   </tr>                 
                   <tr>
                     <td align="left">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{str_replace('_',' ', $setor)}} do dia {{date('d/m/Y à\s h:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s h:i:s', strtotime($livro->fim))}}.</p></td>
+                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{strtoupper(str_replace('_',' ', $setor))}} do dia {{date('d/m/Y à\s h:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s h:i:s', strtotime($livro->fim))}}.</p></td>
                   </tr>
                   <tr>
                     <td align="left">
-                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; I - Técnicos presentes:</b></p>
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; I - Técnico de Serviço:</b></p>
                       <ol type="A">
                         <li>{{$livro->users->cargo}} {{strtoupper($livro->users->name)}}</li>
+                          
+                      </ol>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left">
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; II - Técnicos Presentes:</b></p>
+                      <ol type="A">
+                          @forelse ($tecnicos as $tecnico)
+                              <li>{{$tecnico->cargo}} {{$tecnico->name}}</li>
+                          @empty
+                      
+                          @endforelse
                       </ol>
                     </td>
                   </tr>
                   <tr class="justify-tb">
                     <td align="left">
-                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; II - Ocorrências:</b></p>
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; III - Ocorrências:</b></p>
                       <ol type="A">
-                        {{$livro->conteudo}}
-                        <li>Morbi ac molestie velit. Quisque ut erat gravida, sollicitudin nibh sit amet, aliquam mi. Pellentesque vel condimentum velit. Phasellus auctor urna massa, sit amet bibendum risus condimentum quis. Nullam bibendum, ex id varius scelerisque, dolor sapien ultricies lorem, non congue dui nisl vel tellus. Nulla et egestas sem, et fermentum lacus. Cras accumsan quis metus eget convallis. Integer in porttitor ex, vitae pretium mauris.
-                          <ul>
-                            <li>Fulano de Tal (12/03/2018 01:20): teste</li>
-                          </ul>
-
-                        </li>
-
-                        <br>
-                        <li>Etiam maximus justo a lacus mollis, vel hendrerit tellus ultrices. Integer est tellus, tincidunt et vulputate ac, elementum sed libero. Ut molestie molestie lorem eget placerat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec auctor arcu libero, in iaculis massa ornare ac. Suspendisse potenti. Curabitur et sem id neque hendrerit molestie in in dolor. Nunc eget elit lorem. Quisque non tellus ipsum. Aliquam laoreet at massa at lacinia. </li>
-
-                        <br>
-                        <li>Morbi ac molestie velit. Quisque ut erat gravida, sollicitudin nibh sit amet, aliquam mi. Pellentesque vel condimentum velit. Phasellus auctor urna massa, sit amet bibendum risus condimentum quis. Nullam bibendum, ex id varius scelerisque, dolor sapien ultricies lorem, non congue dui nisl vel tellus. Nulla et egestas sem, et fermentum lacus. Cras accumsan quis metus eget convallis. Integer in porttitor ex, vitae pretium mauris.</li>
+                        {!!html_entity_decode($livro->conteudo)!!}
+                        
                       </ol>
                     </td>
                   </tr>
 
                   <tr class="justify-tb">
                     <td align="left">
-                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; III - Ações para o próximo serviço:</b></p>
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; IV - Ações para o próximo serviço:</b></p>
+                      <p>&nbsp; &nbsp; &nbsp; &nbsp; Acompanhar os seguintes tickets:</p>
                       <ol type="A">
-                        <li>Quisque consequat, neque quis pellentesque tincidunt, urna ex sollicitudin augue, a feugiat ipsum felis sit amet nunc. Phasellus sit amet massa mi.</li>
-
-                        <br>
-                        <li>Sed viverra dui vitae varius maximus. Maecenas sodales nibh dui, a bibendum lorem efficitur vel. Maecenas sed dapibus erat.</li>
-
-                        <br>
-                        <li>Morbi ac molestie velit. Quisque ut erat gravida, sollicitudin nibh sit amet, aliquam mi. Pellentesque vel condimentum velit. Phasellus auctor urna massa, sit amet bibendum risus condimentum quis. Nullam bibendum, ex id varius scelerisque, dolor sapien ultricies lorem, non congue dui nisl vel tellus. Nulla et egestas sem, et fermentum lacus. Cras accumsan quis metus eget convallis. Integer in porttitor ex, vitae pretium mauris.</li>
+                        {!!html_entity_decode($livro->acoes)!!}
                       </ol>
                     </td>
                   </tr>
@@ -159,11 +180,29 @@
     </section>
     <!-- /.content -->
 
-    @if (($livro->status)==1)
-    <section class="content">
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+      @if (($livro->status)==0)
 
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Livro</a>
+      <div class="box-body col-md-12">              
+              <div class="callout callout-danger">
+                <h5>Este livro não foi aprovado pelo técnico de serviço: {{$livro->users->cargo}} <b>{{$livro->users->name}}.</h5>
+              </div>
+      </div>  
+
+      @else
+
+      <div class="box-body col-md-12">              
+              <div class="callout callout-success">
+                <h5>Este livro foi aprovado pelo técnico de serviço: {{$livro->users->cargo}} <b>{{$livro->users->name}}</b> através de senha pessoal.</h5>
+              </div>
+      </div> 
+        
+      @endif 
+
+    @if (($livro->status)==0)
+    <section class="content">
+      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Aprovar Livro</a>
+
+      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro</a>
     </section>
     @else
         

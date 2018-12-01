@@ -32,6 +32,9 @@
 <!-- FastClick -->
 <script src="{{ asset('abower_components/fastclick/lib/fastclick.js')}}"></script>
 
+<!-- Select2 -->
+<script src="{{ asset('abower_components/select2/dist/js/select2.full.min.js')}}"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js')}}"></script>
 <!-- InputMask -->
@@ -49,11 +52,108 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
 
-<script>
-  $(function () {
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
+<script type="text/javascript">
+
+    $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+
     CKEDITOR.replace('editor1')
-    
   })
+
+
+</script>
+
+<script type="text/javascript">
+  //adicionar técnico ao livro
+  $(document).ready(function() {
+  var max_fields = 10; //maximum input boxes allowed
+  var wrapper = $(".input_fields_wrap"); //Fields wrapper
+  var add_button = $(".add_field_button"); //Add button ID
+
+
+  //Adicionar Tecnico
+  var x = 1; //initlal text box count
+  $(add_button).click(function(e) { //on add input button click
+    e.preventDefault();
+    var length = wrapper.find("input:text").length;
+
+    if (x < max_fields) { //max input box allowed
+      x++; //text box increment
+      $(wrapper).append('<div><input class="form-control" type="text" name="tecnico[' + (length+1) + ']" /><a href="#" class="remove_field btn btn-danger"><i class="fa fa-minus-circle"></i>Remover</a></div>'); //add input box
+    }
+    //Fazendo com que cada uma escreva seu name
+    wrapper.find("input:text").each(function() {
+      $(this).val($(this).attr('name'))
+    });
+  });
+
+  $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+    e.preventDefault();
+    $(this).parent('div').remove();
+    x--;
+  })
+
+});
 </script>

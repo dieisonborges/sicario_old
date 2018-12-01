@@ -150,7 +150,6 @@
             </a>
             <ul class="treeview-menu">
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan          
@@ -201,8 +200,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('livros/tiop_supervisao/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/tiop_supervisao/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan 
