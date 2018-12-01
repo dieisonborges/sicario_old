@@ -13,6 +13,7 @@ use App\Setor;
 use App\Ticket;
 use App\User;
 use DB;
+use Carbon\Carbon;
 
 class LivroController extends Controller
 {
@@ -28,8 +29,8 @@ class LivroController extends Controller
         
         $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
 
-        $protocolo = $chars[rand (0 , 25)];
-        $protocolo .= $chars[rand (0 , 25)];
+        $protocolo = $chars[rand (0 , 24)];
+        $protocolo .= $chars[rand (0 , 24)];
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);
@@ -223,6 +224,8 @@ class LivroController extends Controller
             $setor = Setor::find($request->input('setor_id'));
 
             //Tickets Abertos por setor
+            // 1 - Aberto/Ativo
+            // 0 - Fechado/Encerrado
             $tickets = $setor->tickets()->where("status", "1")->get();
             //lista os tickets
             foreach($tickets as $ticket){
@@ -262,13 +265,22 @@ class LivroController extends Controller
             $setor = Setor::find($request->input('setor_id'));
 
             //Tickets Abertos por setor
-            $tickets = $setor->tickets()->where("status", "1")->get();
+            // 1 - Aberto/Ativo
+            // 0 - Fechado/Encerrado
+            $tickets = $setor->tickets()->where("status", "0")->get();
             //lista os tickets
             foreach($tickets as $ticket){
 
+                    $created_at = strtotime(Carbon::parse($ticket->created_at)->format('Y-m-d H:i:s'));
+                    $livro_inicio = strtotime($livro->inicio);
+                    $livro_fim = strtotime($livro->fim);
+
+                    //dd($livro_inicio, $created_at, $livro_fim);
+
                     //Verifica se ticket está dentro do intervalo de data
-                    if((($livro->inicio)>=($ticket->created_at))and(($ticket->created_at)<=($livro->fim))){
+                    if(($livro_inicio<=$created_at)and($created_at>=$livro_fim)){
                         $srvFlag = 1;
+                        dd($ticket->created_at);
                     }
 
                     $conteudo_temp .= "<li>";

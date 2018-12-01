@@ -29,7 +29,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora" value="{{date('h:i')}}">
+						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora" value="{{date('h:i:s')}}">
 					</div>
 					<!-- /.input group -->
 				</div>
@@ -48,7 +48,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora" value="{{date('h:i')}}">
+						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora" value="{{date('h:i:s')}}">
 					</div>
 					<!-- /.input group -->
 				</div>

@@ -18,8 +18,8 @@ class CreateTicketsTable extends Migration
             $table->string('protocolo')->unique();
 
             $table->integer('status');
-            // 1 - Aberto
-            // 0 - Fechado
+            // 1 - Aberto/Ativo
+            // 0 - Fechado/Encerrado
            
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
