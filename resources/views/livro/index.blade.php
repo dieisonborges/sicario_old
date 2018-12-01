@@ -41,6 +41,7 @@
                     <th>Início do Serviço</th>
                     <th>Término do Serviço</th> 
                     <th>Responsável</th>
+                    <th>Status</th>
                     <th>Autenticação</th>
                                        
                 </tr>
@@ -58,6 +59,21 @@
                     </a>
                     </td>                  
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
+                    <td>
+                        <a href="{{URL::to('livros')}}/{{$livro->id}}">
+                            <!--
+                            0  => "Fechado",
+                            1  => "Aberto",  
+                            -->
+                            @switch($livro->status)
+                                @case(1)
+                                    <span class="btn btn-success btn-xs">Aprovado</span>
+                                    @break                                                               
+                                @default
+                                    <span class="btn btn-warning btn-xs">Aberto</span>
+                            @endswitch
+                        </a>
+                    </td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->autenticacao}}</a></td>
 
                 @empty

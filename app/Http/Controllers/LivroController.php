@@ -98,13 +98,50 @@ class LivroController extends Controller
 
             $week = $this->weekBr();
 
-            $semana = "olá";
-
             return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => null));
         }
         else{
             return redirect('home')->with('permission_error', '403');
         }
+    }
+
+    public function busca (Request $request, $setor){
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            $buscaInput = $request->input('busca');
+            
+
+            //usuário
+            //$user_id = auth()->user()->id;
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $users = $setor->users()->get();
+
+            $livros = $setor->livros()->where('inicio', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('fim', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('autenticacao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%')
+                                ->paginate(40);
+
+            $week = $this->weekBr();
+
+            return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => $buscaInput));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+        
     }
 
     /**
@@ -178,45 +215,101 @@ class LivroController extends Controller
             //usuário
             $livro->user_id = auth()->user()->id;
 
-            /* ------------------------------------Conteudo Livro-------------------------------- */
+            /* ------------------------------------Acoes para o proximo Serviço-------------------------------- */
 
             //cabecalho
-            $conteudo = "";
+            $acoes = "";
 
             $setor = Setor::find($request->input('setor_id'));
 
             //Tickets Abertos por setor
-            $tickets = $setor->tickets()->where("status", "0")->get();
+            $tickets = $setor->tickets()->where("status", "1")->get();
             //lista os tickets
             foreach($tickets as $ticket){
                 //Verifica se ticket está dentro do intervalo de data
-                if(($ticket->created_at)){
-                        $conteudo .= "<li>";
-                        $conteudo .= " Ticket: <b>".$ticket->protocolo."</b><br>";
-                        $conteudo .= "".$ticket->titulo."<br>";
+                        $acoes .= "<li>";
+                        $acoes .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                        $acoes .= "".$ticket->titulo."<br>";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
-                        $conteudo .= "<ul>";
+                        $acoes .= "<ul>";
                         foreach($prontuarios as $prontuario){
-                            $conteudo .= "<li>";
+                            $acoes .= "<li>";
                             $user_prontuario = User::find($prontuario->user_id);
-                            $conteudo .= "<small><b>".$prontuario->created_at."</b></small> ";
-                            $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
+                            $acoes .= "<small><b>".$prontuario->created_at."</b></small> ";
+                            $acoes .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
                             
-                            $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
-                            $conteudo .= "</li>";
-                    }
+                            $acoes .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
+                            $acoes .= "</li>";
                 }
-                $conteudo .= "</ul>";
-                $conteudo .= "</li><br><br>";
-            }           
+                $acoes .= "</ul>";
+                $acoes .= "</li><br><br>";
+            }
+            /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */     
 
+            //Armazena para inserir no banco
+            $livro->acoes = $acoes;  
+
+            /* ------------------------------------Conteudo Livro -------------------------------- */     
+            //Verifica se o ticket ou alguma ação compreende o período do serviço
+            $srvFlag = 0;
+
+            //cabecalho
+            $conteudo = "";
+
+            $conteudo_temp = "";
+
+            $setor = Setor::find($request->input('setor_id'));
+
+            //Tickets Abertos por setor
+            $tickets = $setor->tickets()->where("status", "1")->get();
+            //lista os tickets
+            foreach($tickets as $ticket){
+
+                    //Verifica se ticket está dentro do intervalo de data
+                    if((($livro->inicio)>=($ticket->created_at))and(($ticket->created_at)<=($livro->fim))){
+                        $srvFlag = 1;
+                    }
+
+                    $conteudo_temp .= "<li>";
+                    $conteudo_temp .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                    $conteudo_temp .= "".$ticket->titulo."<br>";
+                    $prontuarios = $ticket->prontuarioTicketsShow()->get();
+                    //lista os prontuarios dos tickets
+                    $conteudo_temp .= "<ul>";
+                    foreach($prontuarios as $prontuario){
+
+                        if((($livro->inicio)>=($prontuario->created_at))and(($prontuario->created_at)<=($livro->fim))){
+                            $srvFlag = 1;
+                        }
+
+                        $conteudo_temp .= "<li>";
+                        $user_prontuario = User::find($prontuario->user_id);
+                        $conteudo_temp .= "<small><b>".$prontuario->created_at."</b></small> ";
+                        $conteudo_temp .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
+                        
+                        $conteudo_temp .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
+                        $conteudo_temp .= "</li>";
+                    }
+                    $conteudo_temp .= "</ul>";
+                    $conteudo_temp .= "</li><br><br>";
+
+                    if($srvFlag==1){
+                        $conteudo .= $conteudo_temp;
+                        $srvFlag=0;
+                    }
+                    else{
+                        $conteudo_temp="";
+                        $srvFlag=0;
+                    }
+            }
             /* -------------------------------------FIM Conteudo Livro---------------------------- */
             
-
+            
+            //Armazena para inserir no banco
             $livro->conteudo = $conteudo;  
 
-            $livro->acoes = $conteudo;  
+            
             
 
 
@@ -272,6 +365,51 @@ class LivroController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
 
+    }
+
+    public function aprovar($setor, $id)
+    {
+        //
+        if(!(Gate::denies('update_'.$setor))){
+            $livro = Livro::find($id); 
+
+
+
+            if($livro->status==1){
+                return redirect()->back()->with('danger','O Livro não pode ser excluído!');
+            }
+
+            $livro->status = 1;
+
+            if($livro->save()){
+                return redirect()->back()->with('success','Livro APROVADO.');
+            }else{
+                return redirect('livros/'.$setor.'/')->with('danger','Ouve um problema!');
+            }
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+            
+            
+    }
+
+    public function destroy($setor, $id)
+    {
+        //
+        if(!(Gate::denies('delete_'.$setor))){
+            $livro = Livro::find($id);      
+
+            if($livro->status==1){
+                return redirect()->back()->with('danger','O Livro não pode ser excluído!');
+            }
+            
+            $livro->delete();
+            return redirect('livros/'.$setor.'/')->with('success','Livro excluído com sucesso!');
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
     }
 
 }

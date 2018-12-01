@@ -200,9 +200,9 @@
 
     @if (($livro->status)==0)
     <section class="content">
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Aprovar Livro</a>
+      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Aprovar Livro</a>
 
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro</a>
+      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro</a>
     </section>
     @else
         

@@ -116,3 +116,5 @@ Route::post('livros/{setor}/busca', 'LivroController@busca');
 Route::get('livros/{setor}/{id}/show', 'LivroController@show');
 Route::get('livros/{setor}/create', 'LivroController@create');
 Route::post('livros/preview', 'LivroController@store');
+Route::get('livros/{setor}/{id}/excluir', 'LivroController@destroy');
+Route::get('livros/{setor}/{id}/aprovar', 'LivroController@aprovar');

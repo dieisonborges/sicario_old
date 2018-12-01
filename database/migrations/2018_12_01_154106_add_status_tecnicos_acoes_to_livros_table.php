@@ -15,7 +15,7 @@ class AddStatusTecnicosAcoesToLivrosTable extends Migration
     {
         Schema::table('livros', function (Blueprint $table) {
             //
-            //Status 0-Aberto 1-Fechado 
+            //Status 0-Aberto 1-Aprovado 
             $table->integer('status')->default(0);
             $table->longText('acoes');
         });
