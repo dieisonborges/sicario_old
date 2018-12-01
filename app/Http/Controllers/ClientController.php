@@ -11,6 +11,7 @@ use Gate;
 use App\Ticket;
 use App\Equipamento;
 use App\Setor; 
+use DB;
 
 class ClientController extends Controller
 {
@@ -162,8 +163,10 @@ class ClientController extends Controller
             //Status
             $status = $this->ticketStatus();
 
+            $setores = Setor::all();
 
-            return view('client.create', compact('equipamentos', 'tipos', 'rotulos', 'status'));
+
+            return view('client.create', compact('equipamentos', 'tipos', 'rotulos', 'status', 'setores'));
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -178,6 +181,7 @@ class ClientController extends Controller
         if(auth()->user()->id){
             //Validação
             $this->validate($request,[
+                    'setor' => 'required',
                     'rotulo' => 'required',
                     'tipo' => 'required',
                     'titulo' => 'required|string|max:30',
@@ -209,6 +213,15 @@ class ClientController extends Controller
 
 
             if($ticket->save()){
+
+                $setores = $request->input('setor');
+
+                $ticket_id = DB::getPdo()->lastInsertId();
+                //Vincula tecnicos ao livro
+                foreach ($setores as $setor) {
+                    Ticket::find($ticket_id)->setors()->attach($setor);
+                } 
+
                 return redirect('clients/1/status')->with('success', 'Ticket cadastrado com sucesso!');
             }else{
                 return redirect('clients/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');

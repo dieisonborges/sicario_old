@@ -1,5 +1,5 @@
  
-	@extends('layouts.app')
+	@extends('layouts.app') 
 	@section('title', 'Novo Ticket')
 	@section('content')
 			<h1>
@@ -48,16 +48,36 @@
 				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{ old('titulo') }}">
 			 	</div>
 
+			 	<!--
+
 			 	<div class="form-group col-md-12">
 	                <label>Categoria</label>
-	                <select class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais categorias"
+	                <select name="categoria[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais categorias"
 	                        style="width: 100%;">
-	                  <option>Ocorrência</option>
-	                  <option>Atividade</option>
-	                  <option>Ferramentaria</option>
-	                  <option>Canais</option>
-	                  <option>Radares</option>
-	                  <option>BDS</option>
+		                  <option value="Ocorrência">Ocorrência</option>
+		                  <option value="Atividade">Atividade</option>
+		                  <option value="Ferramentaria">Ferramentaria</option>
+		                  <option value="Canais">Canais</option>
+		                  <option value="Radares">Radares</option>
+		                  <option value="DBS">BDS</option>
+	                </select>
+	            </div>
+
+	        	-->
+	            <!-- /.form-group -->
+
+	            <div class="form-group col-md-12">
+	                <label>Setor</label>
+	                <select name="setor[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais setores para atendimento"
+	                        style="width: 100%;" required="required">
+		                  	@forelse ($setores as $setor)
+		                        <option value="{{$setor->id}}">
+		                            {{$setor->name}} | {{$setor->label}}
+		                        </option>
+		                    @empty
+	                        	<option>Nenhuma Opção</option>     
+	                    	@endforelse
+		                  
 	                </select>
 	            </div>
 	            <!-- /.form-group -->
