@@ -116,7 +116,6 @@
                       <p><b>&nbsp; &nbsp; &nbsp; &nbsp; I - Técnico de Serviço:</b></p>
                       <ol type="A">
                         <li>{{$livro->users->cargo}} {{strtoupper($livro->users->name)}}</li>
-                          
                       </ol>
                     </td>
                   </tr>

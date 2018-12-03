@@ -63,8 +63,8 @@ class ClientController extends Controller
         
         $chars = 'ABCDEFGHIJKLMNPQRSTUVWXYZ';
 
-        $protocolo = $chars[rand (0 , 25)];
-        $protocolo .= $chars[rand (0 , 25)];
+        $protocolo = $chars[rand (0 , 24)];
+        $protocolo .= $chars[rand (0 , 24)];
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);
         $protocolo .= rand (0 , 9);

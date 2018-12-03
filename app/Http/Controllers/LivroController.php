@@ -232,6 +232,7 @@ class LivroController extends Controller
                 //Verifica se ticket está dentro do intervalo de data
                         $acoes .= "<li>";
                         $acoes .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                        $acoes .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
                         $acoes .= "".$ticket->titulo."<br>";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
@@ -267,7 +268,7 @@ class LivroController extends Controller
             //Tickets Abertos por setor
             // 1 - Aberto/Ativo
             // 0 - Fechado/Encerrado
-            $tickets = $setor->tickets()->where("status", "0")->get();
+            $tickets = $setor->tickets()->get();
             //lista os tickets
             foreach($tickets as $ticket){
 
@@ -278,13 +279,13 @@ class LivroController extends Controller
                     //dd($livro_inicio, $created_at, $livro_fim);
 
                     //Verifica se ticket está dentro do intervalo de data
-                    if(($livro_inicio<=$created_at)and($created_at>=$livro_fim)){
-                        $srvFlag = 1;
-                        dd($ticket->created_at);
+                    if(($livro_inicio<=$created_at)and($livro_fim>=$created_at)){
+                        $srvFlag = 1;   
                     }
 
                     $conteudo_temp .= "<li>";
                     $conteudo_temp .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                    $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo_temp .= "".$ticket->titulo."<br>";
                     $prontuarios = $ticket->prontuarioTicketsShow()->get();
                     //lista os prontuarios dos tickets
@@ -297,7 +298,7 @@ class LivroController extends Controller
 
                         $conteudo_temp .= "<li>";
                         $user_prontuario = User::find($prontuario->user_id);
-                        $conteudo_temp .= "<small><b>".$prontuario->created_at."</b></small> ";
+                        $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
                         $conteudo_temp .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
                         
                         $conteudo_temp .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
@@ -320,10 +321,6 @@ class LivroController extends Controller
             
             //Armazena para inserir no banco
             $livro->conteudo = $conteudo;  
-
-            
-            
-
 
             if($livro->save()){
                 $livro_id = DB::getPdo()->lastInsertId();
