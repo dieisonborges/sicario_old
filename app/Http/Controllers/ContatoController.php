@@ -29,7 +29,7 @@ class ContatoController extends Controller
 				);
 
 				Mail::send('email.contato', $dadosEmail, function($message){
-					$message->from('dieisondsb@fab.mil.br','Dieison S. Borges - Desenvolvedor SICARIO');
+					$message->from('dieisondsb@fab.mil.br','SICARIO');
 					$message->subject('Contato SICARIO');
 					$message->to('dieisondsb@fab.mil.br');
 				});
