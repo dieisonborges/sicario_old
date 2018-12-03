@@ -29,9 +29,9 @@ class ContatoController extends Controller
 				);
 
 				Mail::send('email.contato', $dadosEmail, function($message){
-					$message->from('contato@ecardume.com','e-Cardume');
-					$message->subject('Formulário de Contato');
-					$message->to('ecardume@gmail.com');
+					$message->from('dieisondsb@fab.mil.br','Dieison S. Borges - Desenvolvedor SICARIO');
+					$message->subject('Contato SICARIO');
+					$message->to('dieisondsb@fab.mil.br');
 				});
 
 				return redirect('contato')->with('success', 'Mensagem enviada em breve entraremos em contato!');
