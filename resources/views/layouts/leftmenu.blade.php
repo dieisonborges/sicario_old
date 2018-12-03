@@ -169,7 +169,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tecnicos/tiop_supervisao/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+              <li><a href="{{ url('tecnicos/tiop_supervisao/dashboard/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
             </ul>
           </li>
 
@@ -220,7 +220,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tecnicos/tiop_hardware/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+              <li><a href="{{ url('tecnicos/tiop_hardware/dashboard/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
             </ul>
           </li>
 
@@ -272,7 +272,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('tecnicos/tiop_gbds/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+              <li><a href="{{ url('tecnicos/tiop_gbds/dashboard/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
             </ul>
           </li>
 
@@ -303,8 +303,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
-              <li><a href="{{ url('livros/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+              <li><a href="{{ url('livros/tiop_gbds/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('livros/tiop_gbds/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
           @endcan
