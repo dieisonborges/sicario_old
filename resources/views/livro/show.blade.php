@@ -78,9 +78,22 @@
                     text-align: justify;
                   }
 
+                  li{
+                    margin-left: 15px;
+                    font-weight: none!important;
+                  }
+
+                  p{
+                    font-weight: none!important;
+                  }
+
                   td, tr{
                     /*border: 1px #000000 solid;*/                   
                     
+                  }
+
+                  #acompanhar{
+                    margin-left: 40px;
                   }
 
                 </style>
@@ -96,7 +109,8 @@
                       Comando da Aeronáutica<br>
                       Segundo Centro Integrado de Defesa Aérea e Controle de Tráfego Aéreo<br>                     
                       Divisão Técnica<br>
-                      Subdivisão de Tecnologia da Informação / Informática Operacional</h5>
+                      Subdivisão de Tecnologia da Informação<br>
+                      Seção de Informática Operacional</h5>
                     </td>
                   </tr>
                   <tr>
@@ -144,7 +158,7 @@
                   <tr class="justify-tb">
                     <td align="left">
                       <p><b>&nbsp; &nbsp; &nbsp; &nbsp; IV - Ações para o próximo serviço:</b></p>
-                      <p>&nbsp; &nbsp; &nbsp; &nbsp; Acompanhar os seguintes tickets:</p>
+                      <p><small id="acompanhar"> Acompanhar os seguintes tickets:</small></p>
                       <ol type="A">
                         {!!html_entity_decode($livro->acoes)!!}
                       </ol>

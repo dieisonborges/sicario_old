@@ -231,12 +231,14 @@ class LivroController extends Controller
             foreach($tickets as $ticket){
                 //Verifica se ticket está dentro do intervalo de data
                         $acoes .= "<li>";
-                        $acoes .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                        $acoes .= " Ticket: <b>".$ticket->protocolo."</b> ";
                         $acoes .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
+                        $acoes .= "<small>".$setor->name."</small><br>";
                         $acoes .= "".$ticket->titulo."<br>";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
-                        $acoes .= "<ul>";
+                        /*$acoes .= "<ul>";
+                        
                         foreach($prontuarios as $prontuario){
                             $acoes .= "<li>";
                             $user_prontuario = User::find($prontuario->user_id);
@@ -245,8 +247,9 @@ class LivroController extends Controller
                             
                             $acoes .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
                             $acoes .= "</li>";
-                }
-                $acoes .= "</ul>";
+                        }
+
+                $acoes .= "</ul>";*/
                 $acoes .= "</li><br><br>";
             }
             /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */     
@@ -256,30 +259,107 @@ class LivroController extends Controller
 
             /* ------------------------------------Conteudo Livro -------------------------------- */     
             //Verifica se o ticket ou alguma ação compreende o período do serviço
-            $srvFlag = 0;
+            //$srvFlag = 0;
 
             //cabecalho
             $conteudo = "";
 
-            $conteudo_temp = "";
+            //$conteudo_temp = "";
 
             $setor = Setor::find($request->input('setor_id'));
 
             //Tickets Abertos por setor
             // 1 - Aberto/Ativo
             // 0 - Fechado/Encerrado
-            $tickets = $setor->tickets()->get();
+            $tickets = $setor->tickets()
+                             ->where('status', '0')
+                             ->get();
+
+            
+            $livro_inicio = strtotime($livro->inicio);
+            $livro_fim = strtotime($livro->fim);
+
+            //Verificação de intervalo de data
+            $matchData=0;
+
+
+            //$conteudo .= "<ol>";
+            foreach ($tickets as $ticket) {
+
+                /* --------------------------- Verifica intervalo de data ---------------------- */
+                $created_at = strtotime(Carbon::parse($ticket->created_at)->format('Y-m-d H:i:s'));
+
+                if(($created_at>=$livro_inicio)and($created_at<=$livro_fim)){
+                    $matchData=1;
+                } 
+
+                $prontuarios = $ticket->prontuarioTicketsShow()->get();
+
+                foreach($prontuarios as $prontuario){
+
+                    $prontuario_created_at = strtotime(Carbon::parse($prontuario->created_at)->format('Y-m-d H:i:s'));
+
+                    if(($prontuario_created_at>=$livro_inicio)and($prontuario_created_at<=$livro_fim)){
+                        $matchData=1;
+                    } 
+
+                }
+
+
+                /* --------------------------- FIM Verifica intervalo de data ---------------------- */
+
+
+                /* --------------------- */
+
+                if($matchData==1){
+                    //HTML
+                    $conteudo .= "<li>";
+                    $conteudo .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                    $user_ticket = User::find($ticket->user_id);
+                    $conteudo .= $user_ticket->cargo." ".$user_ticket->name."<br>";
+                    $conteudo .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
+                    $conteudo .= "".$ticket->titulo."<br>"; 
+
+                    $conteudo .= "<ul>";
+                    /* -----------------PRONTUARIO/ACOES---------------------*/
+                    foreach($prontuarios as $prontuario){
+
+                        $conteudo .= "<li>";
+                        $user_prontuario = User::find($prontuario->user_id);
+                        $conteudo .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> ";
+                        $conteudo .= "<small>".$setor->name."</small>";
+                        $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
+                        
+                        $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
+                        $conteudo .= "</li>";
+
+                    }
+                    /* ----------------END PRONTUARIO/ACOES-------------------*/
+                    $conteudo .= "</ul>";
+                    $conteudo .= "</li>";
+                }
+
+                /* --------------------- */
+
+
+                //Zera verificação de intervalo de data
+                $matchData=0;
+                
+            }
+            //$conteudo .= "</ol>";
+
+
             //lista os tickets
-            foreach($tickets as $ticket){
+            /*foreach($tickets as $ticket){
 
                     $created_at = strtotime(Carbon::parse($ticket->created_at)->format('Y-m-d H:i:s'));
                     $livro_inicio = strtotime($livro->inicio);
-                    $livro_fim = strtotime($livro->fim);
+                    $livro_fim = strtotime($livro->fim);*/
 
                     //dd($livro_inicio, $created_at, $livro_fim);
 
                     //Verifica se ticket está dentro do intervalo de data
-                    if(($livro_inicio<=$created_at)and($livro_fim>=$created_at)){
+                    /*if(($livro_inicio<=$created_at)and($livro_fim>=$created_at)){
                         $srvFlag = 1;   
                     }
 
@@ -288,7 +368,8 @@ class LivroController extends Controller
                     $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo_temp .= "".$ticket->titulo."<br>";
                     $prontuarios = $ticket->prontuarioTicketsShow()->get();
-                    //lista os prontuarios dos tickets
+                   */ //lista os prontuarios dos tickets
+                    /*
                     $conteudo_temp .= "<ul>";
                     foreach($prontuarios as $prontuario){
 
@@ -298,7 +379,8 @@ class LivroController extends Controller
 
                         $conteudo_temp .= "<li>";
                         $user_prontuario = User::find($prontuario->user_id);
-                        $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
+                        $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> ";
+                        $conteudo_temp .= "<small>".$setor->name."</small>";
                         $conteudo_temp .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
                         
                         $conteudo_temp .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
@@ -315,7 +397,7 @@ class LivroController extends Controller
                         $conteudo_temp="";
                         $srvFlag=0;
                     }
-            }
+            }*/
             /* -------------------------------------FIM Conteudo Livro---------------------------- */
             
             
