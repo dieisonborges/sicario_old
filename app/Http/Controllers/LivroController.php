@@ -257,7 +257,7 @@ class LivroController extends Controller
             //Caso Conteúdo vazio nenhuma Alteração
             if(!$acoes){
 
-                $acoes = "Nenhuma alteração."
+                $acoes = "Nenhuma alteração.";
             }    
 
             //Armazena para inserir no banco
@@ -356,7 +356,7 @@ class LivroController extends Controller
             //Caso Conteúdo vazio nenhuma Alteração
             if(!$conteudo){
 
-                $conteudo = "Nenhuma alteração."
+                $conteudo = "Nenhuma alteração.";
             }
 
             //$conteudo .= "</ol>";
