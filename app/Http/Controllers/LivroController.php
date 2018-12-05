@@ -252,7 +252,13 @@ class LivroController extends Controller
                 $acoes .= "</ul>";*/
                 $acoes .= "</li><br><br>";
             }
-            /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */     
+            /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */ 
+
+            //Caso Conteúdo vazio nenhuma Alteração
+            if(!$acoes){
+
+                $acoes = "Nenhuma alteração."
+            }    
 
             //Armazena para inserir no banco
             $livro->acoes = $acoes;  
@@ -346,6 +352,13 @@ class LivroController extends Controller
                 $matchData=0;
                 
             }
+
+            //Caso Conteúdo vazio nenhuma Alteração
+            if(!$conteudo){
+
+                $conteudo = "Nenhuma alteração."
+            }
+
             //$conteudo .= "</ol>";
 
 
