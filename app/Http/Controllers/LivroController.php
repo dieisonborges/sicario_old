@@ -230,14 +230,14 @@ class LivroController extends Controller
             //lista os tickets
             foreach($tickets as $ticket){
                 //Verifica se ticket está dentro do intervalo de data
-                        $acoes .= "<li>";
+                        $acoes .= "<li> ";
                         $acoes .= " Ticket: <b>".$ticket->protocolo."</b> ";
-                        $acoes .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
-                        $acoes .= "<small>".$setor->name."</small><br>";
-                        $acoes .= "".$ticket->titulo."<br>";
+                        $acoes .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> <br>";
+                        $acoes .= "<small>".$setor->name."</small> <br>";
+                        $acoes .= "".$ticket->titulo."<br> ";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
-                        /*$acoes .= "<ul>";
+                        $acoes .= "<ul>";
                         
                         foreach($prontuarios as $prontuario){
                             $acoes .= "<li>";
@@ -249,7 +249,7 @@ class LivroController extends Controller
                             $acoes .= "</li>";
                         }
 
-                $acoes .= "</ul>";*/
+                $acoes .= "</ul>";
                 $acoes .= "</li><br><br>";
             }
             /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */ 
@@ -333,10 +333,10 @@ class LivroController extends Controller
                         $conteudo .= "<li>";
                         $user_prontuario = User::find($prontuario->user_id);
                         $conteudo .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> ";
-                        $conteudo .= "<small>".$setor->name."</small>";
-                        $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
+                        $conteudo .= "<small>".$setor->name."</small> ";
+                        $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br> ";
                         
-                        $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
+                        $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br> ";
                         $conteudo .= "</li>";
 
                     }
