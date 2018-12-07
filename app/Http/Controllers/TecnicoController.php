@@ -87,6 +87,30 @@ class TecnicoController extends Controller
         return $dias;
     }
 
+    private function weekBr(){
+        /*
+        Sunday      Domingo
+        Monday      Segunda
+        Tuesday     Terça
+        Wednesday   Quarta
+        Thursday    Quinta
+        Friday      Sexta
+        Saturday    Sábado
+        */
+
+        $week = array(
+            'Sunday' => 'Domingo',
+            'Monday' => 'Segunda',
+            'Tuesday' => 'Terça',
+            'Wednesday' => 'Quarta',
+            'Thursday' => 'Quinta',
+            'Friday' => 'Sexta',
+            'Saturday' => 'Sábado',
+        );
+
+        return $week;
+    }
+
     public function index($setor)
     {
         
@@ -643,42 +667,58 @@ class TecnicoController extends Controller
         
         //
         if(!(Gate::denies('read_'.$setor))){
+            /* ======================== FILTRO SETOR ======================== */
+            $setor = Setor::where('name', $setor)->first();
+            /* ======================== END FILTRO SETOR ==================== */
+
+            /* .................... EQUIPE ................... */
+            $equipe = $setor->users()->get();
+            $equipe_qtd = $setor->users()->count();     
+
+            /* .................... END QTD Tickets Abertos ................... */
 
             /* .................... QTD Tickets Abertos ................... */
-            $setors = Setor::where('name', $setor)->limit(1)->get();
-
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
-
             $qtd_tick_aber = $setor->tickets()                                
                                 ->where('status', 1)
                                 ->count();
             /* .................... END QTD Tickets Abertos ................... */
 
             /* .................... QTD Tickets FECHADOS ................... */
-            $setors = Setor::where('name', $setor)->limit(1)->get();
-
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
-
             $qtd_tick_fech = $setor->tickets()                                
                                 ->where('status', 0)
                                 ->count();
             /* .................... END QTD Tickets FECHADOS ................... */
 
+            /* .................... Tickets Abertos ................... */
+            $tickets = $setor->tickets()                                
+                                ->where('status', 1)
+                                ->get();
+            /* .................... END QTD Tickets Abertos ................... */
+
+            /* .................... Últimos Livros ................... */
+
+            $livros = $setor->livros()
+                            ->orderBy('id','DESC')
+                            ->limit(4)
+                            ->get();
+
+            /* .................... END Últimos Livros ................... */
+
+            /* WEEK */
+            $week = $this->weekBr();
+            /* END WEEK */
 
 
 
             return view('tecnico.dashboard', compact(
                             'qtd_tick_fech', 
                             'qtd_tick_aber', 
-                            'setor'
+                            'setor',
+                            'equipe',
+                            'equipe_qtd',
+                            'tickets',
+                            'livros',
+                            'week'
                         ));
         }
         else{
@@ -686,6 +726,34 @@ class TecnicoController extends Controller
         }
     }
     /* ----------------------------- END DASHBOARD ---------------------*/
+
+    public function alocar($setor)
+    {
+        
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            //usuário
+            //$user_id = auth()->user()->id;
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $tickets = $setor->tickets()->paginate(40);
+
+
+            return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
 
 
 

@@ -40,7 +40,7 @@ class HomeController extends Controller
             foreach ($setores as $setor) {
                 
                 if(!(Gate::denies('read_'.$setor->name))){
-                    return redirect('tecnicos/'.$setor->name.'/dashboard')->with('success', 'Painel de Controle Carregado Com Sucesso!');
+                    return redirect('tecnicos/'.$setor->name.'/dashboard');
                 }
 
             }

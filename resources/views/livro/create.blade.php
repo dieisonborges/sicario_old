@@ -17,29 +17,29 @@
 				<input type="hidden" name="setor_id" value="{{$setor->id}}">
 
 				<!-- Date and time range -->
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-5">
 					<label>Início do serviço:</label>
 
-					<div class="input-group col-md-5">
+					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
-						<input type="date" class="form-control pull-right" id="inicio_data" name="inicio_data" value="{{date('Y-m-d',strtotime('-1 day', strtotime(date('Y-m-d'))))}}">
+						<input type="date" class="form-control pull-right" id="inicio_data" name="inicio_data" value="{{date('Y-m-d')}}">
 					
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora" value="{{date('h:i')}}">
+						<input type="time" class="form-control pull-right" id="inicio_hora" name="inicio_hora" value="00:00">
 					</div>
 					<!-- /.input group -->
 				</div>
 				<!-- /.form group -->
 
 				<!-- Date and time range -->
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-5">
 					<label>Fim do serviço:</label>
 
-					<div class="input-group col-md-5">
+					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						</div>
@@ -48,7 +48,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-clock-o"></i>
 						</div>
-						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora" value="{{date('h:i')}}">
+						<input type="time" class="form-control pull-right" id="fim_hora" name="fim_hora" value="00:00">
 					</div>
 					<!-- /.input group -->
 				</div>

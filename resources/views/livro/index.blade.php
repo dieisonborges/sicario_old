@@ -75,6 +75,7 @@
                         </a>
                     </td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->autenticacao}}</a></td>
+                </tr>
 
                 @empty
                     

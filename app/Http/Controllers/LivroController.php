@@ -85,17 +85,12 @@ class LivroController extends Controller
             //$user_id = auth()->user()->id;
 
             //setor
-            $setors = Setor::where('name', $setor)->limit(1)->get();
+            $setor = Setor::where('name', $setor)->first();
 
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
 
             $users = $setor->users()->get();
 
-            $livros = $setor->livros()->paginate(40);
+            $livros = $setor->livros()->orderBy('id','DESC')->paginate(40);
 
             $week = $this->weekBr();
 
@@ -117,13 +112,7 @@ class LivroController extends Controller
             //$user_id = auth()->user()->id;
 
             //setor
-            $setors = Setor::where('name', $setor)->limit(1)->get();
-
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
+            $setor = Setor::where('name', $setor)->first();
 
             $users = $setor->users()->get();
 
@@ -155,13 +144,8 @@ class LivroController extends Controller
         //
         if(!(Gate::denies('read_'.$setor))){
 
-            $setors = Setor::where('name', $setor)->limit(1)->get();
+            $setor = Setor::where('name', $setor)->first();
 
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
 
             $users = $setor->users()->get();
 
@@ -359,60 +343,7 @@ class LivroController extends Controller
                 $conteudo = "Nenhuma alteração.";
             }
 
-            //$conteudo .= "</ol>";
-
-
-            //lista os tickets
-            /*foreach($tickets as $ticket){
-
-                    $created_at = strtotime(Carbon::parse($ticket->created_at)->format('Y-m-d H:i:s'));
-                    $livro_inicio = strtotime($livro->inicio);
-                    $livro_fim = strtotime($livro->fim);*/
-
-                    //dd($livro_inicio, $created_at, $livro_fim);
-
-                    //Verifica se ticket está dentro do intervalo de data
-                    /*if(($livro_inicio<=$created_at)and($livro_fim>=$created_at)){
-                        $srvFlag = 1;   
-                    }
-
-                    $conteudo_temp .= "<li>";
-                    $conteudo_temp .= " Ticket: <b>".$ticket->protocolo."</b><br>";
-                    $conteudo_temp .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
-                    $conteudo_temp .= "".$ticket->titulo."<br>";
-                    $prontuarios = $ticket->prontuarioTicketsShow()->get();
-                   */ //lista os prontuarios dos tickets
-                    /*
-                    $conteudo_temp .= "<ul>";
-                    foreach($prontuarios as $prontuario){
-
-                        if((($livro->inicio)>=($prontuario->created_at))and(($prontuario->created_at)<=($livro->fim))){
-                            $srvFlag = 1;
-                        }
-
-                        $conteudo_temp .= "<li>";
-                        $user_prontuario = User::find($prontuario->user_id);
-                        $conteudo_temp .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> ";
-                        $conteudo_temp .= "<small>".$setor->name."</small>";
-                        $conteudo_temp .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
-                        
-                        $conteudo_temp .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
-                        $conteudo_temp .= "</li>";
-                    }
-                    $conteudo_temp .= "</ul>";
-                    $conteudo_temp .= "</li><br><br>";
-
-                    if($srvFlag==1){
-                        $conteudo .= $conteudo_temp;
-                        $srvFlag=0;
-                    }
-                    else{
-                        $conteudo_temp="";
-                        $srvFlag=0;
-                    }
-            }*/
-            /* -------------------------------------FIM Conteudo Livro---------------------------- */
-            
+          
             
             //Armazena para inserir no banco
             $livro->conteudo = $conteudo;  

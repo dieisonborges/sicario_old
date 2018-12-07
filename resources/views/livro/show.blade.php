@@ -123,7 +123,7 @@
                     <td align="left">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{strtoupper(str_replace('_',' ', $setor))}} do dia {{date('d/m/Y à\s h:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s h:i:s', strtotime($livro->fim))}}.</p></td>
+                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{strtoupper(str_replace('_',' ', $setor))}} do dia {{date('d/m/Y à\s H:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s H:i:s', strtotime($livro->fim))}}.</p></td>
                   </tr>
                   <tr>
                     <td align="left">
@@ -213,9 +213,9 @@
 
     @if (($livro->status)==0)
     <section class="content">
-      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Aprovar Livro</a>
+      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Fechar Livro (Aprovar)</a>
 
-      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro</a>
+      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro (Descartar)</a>
     </section>
     @else
         
