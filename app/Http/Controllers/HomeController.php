@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Home;
 use App\User;
 use Gate;
+use App\Setor; 
 
 class HomeController extends Controller
 {
@@ -26,12 +27,27 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-
-        
+    {   
         if(Auth::check()){
-            return view('home.index');  
+
+
+            /* ------------- Verifica perfil técnico ----------------- */
+
+            $setores = Setor::all();
+
+            $flagClient=0;
+
+            foreach ($setores as $setor) {
+                
+                if(!(Gate::denies('read_'.$setor->name))){
+                    return redirect('tecnicos/'.$setor->name.'/dashboard')->with('success', 'Painel de Controle Carregado Com Sucesso!');
+                }
+
+            }
+
+
+            return view('home.index'); 
+
         }else{
             return redirect('login')->with('danger', 'Erro: <b>400</b> Você não fez login no sistema');
         }

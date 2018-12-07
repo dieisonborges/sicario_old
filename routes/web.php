@@ -108,6 +108,7 @@ Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');
 Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
 Route::post('tecnicos/setorUpdate', 'TecnicoController@setorUpdate');
 Route::post('tecnicos/setorDestroy', 'TecnicoController@setorDestroy');
+Route::get('tecnicos/{setor}/dashboard', 'TecnicoController@dashboard');
 
 //LIVROS Técnicos
 
@@ -118,3 +119,4 @@ Route::get('livros/{setor}/create', 'LivroController@create');
 Route::post('livros/preview', 'LivroController@store');
 Route::get('livros/{setor}/{id}/excluir', 'LivroController@destroy');
 Route::get('livros/{setor}/{id}/aprovar', 'LivroController@aprovar');
+

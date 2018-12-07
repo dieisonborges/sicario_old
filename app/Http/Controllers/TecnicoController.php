@@ -288,7 +288,13 @@ class TecnicoController extends Controller
             //recuperar todos equipapmentos
             $equipamentos = Equipamento::all(); 
 
-            return view('tecnico.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
+            if($ticket->status==0){
+                return redirect('home')->with('permission_error', '403');
+            }else{
+                return view('tecnico.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
+            }
+
+            
         }
         else{
             return redirect('home')->with('permission_error', '403');
@@ -320,7 +326,7 @@ class TecnicoController extends Controller
                     'rotulo' => 'required',
                     'tipo' => 'required',
                     'titulo' => 'required|string|max:30',
-                    'descricao' => 'required|string|min:15',
+                    /*'descricao' => 'required|string|min:15',*/
             ]);
 
 
@@ -336,7 +342,7 @@ class TecnicoController extends Controller
 
             $ticket->titulo = $request->get('titulo');
 
-            $ticket->descricao = $request->get('descricao');
+            //$ticket->descricao = $request->get('descricao');
 
             if($ticket->save()){
                 return redirect('tecnicos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
@@ -629,6 +635,57 @@ class TecnicoController extends Controller
             return redirect('home')->with('permission_error', '403');
         }
     }
+
+
+    /* ------------------------------ DASHBOARD --------------------------*/
+    public function dashboard($setor)
+    {
+        
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            /* .................... QTD Tickets Abertos ................... */
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $qtd_tick_aber = $setor->tickets()                                
+                                ->where('status', 1)
+                                ->count();
+            /* .................... END QTD Tickets Abertos ................... */
+
+            /* .................... QTD Tickets FECHADOS ................... */
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $qtd_tick_fech = $setor->tickets()                                
+                                ->where('status', 0)
+                                ->count();
+            /* .................... END QTD Tickets FECHADOS ................... */
+
+
+
+
+            return view('tecnico.dashboard', compact(
+                            'qtd_tick_fech', 
+                            'qtd_tick_aber', 
+                            'setor'
+                        ));
+        }
+        else{
+            return redirect('home')->with('permission_error', '403');
+        }
+    }
+    /* ----------------------------- END DASHBOARD ---------------------*/
 
 
 

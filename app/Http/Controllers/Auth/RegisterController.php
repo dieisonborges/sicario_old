@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'telefone' => 'required|string|celular_com_ddd',
             'password' => ['required','string','min:6','max:20','confirmed','regex:(^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$)'],            
         ], [
-            'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 6 digitos e máximo 20',
+            'regex' => 'No campo :attribute é obrigatório para criação de senhas, pelo menos um caracter maiúsculo, minúsculo e número. Mínimo 8 digitos e máximo 20',
         ]);
     }
 

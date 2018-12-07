@@ -29,7 +29,7 @@
 				    <select class="form-control" name="status">
 						<option value="{{$ticket->status}}">{{$status[$ticket->status]}}</option>
 						@foreach ($status as $Key => $statu)
-						   <option value="{{$Key}}"> {{$statu}} - {{$Key}}</option>
+						   <option value="{{$Key}}"> {{$statu}}</option>
 						@endforeach 	
 					</select>
 			 	</div>
@@ -40,7 +40,7 @@
 						<option value="{{$ticket->rotulo}}" selected="selected">{{$rotulos[$ticket->rotulo]}}</option>
 
 	                	@foreach ($rotulos as $Key => $rotulo)
-						   <option value="{{$Key}}"> {{$rotulo}} - {{$Key}}</option>
+						   <option value="{{$Key}}"> {{$rotulo}}</option>
 						@endforeach 
 											
 					</select>
@@ -51,7 +51,7 @@
 					<select class="form-control" name="tipo">
 						<option selected="selected" value="{{$ticket->tipo}}">{{$tipos[$ticket->tipo]}}</option>						
 						@foreach ($tipos as $Key => $tipo)
-						   <option value="{{$Key}}"> {{$tipo}} - {{$Key}}</option>
+						   <option value="{{$Key}}"> {{$tipo}}</option>
 						@endforeach 				
 					</select>
 			 	</div>
@@ -82,9 +82,10 @@
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
-		                <textarea class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
+		                <textarea disabled="disabled" class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
 		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$ticket->descricao}}</textarea>
 		              </form>
+		              <small>*Não é possível editar a descrição.</small>
 		            </div>
 			 	</div> 	
 

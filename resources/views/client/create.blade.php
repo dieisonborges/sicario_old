@@ -35,7 +35,6 @@
 			 	<div class="form-group col-md-6">
 				    <label for="equipamento_id">Equipamento</label>
 				    <select class="form-control" name="equipamento_id">
-				    	<option selected="selected" value="">Nenhum</option>
 				    	@forelse ($equipamentos as $equipamento)
 				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
 					    @empty                    

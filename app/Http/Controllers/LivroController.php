@@ -232,7 +232,7 @@ class LivroController extends Controller
                 //Verifica se ticket está dentro do intervalo de data
                         $acoes .= "<li> ";
                         $acoes .= " Ticket: <b>".$ticket->protocolo."</b> ";
-                        $acoes .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> <br>";
+                        $acoes .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> <br>";
                         $acoes .= "<small>".$setor->name."</small> <br>";
                         $acoes .= "".$ticket->titulo."<br> ";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
@@ -323,7 +323,7 @@ class LivroController extends Controller
                     $conteudo .= " Ticket: <b>".$ticket->protocolo."</b><br>";
                     $user_ticket = User::find($ticket->user_id);
                     $conteudo .= $user_ticket->cargo." ".$user_ticket->name."<br>";
-                    $conteudo .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
+                    $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo .= "".$ticket->titulo."<br>"; 
 
                     $conteudo .= "<ul>";
@@ -332,7 +332,7 @@ class LivroController extends Controller
 
                         $conteudo .= "<li>";
                         $user_prontuario = User::find($prontuario->user_id);
-                        $conteudo .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> ";
+                        $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> ";
                         $conteudo .= "<small>".$setor->name."</small> ";
                         $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br> ";
                         
@@ -378,7 +378,7 @@ class LivroController extends Controller
 
                     $conteudo_temp .= "<li>";
                     $conteudo_temp .= " Ticket: <b>".$ticket->protocolo."</b><br>";
-                    $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small><br>";
+                    $conteudo_temp .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo_temp .= "".$ticket->titulo."<br>";
                     $prontuarios = $ticket->prontuarioTicketsShow()->get();
                    */ //lista os prontuarios dos tickets
@@ -392,7 +392,7 @@ class LivroController extends Controller
 
                         $conteudo_temp .= "<li>";
                         $user_prontuario = User::find($prontuario->user_id);
-                        $conteudo_temp .= "<small>".date('d/m/Y h:i:s', strtotime($ticket->created_at))."</small> ";
+                        $conteudo_temp .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> ";
                         $conteudo_temp .= "<small>".$setor->name."</small>";
                         $conteudo_temp .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
                         
