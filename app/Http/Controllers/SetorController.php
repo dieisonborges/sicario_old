@@ -31,7 +31,7 @@ class SetorController extends Controller
             return view('setor.index', array('setors' => $setors, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -45,7 +45,7 @@ class SetorController extends Controller
             return view('setor.index', array('setors' => $setors, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -61,7 +61,7 @@ class SetorController extends Controller
             return view('setor.create');                  
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -94,7 +94,7 @@ class SetorController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -112,7 +112,7 @@ class SetorController extends Controller
             return view('setor.show', array('setor' => $setor));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -130,7 +130,7 @@ class SetorController extends Controller
             return view('setor.edit', compact('setor','id'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -163,7 +163,7 @@ class SetorController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -183,7 +183,7 @@ class SetorController extends Controller
             return redirect()->back()->with('success','Setor (Regra) excluída com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 }

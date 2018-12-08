@@ -101,7 +101,7 @@ class ClientController extends Controller
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -126,7 +126,7 @@ class ClientController extends Controller
             return view('client.index', array('tickets' => $tickets, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -145,7 +145,7 @@ class ClientController extends Controller
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -169,7 +169,7 @@ class ClientController extends Controller
             return view('client.create', compact('equipamentos', 'tipos', 'rotulos', 'status', 'setores'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         } 
 
 
@@ -228,7 +228,7 @@ class ClientController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -249,7 +249,7 @@ class ClientController extends Controller
             //Verifica permissão de acesso por usuário
             //Ao ticket
             if(!isset($temp_ticket)){
-            	return redirect('home')->with('permission_error', '403');
+            	return redirect('erro')->with('permission_error', '403');
             }
 
             $ticket = $temp_ticket;
@@ -272,7 +272,7 @@ class ClientController extends Controller
             return view('client.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -286,7 +286,7 @@ class ClientController extends Controller
             return view('client.acao', compact('ticket'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -327,7 +327,7 @@ class ClientController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -340,7 +340,7 @@ class ClientController extends Controller
             return view('client.encerrar', compact('ticket'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -385,7 +385,7 @@ class ClientController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 

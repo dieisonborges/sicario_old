@@ -97,7 +97,7 @@ class LivroController extends Controller
             return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -129,7 +129,7 @@ class LivroController extends Controller
             return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => $buscaInput));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
         
     }
@@ -152,7 +152,7 @@ class LivroController extends Controller
             return view('livro.create', compact('setor', 'users'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         } 
     }
 
@@ -361,7 +361,7 @@ class LivroController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -388,7 +388,7 @@ class LivroController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                //return redirect('home')->with('permission_error', '403');
+                //return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -397,7 +397,7 @@ class LivroController extends Controller
             return view('livro.show', compact('livro', 'setor', 'tecnicos'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -423,7 +423,7 @@ class LivroController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
             
             
@@ -443,7 +443,7 @@ class LivroController extends Controller
             return redirect('livros/'.$setor.'/')->with('success','Livro excluído com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 

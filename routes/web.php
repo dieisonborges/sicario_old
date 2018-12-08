@@ -22,6 +22,9 @@ Auth::routes();
 // HomeController - Dashboard - Painel Inicial
 Route::get('home', 'HomeController@index')->name('home');
 
+// Área de erros
+Route::get('erro', 'ErroController@index')->name('erro');
+
 // ContatoController
 Route::resource('contato', 'ContatoController');
 Route::post('contato/enviar', 'ContatoController@enviar');
@@ -109,8 +112,11 @@ Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');
 Route::post('tecnicos/setorUpdate', 'TecnicoController@setorUpdate');
 Route::post('tecnicos/setorDestroy', 'TecnicoController@setorDestroy');
 Route::get('tecnicos/{setor}/dashboard', 'TecnicoController@dashboard');
+Route::get('tecnicos/{setor}/alocar', 'TecnicoController@alocar');
+Route::get('tecnicos/{setor}/{id}/alocarSetors', 'TecnicoController@alocarSetors');
+Route::post('tecnicos/alocarSetorUpdate', 'TecnicoController@alocarSetorUpdate');
 
-//LIVROS Técnicos
+//LIVROS Técnicos 
 
 Route::get('livros/{setor}/', 'LivroController@index');
 Route::post('livros/{setor}/busca', 'LivroController@busca');

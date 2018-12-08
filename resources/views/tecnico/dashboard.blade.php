@@ -69,16 +69,16 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>#</h3>
+              <h3>{{$cont_aloc}}</h3>
 
               <p>Tickets sem Setor (Não Alocados)</p>
             </div>
-            <a href="#">
+            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}">
               <div class="icon">                
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="#" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

@@ -38,7 +38,7 @@ class TicketController extends Controller
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -107,7 +107,7 @@ class TicketController extends Controller
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -135,7 +135,7 @@ class TicketController extends Controller
             return view('ticket.create', compact('equipamentos', 'tipos', 'rotulos', 'status'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         } 
 
 
@@ -192,7 +192,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -240,7 +240,7 @@ class TicketController extends Controller
             return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -272,7 +272,7 @@ class TicketController extends Controller
             return view('ticket.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -320,7 +320,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -340,7 +340,7 @@ class TicketController extends Controller
             return redirect()->back()->with('success','Ticket excluído com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -353,7 +353,7 @@ class TicketController extends Controller
             return view('ticket.acao', compact('ticket'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -394,7 +394,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -407,7 +407,7 @@ class TicketController extends Controller
             return view('ticket.encerrar', compact('ticket'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -454,7 +454,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -470,7 +470,7 @@ class TicketController extends Controller
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -488,7 +488,7 @@ class TicketController extends Controller
             return view('ticket.setor', compact('ticket', 'setors', 'all_setors'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -512,7 +512,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -537,7 +537,7 @@ class TicketController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 

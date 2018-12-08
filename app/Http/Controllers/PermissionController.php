@@ -23,7 +23,7 @@ class PermissionController extends Controller
         	return view('permission.index', array('permissions' => $permissions, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -34,7 +34,7 @@ class PermissionController extends Controller
             return view('permission.show', array('permission' => $permission));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -49,7 +49,7 @@ class PermissionController extends Controller
 
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -60,7 +60,7 @@ class PermissionController extends Controller
             return view('permission.create');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }      
 
     }
@@ -87,7 +87,7 @@ class PermissionController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -100,7 +100,7 @@ class PermissionController extends Controller
             return view('permission.edit', compact('permission','id'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }        
 
     }
@@ -126,7 +126,7 @@ class PermissionController extends Controller
 
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -140,7 +140,7 @@ class PermissionController extends Controller
 
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -156,7 +156,7 @@ class PermissionController extends Controller
 
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
 

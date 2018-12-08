@@ -135,7 +135,7 @@ class TecnicoController extends Controller
             return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -168,7 +168,7 @@ class TecnicoController extends Controller
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -199,7 +199,7 @@ class TecnicoController extends Controller
 
 
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -237,7 +237,7 @@ class TecnicoController extends Controller
 
         
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -255,7 +255,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -277,7 +277,7 @@ class TecnicoController extends Controller
             return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -296,7 +296,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -313,7 +313,7 @@ class TecnicoController extends Controller
             $equipamentos = Equipamento::all(); 
 
             if($ticket->status==0){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }else{
                 return view('tecnico.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status', 'setor'));
             }
@@ -321,7 +321,7 @@ class TecnicoController extends Controller
             
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -340,7 +340,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -375,7 +375,7 @@ class TecnicoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -397,7 +397,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -412,7 +412,7 @@ class TecnicoController extends Controller
             return view('tecnico.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -435,7 +435,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -448,7 +448,7 @@ class TecnicoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -472,7 +472,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -488,7 +488,7 @@ class TecnicoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -506,14 +506,14 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
             return view('tecnico.acao', array('ticket' => $ticket, 'setor' => $setor));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -549,7 +549,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -570,7 +570,7 @@ class TecnicoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -588,14 +588,14 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
             return view('tecnico.encerrar', compact('ticket', 'setor'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -631,7 +631,7 @@ class TecnicoController extends Controller
             }
 
             if(!(isset($setors_security->id))){
-                return redirect('home')->with('permission_error', '403');
+                return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
@@ -656,7 +656,7 @@ class TecnicoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -708,6 +708,29 @@ class TecnicoController extends Controller
             $week = $this->weekBr();
             /* END WEEK */
 
+            /* .................... QTD não alocados ................... */
+
+            $tickets_aloc = Ticket::where('status', '1')->get();
+
+            $cont_aloc = 0;
+
+            foreach ($tickets_aloc as $ticket_aloc) {
+                $flagTicket=0;
+                $setors_aloc = $ticket_aloc->setors()->get();
+                foreach ($setors_aloc as $setor_aloc) {
+                    if(isset($setor_aloc->id)){
+                        $flagTicket=1;
+                    }
+                }
+                if($flagTicket==0){
+                    $cont_aloc+=1;
+                }
+            }
+
+
+
+            /* .................... END QTD não alocados ................... */
+
 
 
             return view('tecnico.dashboard', compact(
@@ -718,11 +741,12 @@ class TecnicoController extends Controller
                             'equipe_qtd',
                             'tickets',
                             'livros',
-                            'week'
+                            'week',
+                            'cont_aloc'
                         ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
     /* ----------------------------- END DASHBOARD ---------------------*/
@@ -733,29 +757,80 @@ class TecnicoController extends Controller
         //
         if(!(Gate::denies('read_'.$setor))){
 
-            //usuário
-            //$user_id = auth()->user()->id;
+            $tickets = Ticket::where('status', '1')->paginate();
 
-            //setor
-            $setors = Setor::where('name', $setor)->limit(1)->get();
+            $setor = Setor::where('name', $setor)->first();
 
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
+            foreach ($tickets as $ticket) {
+                $flagTicket[$ticket->id]=0;
+                $setors = $ticket->setors()->get();
+                foreach ($setors as $setor_get) {
+                    if(isset($setor_get->id)){
+                        $flagTicket[$ticket->id]=1;
+                    }
+                }
             }
 
-            $setor = $temp_setor;
+            return view('tecnico.alocar', compact(
+                            'tickets',
+                            'setor',
+                            'flagTicket'
+                        ));
 
-            $tickets = $setor->tickets()->paginate(40);
-
-
-            return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
+    public function alocarSetors($setor, $id){
 
+        $my_setor = $setor;
+
+        if(!(Gate::denies('read_'.$setor))){  
+
+
+            $ticket = $this->ticket->find($id);
+
+            //recuperar setors
+            $setors = $ticket->setors()->get();
+
+            //todos setores
+            $all_setors = Setor::all();
+
+
+            return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
+
+    public function alocarSetorUpdate(Request $request){
+
+        $my_setor = $request->input('my_setor');
+
+        if(!(Gate::denies('update_'.$my_setor))){              
+                    
+            $setor_id = $request->input('setor_id');
+            $ticket_id = $request->input('ticket_id');
+
+            $ticket  = Ticket::find($ticket_id);
+
+            $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+          
+            if(!$status){
+                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
 
 
 }

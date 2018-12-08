@@ -26,7 +26,7 @@ class UserController extends Controller
         	return view('user.index', array('users' => $user, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -37,7 +37,7 @@ class UserController extends Controller
             return view('user.show', array('user' => $user));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -54,7 +54,7 @@ class UserController extends Controller
             return view('user.index', array('users' => $user, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -65,7 +65,7 @@ class UserController extends Controller
             return view('user.create');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }       
 
     }
@@ -117,7 +117,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -129,7 +129,7 @@ class UserController extends Controller
             return view('user.edit', compact('user','id'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -165,7 +165,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -195,7 +195,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -208,7 +208,7 @@ class UserController extends Controller
             return redirect()->back()->with('success','Usuário excluído com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -226,7 +226,7 @@ class UserController extends Controller
             return view('user.role', compact('user', 'roles', 'all_roles'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
 
@@ -255,7 +255,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -280,7 +280,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -299,7 +299,7 @@ class UserController extends Controller
             return view('user.setor', compact('user', 'setors', 'all_setors'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -324,7 +324,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -349,7 +349,7 @@ class UserController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 

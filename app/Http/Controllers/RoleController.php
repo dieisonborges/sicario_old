@@ -26,7 +26,7 @@ class RoleController extends Controller
         	return view('role.index', array('roles' => $roles, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -37,7 +37,7 @@ class RoleController extends Controller
             return view('role.show', array('role' => $role));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -52,7 +52,7 @@ class RoleController extends Controller
             return view('role.index', array('roles' => $roles, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -62,7 +62,7 @@ class RoleController extends Controller
             return view('role.create');                  
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -88,7 +88,7 @@ class RoleController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -99,7 +99,7 @@ class RoleController extends Controller
             return view('role.edit', compact('role','id'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
          
 
@@ -126,7 +126,7 @@ class RoleController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -139,7 +139,7 @@ class RoleController extends Controller
             return redirect()->back()->with('success','Role (Regra) excluída com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -157,7 +157,7 @@ class RoleController extends Controller
             return view('role.permission', compact('role', 'permissions', 'all_permissions'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
 
@@ -181,7 +181,7 @@ class RoleController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
 
     }
@@ -205,7 +205,7 @@ class RoleController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 

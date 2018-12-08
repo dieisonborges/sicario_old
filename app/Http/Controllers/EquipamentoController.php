@@ -21,7 +21,7 @@ class EquipamentoController extends Controller
             return view('equipamento.index', array('equipamentos' => $equipamentos, 'buscar' => null));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -36,7 +36,7 @@ class EquipamentoController extends Controller
             return view('equipamento.index', array('equipamentos' => $equipamentos, 'buscar' => $buscaInput ));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -53,7 +53,7 @@ class EquipamentoController extends Controller
             return view('equipamento.create');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         } 
     }
 
@@ -95,7 +95,7 @@ class EquipamentoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -113,7 +113,7 @@ class EquipamentoController extends Controller
             return view('equipamento.show', array('equipamento' => $equipamento));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -131,7 +131,7 @@ class EquipamentoController extends Controller
             return view('equipamento.edit', compact('equipamento','id'));
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -175,7 +175,7 @@ class EquipamentoController extends Controller
             }
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 
@@ -195,7 +195,7 @@ class EquipamentoController extends Controller
             return redirect()->back()->with('success','Equipamento excluído com sucesso!');
         }
         else{
-            return redirect('home')->with('permission_error', '403');
+            return redirect('erro')->with('permission_error', '403');
         }
     }
 }
