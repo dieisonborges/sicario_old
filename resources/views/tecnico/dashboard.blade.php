@@ -164,6 +164,11 @@
                         <i class="fa fa-ticket"></i>
                       </span>
                   @break
+                  @case(4)
+                      <span class="info-box-icon">
+                        <i class="fa fa-ticket"></i>
+                      </span>
+                  @break
               @endswitch
 
               <div class="info-box-content">
