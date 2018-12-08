@@ -271,7 +271,7 @@
         </div>
         <!-- /.col -->
 
-        <div class="col-md-6">
+        <div class="col-md-8">
               <!-- USERS LIST -->
               <div class="box box-danger">
                 <div class="box-header with-border">
@@ -292,7 +292,7 @@
                     <li>
                       <img src="{{asset('img/default-user-image.png')}}" width="90px" height="90px" alt="User Image">
                         <a class="users-list-name" href="#">{{$membro->name}}</a>
-                      <span class="users-list-date">{{$membro->cargo}}</span>
+                      <span class="users-list-date">{{strtoupper($membro->cargo)}}</span>
                     </li>
                     @endforeach
                     
