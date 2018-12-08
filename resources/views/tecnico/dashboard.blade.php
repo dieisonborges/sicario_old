@@ -155,17 +155,17 @@
                       </span>                    
                   @break
                   @case(2)
-                      <span class="info-box-icon bg-aqua">
+                      <span class="info-box-icon bg-orange">
                           <i class="fa fa-ticket"></i>
                       </span>
                   @break
                   @case(3)
-                      <span class="info-box-icon">
+                      <span class="info-box-icon bg-navy">
                         <i class="fa fa-ticket"></i>
                       </span>
                   @break
                   @case(4)
-                      <span class="info-box-icon">
+                      <span class="info-box-icon bg-blue">
                         <i class="fa fa-ticket"></i>
                       </span>
                   @break

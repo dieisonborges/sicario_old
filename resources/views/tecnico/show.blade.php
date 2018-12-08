@@ -50,11 +50,15 @@
                                     <span class="btn btn-flat btn-warning btn-md col-md-12">Alto - Urgência (resolver o mais rápido possível)</span>
                                     @break
                                 @case(2)
-                                    <span class="btn btn-flat btn-info btn-md col-md-12">Médio - Intermediária (avaliar situação)</span>
+                                    <span class="btn btn-flat bg-orange btn-md col-md-12">Médio - Intermediária (avaliar situação)</span>
                                     @break
                                 @case(3)
-                                    <span class="btn btn-flat btn-md col-md-12">Baixo - Rotineiro ou Planejado</span>
-                                    @break                            
+                                    <span class="btn btn-flat bg-navy btn-md col-md-12">Baixo - Rotineiro ou Planejado</span>
+                                    @break
+                                @case(4)
+                                    <span class="btn btn-flat btn-info btn-md col-md-12">Nenhum</span>
+                                    @break
+                                @break                           
 
                             @endswitch
 			 	</div>			 	
@@ -67,7 +71,7 @@
 			 	<div class="form-group col-md-4">
 				    <label for="equipamento_id">Equipamento</label>
             @if($ticket->equipamento_id)
-				    <span class="col-md-12 form-control">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}}</span>
+				    <span class="col-md-12 form-control">{{$ticket->equipamentos->nome}}</span>
             @else
             <span class="col-md-12 form-control">Nenhum</span>
             @endif
