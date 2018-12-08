@@ -207,15 +207,19 @@
 
     </section>
     <!-- /.content -->
+    <section class="content">
 
     @if (($ticket->status)==1)
-    <section class="content">
+    
       <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
       <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
-    </section>
+
     @else
         
     @endif	
+      <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    </section>
+
   @endsection
 @endcan
