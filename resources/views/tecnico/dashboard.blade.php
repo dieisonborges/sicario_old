@@ -234,11 +234,11 @@
                     <td>{{$livro->id}}</td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{str_replace('/'.$setor->name,'', $livro->protocolo)}}</a></td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
-                    {{date('d/m/Y h:i:s', strtotime($livro->inicio))}}
+                    {{date('d/m/Y H:i:s', strtotime($livro->inicio))}}
                     {{$week[date('l', strtotime($livro->inicio))]}}</a>
                     </td>
                     <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
-                    {{date('d/m/Y h:i:s', strtotime($livro->fim))}}
+                    {{date('d/m/Y H:i:s', strtotime($livro->fim))}}
                     {{$week[date('l', strtotime($livro->fim))]}}
                     </a>
                     </td>                  
