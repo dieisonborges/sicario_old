@@ -70,14 +70,11 @@ class LogController extends Controller
      
         $log = new Log();
         $log->ip = request()->ip();
-
-        $log->mac = request()->ip();
-
-        //$log->mac = shell_exec("arp -an ".$log->ip."");
+        $log->mac = shell_exec("arp -an ".$log->ip."");
         /* tratar MAC */
-        //$log->mac = explode("at", $log->mac);
-        //$log->mac = explode("on", $log->mac[1]);
-        //$log->mac = $log->mac[0];
+        $log->mac = explode("at", $log->mac);
+        $log->mac = explode("on", $log->mac[1]);
+        $log->mac = $log->mac[0];
         /* END tratar MAC */
 
         $log->host = array_key_exists( 'REMOTE_HOST', $_SERVER) ? $_SERVER['REMOTE_HOST'] : gethostbyaddr($_SERVER["REMOTE_ADDR"]);
