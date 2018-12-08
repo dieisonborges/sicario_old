@@ -217,8 +217,12 @@
 
     @else
         
-    @endif	
-      <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    @endif
+
+    <a  class="btn btn-warning btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
+
+    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    
     </section>
 
   @endsection
