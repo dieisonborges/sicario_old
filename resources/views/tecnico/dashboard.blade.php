@@ -155,7 +155,7 @@
                       </span>                    
                   @break
                   @case(2)
-                      <span class="info-box-icon bg-orange">
+                      <span class="info-box-icon bg-purple">
                           <i class="fa fa-ticket"></i>
                       </span>
                   @break

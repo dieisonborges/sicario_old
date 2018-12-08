@@ -50,7 +50,7 @@
                                     <span class="btn btn-flat btn-warning btn-md col-md-12">Alto - Urgência (resolver o mais rápido possível)</span>
                                     @break
                                 @case(2)
-                                    <span class="btn btn-flat bg-orange btn-md col-md-12">Médio - Intermediária (avaliar situação)</span>
+                                    <span class="btn btn-flat bg-purple btn-md col-md-12">Médio - Intermediária (avaliar situação)</span>
                                     @break
                                 @case(3)
                                     <span class="btn btn-flat bg-navy btn-md col-md-12">Baixo - Rotineiro ou Planejado</span>
