@@ -148,6 +148,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
+        /* LOG Controller */
+        //App\Http\Controllers\LogController::class,
 
 
         /*

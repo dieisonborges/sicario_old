@@ -6,7 +6,7 @@
   <div class="login-box-body">
 
     <a href="/">
-        <b style="display:none;">e-Cardume</b>
+        <b style="display:none;">SICARIO</b>
         <img src="{{ asset('img/logo/logo-branco-preto.jpg') }}" width="100%">
     </a>
 

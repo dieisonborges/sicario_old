@@ -142,6 +142,7 @@
               1   =>  "Alto - Urgência (resolver o mais rápido possível)",
               2   =>  "Médio - Intermediária (avaliar situação)",
               3   =>  "Baixo - Rotineiro ou Planejado",
+              4   =>  "Nenhum",
               -->
               @switch($ticket->rotulo)
                   @case(0)

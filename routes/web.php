@@ -126,3 +126,6 @@ Route::post('livros/preview', 'LivroController@store');
 Route::get('livros/{setor}/{id}/excluir', 'LivroController@destroy');
 Route::get('livros/{setor}/{id}/aprovar', 'LivroController@aprovar');
 
+//LOGS
+Route::resource('logs', 'LogController');
+Route::post('logs/busca', 'LogController@busca');

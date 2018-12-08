@@ -81,6 +81,21 @@
           </li>
           @endcan
 
+          @can('read_log')
+
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-history"></i> <span>Logs (Registros) Sistema</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url('logs/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+            </ul>
+          </li>
+          @endcan
+
           @can('read_equipamento')
 
            <!-- ************************ Administrador | Configurações ********************* -->        

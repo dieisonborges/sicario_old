@@ -11,9 +11,21 @@ use Gate;
 use App\Ticket;
 use App\Equipamento;
 use App\Setor; 
+use App\Http\Controllers\Log;
 
 class TecnicoController extends Controller
 {
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        $log = new LogController;
+        $log->store($info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     //
     private $ticket; 
 
@@ -112,8 +124,8 @@ class TecnicoController extends Controller
     }
 
     public function index($setor)
-    {
-        
+    {       
+
         //
         if(!(Gate::denies('read_'.$setor))){
 
@@ -131,6 +143,8 @@ class TecnicoController extends Controller
 
             $tickets = $setor->tickets()->paginate(40);
 
+            //LOG
+            $this->log("tecnico.index");
 
             return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
@@ -164,6 +178,8 @@ class TecnicoController extends Controller
                                 })
                                 ->paginate(40);
 
+            //LOG
+            $this->log("Busca=".$buscaInput);
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
@@ -193,6 +209,8 @@ class TecnicoController extends Controller
                                 ->where('status', $status)
                                 ->paginate(40);
             
+            //LOG
+            $this->log("tecnico.index=".$status);
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null, 'setor' => $setor));
         }
@@ -230,7 +248,8 @@ class TecnicoController extends Controller
                                 })
                                 ->where('status', $status)
                                 ->paginate(40);
-            
+            //LOG
+            $this->log("tecnico.index=".$status." Busca=".$buscaInput);
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
@@ -273,6 +292,9 @@ class TecnicoController extends Controller
 
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
+            //LOG
+            $this->log("tecnico.show Ticket=".$ticket->id);
+
 
             return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
         }
@@ -311,6 +333,9 @@ class TecnicoController extends Controller
 
             //recuperar todos equipapmentos
             $equipamentos = Equipamento::all(); 
+
+            //LOG
+            $this->log("tecnico.edit Tipo:".$tipos." Rotulo:".$rotulos." Status:".$status." Equipamentos:".$equipamentos);
 
             if($ticket->status==0){
                 return redirect('erro')->with('permission_error', '403');
@@ -368,6 +393,9 @@ class TecnicoController extends Controller
 
             //$ticket->descricao = $request->get('descricao');
 
+            //LOG
+            $this->log("tecnico.edit Ticket".$id);
+
             if($ticket->save()){
                 return redirect('tecnicos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
             }else{
@@ -408,6 +436,9 @@ class TecnicoController extends Controller
             //todos setores
             $all_setors = Setor::all();
 
+            //LOG
+            $this->log("tecnico.setor Ticket".$id);
+
 
             return view('tecnico.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
@@ -440,6 +471,9 @@ class TecnicoController extends Controller
             /* ------------------------------ END Security --------------------------------*/
 
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+
+            //LOG
+            $this->log("setorUpdate setor_id".$setor_id."  ticket_id:".$ticket_id);
           
             if(!$status){
                 return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
@@ -480,6 +514,9 @@ class TecnicoController extends Controller
 
             $status = $setor ->setorTicket()->detach($ticket->id);
 
+            //LOG
+            $this->log("setorDestroy setor:".$setor->name);
+
             
             if($status){
                 return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
@@ -509,6 +546,9 @@ class TecnicoController extends Controller
                 return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
+
+            //LOG
+            $this->log("acao setor:".$ticket->id);
 
             return view('tecnico.acao', array('ticket' => $ticket, 'setor' => $setor));
         }
@@ -563,6 +603,9 @@ class TecnicoController extends Controller
                 'updated_at' => date ("Y-m-d h:i:s")
             ]]); 
 
+            //LOG
+            $this->log("storeAcao:".$ticket_id);
+
             if(!$status){
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
             }else{
@@ -591,6 +634,9 @@ class TecnicoController extends Controller
                 return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
+
+            //LOG
+            $this->log("Encerrar:".$id);
 
             return view('tecnico.encerrar', compact('ticket', 'setor'));
         }
@@ -649,6 +695,9 @@ class TecnicoController extends Controller
 
             /* ---------------------- Encerra FIM ----------*/
 
+            //LOG
+            $this->log("storeEncerrar:".$ticket_id);
+
             if((!$status)and($ticket->save())){
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
             }else{
@@ -671,7 +720,7 @@ class TecnicoController extends Controller
             $setor = Setor::where('name', $setor)->first();
             /* ======================== END FILTRO SETOR ==================== */
 
-            /* .................... EQUIPE ................... */
+            /* .................... EQUIPE ...................*/
             $equipe = $setor->users()->get();
             $equipe_qtd = $setor->users()->count();     
 
@@ -731,6 +780,9 @@ class TecnicoController extends Controller
 
             /* .................... END QTD não alocados ................... */
 
+            //LOG
+            $this->log("Dashboard");
+
 
 
             return view('tecnico.dashboard', compact(
@@ -771,6 +823,9 @@ class TecnicoController extends Controller
                 }
             }
 
+            //LOG
+            $this->log("alocar");
+
             return view('tecnico.alocar', compact(
                             'tickets',
                             'setor',
@@ -798,6 +853,9 @@ class TecnicoController extends Controller
             //todos setores
             $all_setors = Setor::all();
 
+            //LOG
+            $this->log("alocarSetors");
+
 
             return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
@@ -819,6 +877,9 @@ class TecnicoController extends Controller
             $ticket  = Ticket::find($ticket_id);
 
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+
+            //LOG
+            $this->log("alocarSetorsUpdate");
           
             if(!$status){
                 return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
