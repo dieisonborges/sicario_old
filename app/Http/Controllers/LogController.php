@@ -76,8 +76,16 @@ class LogController extends Controller
         if(isset($logmac)){
             /* tratar MAC */
             $logmac = explode("at", $logmac);
-            $logmac = explode("on", $logmac[1]);
-            $log->mac = $logmac[0];
+            if(isset($logmac[1])){
+                $logmac = explode("on", $logmac[1]);
+                if(isset($logmac[0])){
+                   $log->mac = $logmac[0]; 
+                }else{
+                    $log->mac = "None";
+                } 
+            }else{
+                $log->mac = "None";
+            }            
             /* END tratar MAC */
 
         }else{
