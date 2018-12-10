@@ -9,8 +9,26 @@ use App\User;
 use App\Role;
 use App\Permission;
 
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class AuthServiceProvider extends ServiceProvider
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="AuthServiceProvider";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     /**
      * The policy mappings for the application.
      *
@@ -22,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         */
     ];
 
+
     /**
      * Register any authentication / authorization services.
      *
@@ -29,9 +48,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("GateContract");
+        //--------------------------------------------------------------------------------------------
         
         $this->registerPolicies($gate);
+
+        //
 
         //Comente esse bloco no primeiro migrate
 
@@ -43,21 +66,15 @@ class AuthServiceProvider extends ServiceProvider
              
             $gate->define(
 
-                $permission->name, function(User $user) use ($permission){
-                 
+                $permission->name, function(User $user) use ($permission){                 
 
                     return $user->hasPermission($permission);
-                    
-
-
 
                 }
 
-            );  
-
+            );
         
             /* Permissão total para o Grupo adm */
-
         
             Gate::before(function ($user) {
                 if ($user->hasRole('adm')) {

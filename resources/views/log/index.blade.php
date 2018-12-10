@@ -48,7 +48,7 @@
                     <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->mac}}</a></td>
                     <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->host}}</a></td>
                     <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->filename}}</a></td>
-                    <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->info}}</a></td>
+                    <td><a href="{{URL::to('logs')}}/{{$log->id}}"> {{ str_limit($log->info, $limit = 40, $end = '...') }}</a></td>
                     <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->user_id}}</a></td>
                     <td><a href="{{URL::to('logs')}}/{{$log->id}}">{{$log->created_at}}</a></td>
                     

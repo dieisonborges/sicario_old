@@ -4,9 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
 
 class ForgotPasswordController extends Controller
 {
+
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="ForgotPasswordController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -27,6 +44,10 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("recuperarSenha");
+        //--------------------------------------------------------------------------------------------
+        
         $this->middleware('guest');
     }
 }

@@ -13,8 +13,25 @@ use App\Equipamento;
 use App\Setor; 
 use DB;
 
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class ClientController extends Controller
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="ClientController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
     //
     private $ticket;
 
@@ -98,6 +115,10 @@ class ClientController extends Controller
 
             $tickets = Ticket::where('user_id', $user_id)->paginate(40);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.index");
+            //--------------------------------------------------------------------------------------------
+
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
@@ -122,6 +143,10 @@ class ClientController extends Controller
 			    $query->where('user_id', $user_id);	
 			})->paginate(40);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.index.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
 			            				   
             return view('client.index', array('tickets' => $tickets, 'buscar' => $buscaInput ));
         }
@@ -141,6 +166,10 @@ class ClientController extends Controller
             $tickets = Ticket::where('user_id', $user_id)
             				 ->where('status', $status)
             				 ->paginate(40);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.index.status=".$status);
+            //--------------------------------------------------------------------------------------------
 
             return view('client.index', array('tickets' => $tickets, 'buscar' => null));
         }
@@ -164,6 +193,10 @@ class ClientController extends Controller
             $status = $this->ticketStatus();
 
             $setores = Setor::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.create");
+            //--------------------------------------------------------------------------------------------
 
 
             return view('client.create', compact('equipamentos', 'tipos', 'rotulos', 'status', 'setores'));
@@ -220,7 +253,11 @@ class ClientController extends Controller
                 //Vincula tecnicos ao livro
                 foreach ($setores as $setor) {
                     Ticket::find($ticket_id)->setors()->attach($setor);
-                } 
+            }
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.store");
+            //-------------------------------------------------------------------------------------------- 
 
                 return redirect('clients/1/status')->with('success', 'Ticket cadastrado com sucesso!');
             }else{
@@ -240,19 +277,13 @@ class ClientController extends Controller
         	//usuário
             $user_id = auth()->user()->id;
 
-            $ticket = Ticket::where('id', $id)->where('user_id', $user_id)->limit(1)->get();
-
-            foreach ($ticket as $tickets ) {
-            	$temp_ticket = $tickets;
-            }
+            $ticket = Ticket::where('id', $id)->where('user_id', $user_id)->limit(1)->first();
 
             //Verifica permissão de acesso por usuário
             //Ao ticket
-            if(!isset($temp_ticket)){
+            if(!isset($ticket)){
             	return redirect('erro')->with('permission_error', '403');
             }
-
-            $ticket = $temp_ticket;
 
             //Tipos
             $tipos = $this->ticketTipo();
@@ -268,6 +299,10 @@ class ClientController extends Controller
 
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.show.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
 
             return view('client.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
@@ -281,7 +316,11 @@ class ClientController extends Controller
     {
         //
          if(auth()->user()->id){            
-            $ticket = Ticket::find($id); 
+            $ticket = Ticket::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.acao=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('client.acao', compact('ticket'));
         }
@@ -320,6 +359,10 @@ class ClientController extends Controller
                 'updated_at' => date ("Y-m-d h:i:s")
             ]]); 
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.store.acao.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
+
             if(!$status){
                 return redirect('clients/'.$ticket_id)->with('success', ' Ação adicionada com sucesso!');
             }else{
@@ -336,6 +379,10 @@ class ClientController extends Controller
         //
          if(auth()->user()->id){            
             $ticket = Ticket::find($id); 
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.encerrar.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('client.encerrar', compact('ticket'));
         }
@@ -377,6 +424,10 @@ class ClientController extends Controller
             $ticket->status = 0;
 
             /* ---------------------- Encerra FIM ----------*/
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("client.store.encerrar.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
                 return redirect('clients/'.$ticket_id)->with('success', ' Ticket Encerrado com sucesso!');

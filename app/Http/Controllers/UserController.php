@@ -11,8 +11,26 @@ use App\Setor;
 use Gate;
 use DB;
 
+//Log
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class UserController extends Controller
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="UserController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
     //
     private $user;
 
@@ -22,7 +40,12 @@ class UserController extends Controller
 
     public function index(){
         if(!(Gate::denies('read_user'))){
-        	$user = User::paginate(40);         
+        	$user = User::paginate(40);     
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.index");
+            //--------------------------------------------------------------------------------------------
+
         	return view('user.index', array('users' => $user, 'buscar' => null));
         }
         else{
@@ -34,6 +57,11 @@ class UserController extends Controller
     public function show($id){
         if(!(Gate::denies('read_user'))){
             $user = User::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("show.index");
+            //--------------------------------------------------------------------------------------------
+
             return view('user.show', array('user' => $user));
         }
         else{
@@ -50,7 +78,12 @@ class UserController extends Controller
                                 ->orwhere('email', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('telefone', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('cpf', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);        
+                                ->paginate(40); 
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
             return view('user.index', array('users' => $user, 'buscar' => $buscaInput ));
         }
         else{
@@ -61,7 +94,11 @@ class UserController extends Controller
     // Criar 
     public function create(){
         if(!(Gate::denies('create_user'))){
-        
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.create");
+            //--------------------------------------------------------------------------------------------
+
             return view('user.create');
         }
         else{
@@ -109,6 +146,9 @@ class UserController extends Controller
             $ntel = substr($user['telefone'], 7, 4); 
             $user['telefone'] = "(".$ddd.")".$ntelpre."-".$ntel;
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.store");
+            //--------------------------------------------------------------------------------------------
 
             if($user->save()){
                 return redirect('users/')->with('success', 'Usuário cadastrado com sucesso!');
@@ -126,6 +166,11 @@ class UserController extends Controller
         if(!(Gate::denies('update_user'))){
         
             $user = User::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.edit.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return view('user.edit', compact('user','id'));
         }
         else{
@@ -156,7 +201,12 @@ class UserController extends Controller
             $user->cpf = $request->get('cpf');
             $user->telefone = $request->get('telefone');
             $user->status = $request->get('status');
-            $user->login = $request->get('login');        
+            $user->login = $request->get('login');   
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.update.id=".$id);
+            //--------------------------------------------------------------------------------------------     
 
             if($user->save()){
                 return redirect('users/')->with('success', 'Usuário atualizado com sucesso!');
@@ -186,6 +236,10 @@ class UserController extends Controller
                 $user->status = 0;
                 $user->login = 16; //Maior que 16 bloqueia o login (Tentativas)
             }
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.updateActive.id=".$id);
+            //--------------------------------------------------------------------------------------------
                     
 
             if($user->save()){
@@ -205,6 +259,11 @@ class UserController extends Controller
             $user = User::find($id);        
             
             $user->delete();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.destroy.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return redirect()->back()->with('success','Usuário excluído com sucesso!');
         }
         else{
@@ -222,6 +281,10 @@ class UserController extends Controller
 
             //todas permissoes
             $all_roles = Role::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.roles.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('user.role', compact('user', 'roles', 'all_roles'));
         }
@@ -247,6 +310,10 @@ class UserController extends Controller
             $user  = User::find($user_id);
 
             $status = Role::find($role_id)->roleUser()->attach($user->id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.roleUpdate.id=".$user_id."Role=".$role_id);
+            //--------------------------------------------------------------------------------------------
           
             if(!$status){
                 return redirect('user/'.$user_id.'/roles')->with('success', 'Role (Regra) atualizada com sucesso!');
@@ -272,6 +339,10 @@ class UserController extends Controller
 
             $status = $role ->roleUser()->detach($user->id);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.roleDestroy.id=".$user_id."Role=".$role_id);
+            //--------------------------------------------------------------------------------------------
+
             
             if($status){
                 return redirect('user/'.$user_id.'/roles')->with('success', 'Role (Regra) excluída com sucesso!');
@@ -296,6 +367,10 @@ class UserController extends Controller
             //todas permissoes
             $all_setors = Setor::all();
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.setor.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return view('user.setor', compact('user', 'setors', 'all_setors'));
         }
         else{
@@ -316,6 +391,10 @@ class UserController extends Controller
             $user  = User::find($user_id);
 
             $status = Setor::find($setor_id)->setorUser()->attach($user->id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.setorUpdate.id=".$user_id."Setor=".$setor_id);
+            //--------------------------------------------------------------------------------------------
           
             if(!$status){
                 return redirect('user/'.$user_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
@@ -341,6 +420,10 @@ class UserController extends Controller
 
             $status = $setor ->setorUser()->detach($user->id);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("user.setorDestroy.id=".$user_id."Setor=".$setor_id);
+            //--------------------------------------------------------------------------------------------
+
             
             if($status){
                 return redirect('user/'.$user_id.'/setors')->with('success', 'Setor (Regra) excluída com sucesso!');
@@ -353,32 +436,6 @@ class UserController extends Controller
         }
     }
 
-    
-
-        /*
-
-    public function roleUpdateTest(){
-
-        //Request $request
-            
-        //$role_id = $request->input('role_id');
-        //$user_id = $request->input('user_id');    
-
-        $role_id = "1";
-        $user_id = "22";    
-
-        $user  = User::find($user_id);
-
-        if(Role::find($role_id)->roleUser()->attach($user->id)){
-            dd("ok");
-        }else{
-            dd("problem");
-        }
-        
-
-    }
-
-    */
-    
+       
     
 }

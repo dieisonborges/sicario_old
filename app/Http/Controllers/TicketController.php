@@ -13,9 +13,26 @@ use App\Ticket;
 use App\Equipamento;
 use App\Setor;
 
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class TicketController extends Controller
 {
     
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="TicketController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     private $ticket;
 
     public function __construct(Ticket $ticket){
@@ -34,6 +51,10 @@ class TicketController extends Controller
 
 
             $tickets = Ticket::paginate(40);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.index");
+            //--------------------------------------------------------------------------------------------
 
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
         }
@@ -103,7 +124,12 @@ class TicketController extends Controller
             $tickets = Ticket::where('titulo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);        
+                                ->paginate(40);  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.index.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => $buscaInput ));
         }
         else{
@@ -130,6 +156,10 @@ class TicketController extends Controller
 
             //Status
             $status = $this->ticketStatus();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.create");
+            //--------------------------------------------------------------------------------------------
 
 
             return view('ticket.create', compact('equipamentos', 'tipos', 'rotulos', 'status'));
@@ -181,8 +211,11 @@ class TicketController extends Controller
             $ticket->user_id = auth()->user()->id;
 
             //protocolo humano
-            $ticket->protocolo = $this->protocolo();          
-            
+            $ticket->protocolo = $this->protocolo();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.store");
+            //--------------------------------------------------------------------------------------------
 
 
             if($ticket->save()){
@@ -236,6 +269,10 @@ class TicketController extends Controller
 
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.show.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
 
             return view('ticket.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios'));
         }
@@ -268,6 +305,10 @@ class TicketController extends Controller
 
             //recuperar todos equipapmentos
             $equipamentos = Equipamento::all(); 
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.edit.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('ticket.edit', compact('ticket','id', 'tipos', 'rotulos', 'equipamentos', 'status'));
         }
@@ -313,6 +354,10 @@ class TicketController extends Controller
 
             $ticket->descricao = $request->get('descricao');
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.update.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             if($ticket->save()){
                 return redirect('tickets/')->with('success', 'Ticket atualizado com sucesso!');
             }else{
@@ -336,6 +381,10 @@ class TicketController extends Controller
         if(!(Gate::denies('delete_ticket'))){
             $ticket = Ticket::find($id);        
             
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.destroy.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             $ticket->delete();
             return redirect()->back()->with('success','Ticket excluído com sucesso!');
         }
@@ -349,6 +398,10 @@ class TicketController extends Controller
         //
          if(!(Gate::denies('update_ticket'))){            
             $ticket = Ticket::find($id); 
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.acao.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('ticket.acao', compact('ticket'));
         }
@@ -387,6 +440,10 @@ class TicketController extends Controller
                 'updated_at' => date ("Y-m-d h:i:s")
             ]]); 
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.storeAcao.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
+
             if(!$status){
                 return redirect('tickets/'.$ticket_id)->with('success', ' Ação adicionada com sucesso!');
             }else{
@@ -403,6 +460,10 @@ class TicketController extends Controller
         //
          if(!(Gate::denies('update_ticket'))){            
             $ticket = Ticket::find($id); 
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.encerrar.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('ticket.encerrar', compact('ticket'));
         }
@@ -447,6 +508,10 @@ class TicketController extends Controller
 
             /* ---------------------- Encerra FIM ----------*/
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.storeEncerrar.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
+
             if((!$status)and($ticket->save())){
                 return redirect('tickets/'.$ticket_id)->with('success', ' Ticket Encerrado com sucesso!');
             }else{
@@ -467,6 +532,10 @@ class TicketController extends Controller
 
             $tickets = Ticket::where('status', $status)->paginate(40);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.status=".$status);
+            //--------------------------------------------------------------------------------------------
+
             return view('ticket.index', array('tickets' => $tickets, 'buscar' => null));
         }
         else{
@@ -484,6 +553,10 @@ class TicketController extends Controller
 
             //todas permissoes
             $all_setors = Setor::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.setor.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('ticket.setor', compact('ticket', 'setors', 'all_setors'));
         }
@@ -504,6 +577,10 @@ class TicketController extends Controller
             $ticket  = Ticket::find($ticket_id);
 
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.setorUpdate.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
           
             if(!$status){
                 return redirect('tickets/'.$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
@@ -529,6 +606,9 @@ class TicketController extends Controller
 
             $status = $setor ->setorTicket()->detach($ticket->id);
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.setorDestroy.id=".$ticket_id);
+            //--------------------------------------------------------------------------------------------
             
             if($status){
                 return redirect('tickets/'.$ticket_id.'/setors')->with('success', 'Setor (Regra) excluída com sucesso!');

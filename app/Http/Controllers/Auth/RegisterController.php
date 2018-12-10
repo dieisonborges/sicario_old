@@ -7,9 +7,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
 
 class RegisterController extends Controller
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="RegisterController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -37,6 +54,10 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("guest");
+        //--------------------------------------------------------------------------------------------
+
         $this->middleware('guest');
     }
 
@@ -67,6 +88,10 @@ class RegisterController extends Controller
         //Limpar acentos e espaços Telefone
         //$data['telefone'] = sanitizeString($data['telefone']);
 
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("register.validator:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        //--------------------------------------------------------------------------------------------
+
 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
@@ -91,6 +116,10 @@ class RegisterController extends Controller
         
         //Remove toda a pontuação do CPF
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
+
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("register.create:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        //--------------------------------------------------------------------------------------------
         
         return User::create([
             'name' => $data['name'],

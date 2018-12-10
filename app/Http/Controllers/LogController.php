@@ -65,7 +65,7 @@ class LogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($info)
+    public function store($filename, $info)
     {
      
         $log = new Log();
@@ -78,13 +78,16 @@ class LogController extends Controller
         /* END tratar MAC */
 
         $log->host = array_key_exists( 'REMOTE_HOST', $_SERVER) ? $_SERVER['REMOTE_HOST'] : gethostbyaddr($_SERVER["REMOTE_ADDR"]);
-        $log->filename = $_SERVER['SCRIPT_FILENAME'];
+
+       
+        $log->filename = $filename;
+        
 
         if (auth()->check()) {
             $log->user_id = auth()->user()->id;
             $username = auth()->user()->cargo." ".auth()->user()->name;
         }else{
-            $username = "Não efetuou login";
+            $username = "Não necessita login";
         }        
         
         $log->info = $username." | ".$info;

@@ -117,7 +117,7 @@
           @endcan    
 
           @can('read_escala')
-
+          <!--
           <li class="treeview">
             <a href="#">
               <i class="fa fa-male"></i> <span>Escalas Técnicas</span>
@@ -130,6 +130,7 @@
               <li><a href="{{ url('escalas/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>
           </li>
+          -->
           @endcan    
 
           @can('read_ticket')
@@ -155,7 +156,7 @@
           @endcan   
 
           @can('read_livro')
-
+          <!--
           <li class="treeview">
             <a href="#">
               <i class="fa fa-book"></i> <span>Livros de Serviço <i class="fa fa-certificate text-red"></i> Adm</span>
@@ -167,6 +168,7 @@
               <li><a href="{{ url('livros/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
             </ul>
           </li>
+          -->
           @endcan          
 
           @can('read_tiop_supervisao')

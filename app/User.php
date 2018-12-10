@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -47,7 +49,8 @@ class User extends Authenticatable
     }
 
 
-    public function hasPermission(Permission $permission){        
+    public function hasPermission(Permission $permission){
+
         return $this->hasAnyRoles($permission->roles);
     }
 
@@ -68,9 +71,28 @@ class User extends Authenticatable
             return true;
         }else{
             return false;
+        }        
+
+    }
+
+    public function checkActive(){
+
+        if((auth()->user()->status)==1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public function checkQtdLogin(){
+
+        if((auth()->user()->login)<10){
+            return true;
+        }else{
+            return false;
         }
         
-
     }
 
     

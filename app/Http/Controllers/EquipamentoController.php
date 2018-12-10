@@ -6,8 +6,27 @@ use App\Equipamento;
 use Illuminate\Http\Request;
 use Gate;
 
+//Log
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class EquipamentoController extends Controller
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="EquipamentoController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +36,12 @@ class EquipamentoController extends Controller
     {
         //
         if(!(Gate::denies('read_equipamento'))){
-            $equipamentos = Equipamento::paginate(40);         
+            $equipamentos = Equipamento::paginate(40);     
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.index");
+            //--------------------------------------------------------------------------------------------
+
             return view('equipamento.index', array('equipamentos' => $equipamentos, 'buscar' => null));
         }
         else{
@@ -32,7 +56,12 @@ class EquipamentoController extends Controller
                                 ->orwhere('part_number', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('serial_number', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);        
+                                ->paginate(40);  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
             return view('equipamento.index', array('equipamentos' => $equipamentos, 'buscar' => $buscaInput ));
         }
         else{
@@ -49,6 +78,10 @@ class EquipamentoController extends Controller
     {
         //
         if(!(Gate::denies('create_equipamento'))){
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.create");
+            //--------------------------------------------------------------------------------------------
         
             return view('equipamento.create');
         }
@@ -86,7 +119,9 @@ class EquipamentoController extends Controller
                 $equipamento->sistema_id = $request->input('sistema_id');
             }
             
-
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.store");
+            //--------------------------------------------------------------------------------------------
 
             if($equipamento->save()){
                 return redirect('equipamentos/')->with('success', 'Equipamento cadastrado com sucesso!');
@@ -110,6 +145,11 @@ class EquipamentoController extends Controller
         //
          if(!(Gate::denies('read_equipamento'))){
             $equipamento = Equipamento::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.show=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return view('equipamento.show', array('equipamento' => $equipamento));
         }
         else{
@@ -127,7 +167,12 @@ class EquipamentoController extends Controller
     {
         //
         if(!(Gate::denies('update_equipamento'))){            
-            $equipamento = Equipamento::find($id);            
+            $equipamento = Equipamento::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.edit=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return view('equipamento.edit', compact('equipamento','id'));
         }
         else{
@@ -167,6 +212,10 @@ class EquipamentoController extends Controller
                 $equipamento->sistema_id = $request->get('sistema_id');
             }
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.update=".$id);
+            //--------------------------------------------------------------------------------------------
+
 
             if($equipamento->save()){
                 return redirect('equipamentos/')->with('success', 'Equipamento atualizado com sucesso!');
@@ -192,6 +241,11 @@ class EquipamentoController extends Controller
             $equipamento = Equipamento::find($id);        
             
             $equipamento->delete();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.destroy=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return redirect()->back()->with('success','Equipamento excluído com sucesso!');
         }
         else{

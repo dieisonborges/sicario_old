@@ -34,6 +34,8 @@
 				</div>
 			</div>
 
+			@if(isset($user))
+
 			<div class="col-md-6">
 				<div class="box box-danger">
 					<h3>Usuário</h3>
@@ -48,6 +50,17 @@
 
 				</div>
 			</div>
+			@else
+
+			<div class="col-md-6">
+				<div class="box box-danger">
+					<h3>Operação não necessita LOGIN</h3>
+
+				</div>
+			</div>
+
+
+			@endif
 
 			<div class="col-md-12">
 				<div class="box box-success">

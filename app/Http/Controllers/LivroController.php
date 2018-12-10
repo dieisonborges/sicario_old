@@ -15,9 +15,27 @@ use App\User;
 use DB;
 use Carbon\Carbon;
 
+//Log
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class LivroController extends Controller
 {
     
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="LivroController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     private $livro;
 
     public function __construct(Livro $livro){
@@ -94,6 +112,10 @@ class LivroController extends Controller
 
             $week = $this->weekBr();
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.index");
+            //--------------------------------------------------------------------------------------------
+
             return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => null));
         }
         else{
@@ -126,6 +148,10 @@ class LivroController extends Controller
 
             $week = $this->weekBr();
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.index.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
             return view('livro.index', array('week' => $week, 'users' => $users, 'setor' => $setor, 'livros' => $livros, 'buscar' => $buscaInput));
         }
         else{
@@ -148,6 +174,10 @@ class LivroController extends Controller
 
 
             $users = $setor->users()->get();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.create");
+            //--------------------------------------------------------------------------------------------
 
             return view('livro.create', compact('setor', 'users'));
         }
@@ -348,6 +378,10 @@ class LivroController extends Controller
             //Armazena para inserir no banco
             $livro->conteudo = $conteudo;  
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.store");
+            //--------------------------------------------------------------------------------------------
+
             if($livro->save()){
                 $livro_id = DB::getPdo()->lastInsertId();
                 //Vincula tecnicos ao livro
@@ -392,6 +426,9 @@ class LivroController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.show.id=".$id);
+            //--------------------------------------------------------------------------------------------
             
 
             return view('livro.show', compact('livro', 'setor', 'tecnicos'));
@@ -416,6 +453,10 @@ class LivroController extends Controller
 
             $livro->status = 1;
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.aprovar.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             if($livro->save()){
                 return redirect()->back()->with('success','Livro APROVADO.');
             }else{
@@ -436,11 +477,26 @@ class LivroController extends Controller
             $livro = Livro::find($id);      
 
             if($livro->status==1){
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("livro.index=Não pode ser excluido! id".$id);
+                //--------------------------------------------------------------------------------------------
+                
                 return redirect()->back()->with('danger','O Livro não pode ser excluído!');
+
+            }else{
+
+                $livro->delete();
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("livro.destroy.id=".$id);
+                //--------------------------------------------------------------------------------------------
+
+                return redirect('livros/'.$setor.'/')->with('success','Livro excluído com sucesso!');
+
             }
             
-            $livro->delete();
-            return redirect('livros/'.$setor.'/')->with('success','Livro excluído com sucesso!');
+            
         }
         else{
             return redirect('erro')->with('permission_error', '403');

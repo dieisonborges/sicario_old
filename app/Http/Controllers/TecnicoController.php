@@ -12,19 +12,22 @@ use App\Ticket;
 use App\Equipamento;
 use App\Setor; 
 use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
 
 class TecnicoController extends Controller
 {
     /* ----------------------- LOGS ----------------------*/
 
     private function log($info){
+        //path name
+        $filename="TecnicoController";
+
         $log = new LogController;
-        $log->store($info);
+        $log->store($filename, $info);
         return null;     
     }
 
     /* ----------------------- END LOGS --------------------*/
-
 
     //
     private $ticket; 
@@ -143,8 +146,9 @@ class TecnicoController extends Controller
 
             $tickets = $setor->tickets()->paginate(40);
 
-            //LOG
+            //LOG ----------------------------------------------------------------------------------------
             $this->log("tecnico.index");
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.index', array('setor' => $setor, 'tickets' => $tickets, 'buscar' => null));
         }
@@ -178,8 +182,9 @@ class TecnicoController extends Controller
                                 })
                                 ->paginate(40);
 
-            //LOG
-            $this->log("Busca=".$buscaInput);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
@@ -192,9 +197,6 @@ class TecnicoController extends Controller
     {
         //
         if(!(Gate::denies('read_'.$setor))){
-
-
-            //$tickets = Ticket::where('status', $status)->paginate(40);
 
             //setor
             $setors = Setor::where('name', $setor)->limit(1)->get();
@@ -209,8 +211,9 @@ class TecnicoController extends Controller
                                 ->where('status', $status)
                                 ->paginate(40);
             
-            //LOG
-            $this->log("tecnico.index=".$status);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.index.status=".$status);
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => null, 'setor' => $setor));
         }
@@ -227,9 +230,6 @@ class TecnicoController extends Controller
         if(!(Gate::denies('read_'.$setor))){
 
             $buscaInput = $request->input('busca');
-
-
-            //$tickets = Ticket::where('status', $status)->paginate(40);
 
             //setor
             $setors = Setor::where('name', $setor)->limit(1)->get();
@@ -248,8 +248,9 @@ class TecnicoController extends Controller
                                 })
                                 ->where('status', $status)
                                 ->paginate(40);
-            //LOG
-            $this->log("tecnico.index=".$status." Busca=".$buscaInput);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.status=".$status."busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
         }
@@ -268,10 +269,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -292,8 +290,9 @@ class TecnicoController extends Controller
 
             $prontuarios = $ticket->prontuarioTicketsShow()->get();
 
-            //LOG
-            $this->log("tecnico.show Ticket=".$ticket->id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.show.ticket=".$ticket->id);
+            //--------------------------------------------------------------------------------------------
 
 
             return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
@@ -312,10 +311,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -334,8 +330,9 @@ class TecnicoController extends Controller
             //recuperar todos equipapmentos
             $equipamentos = Equipamento::all(); 
 
-            //LOG
-            $this->log("tecnico.edit Tipo:".$tipos." Rotulo:".$rotulos." Status:".$status." Equipamentos:".$equipamentos);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.edit.id:".$id);
+            //--------------------------------------------------------------------------------------------
 
             if($ticket->status==0){
                 return redirect('erro')->with('permission_error', '403');
@@ -359,10 +356,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -393,8 +387,9 @@ class TecnicoController extends Controller
 
             //$ticket->descricao = $request->get('descricao');
 
-            //LOG
-            $this->log("tecnico.edit Ticket".$id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.edit.update.ticket".$id."-".$ticket);
+            //--------------------------------------------------------------------------------------------
 
             if($ticket->save()){
                 return redirect('tecnicos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
@@ -419,10 +414,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -436,8 +428,9 @@ class TecnicoController extends Controller
             //todos setores
             $all_setors = Setor::all();
 
-            //LOG
-            $this->log("tecnico.setor Ticket".$id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.setor.ticket:".$id);
+            //--------------------------------------------------------------------------------------------
 
 
             return view('tecnico.setor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
@@ -460,10 +453,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $my_setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $my_setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -472,8 +462,9 @@ class TecnicoController extends Controller
 
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
 
-            //LOG
-            $this->log("setorUpdate setor_id".$setor_id."  ticket_id:".$ticket_id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.setorUpdate.setor_id:".$setor_id."ticket_id:".$ticket_id);
+            //--------------------------------------------------------------------------------------------
           
             if(!$status){
                 return redirect('tecnicos/'.$my_setor."/".$ticket_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
@@ -500,10 +491,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $my_setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $my_setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -514,8 +502,9 @@ class TecnicoController extends Controller
 
             $status = $setor ->setorTicket()->detach($ticket->id);
 
-            //LOG
-            $this->log("setorDestroy setor:".$setor->name);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.setorDestroy.setor:".$setor->name);
+            //--------------------------------------------------------------------------------------------
 
             
             if($status){
@@ -537,18 +526,16 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
-            //LOG
-            $this->log("acao setor:".$ticket->id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.acao.setor:".$ticket->id);
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.acao', array('ticket' => $ticket, 'setor' => $setor));
         }
@@ -559,7 +546,6 @@ class TecnicoController extends Controller
 
     public function storeAcao(Request $request)
     {
-
         
         $setor = $request->input('setor');
 
@@ -570,7 +556,6 @@ class TecnicoController extends Controller
                     'descricao' => 'required|string|min:15',
                     
             ]);
-                                 
 
             $ticket_id = $request->input('ticket_id');
 
@@ -583,10 +568,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -603,8 +585,9 @@ class TecnicoController extends Controller
                 'updated_at' => date ("Y-m-d h:i:s")
             ]]); 
 
-            //LOG
-            $this->log("storeAcao:".$ticket_id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.storeAcao:".$ticket_id);
+            //--------------------------------------------------------------------------------------------
 
             if(!$status){
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ação adicionada com sucesso!');
@@ -625,18 +608,16 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
-            //LOG
-            $this->log("Encerrar:".$id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.encerrar:".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.encerrar', compact('ticket', 'setor'));
         }
@@ -671,10 +652,7 @@ class TecnicoController extends Controller
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
-            $setors_security = $ticket->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
 
             if(!(isset($setors_security->id))){
                 return redirect('erro')->with('permission_error', '403');
@@ -695,8 +673,9 @@ class TecnicoController extends Controller
 
             /* ---------------------- Encerra FIM ----------*/
 
-            //LOG
-            $this->log("storeEncerrar:".$ticket_id);
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.storeEncerrar:".$ticket_id);
+            //--------------------------------------------------------------------------------------------
 
             if((!$status)and($ticket->save())){
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
@@ -780,8 +759,9 @@ class TecnicoController extends Controller
 
             /* .................... END QTD não alocados ................... */
 
-            //LOG
-            $this->log("Dashboard");
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.dashboard");
+            //--------------------------------------------------------------------------------------------
 
 
 
@@ -823,8 +803,9 @@ class TecnicoController extends Controller
                 }
             }
 
-            //LOG
-            $this->log("alocar");
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.alocar");
+            //--------------------------------------------------------------------------------------------
 
             return view('tecnico.alocar', compact(
                             'tickets',
@@ -853,8 +834,9 @@ class TecnicoController extends Controller
             //todos setores
             $all_setors = Setor::all();
 
-            //LOG
-            $this->log("alocarSetors");
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.alocarSetors:".$id);
+            //--------------------------------------------------------------------------------------------
 
 
             return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
@@ -878,8 +860,9 @@ class TecnicoController extends Controller
 
             $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
 
-            //LOG
-            $this->log("alocarSetorsUpdate");
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.alocarSetorsUpdate:".$setor_id."Ticket".$ticket_id);
+            //--------------------------------------------------------------------------------------------
           
             if(!$status){
                 return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');

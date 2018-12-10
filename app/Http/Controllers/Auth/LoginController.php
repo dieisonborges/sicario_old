@@ -4,9 +4,26 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
 
 class LoginController extends Controller
 {
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="LoginController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -34,6 +51,10 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("login");
+        //--------------------------------------------------------------------------------------------
+        
         $this->middleware('guest')->except('logout');
     }
 }

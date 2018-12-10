@@ -8,8 +8,26 @@ use Illuminate\Support\Facades\Storage;
 use App\Permission;
 use Gate;
 
+//Log
+use App\Http\Controllers\Log;
+use App\Http\Controllers\LogController;
+
 class PermissionController extends Controller
 { 
+    
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="PermissionController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
     //
     private $permission;
 
@@ -19,7 +37,12 @@ class PermissionController extends Controller
 
     public function index(){
         if(!(Gate::denies('read_permission'))){
-        	$permissions = Permission::paginate(40);         
+        	$permissions = Permission::paginate(40);  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.index");
+            //--------------------------------------------------------------------------------------------
+
         	return view('permission.index', array('permissions' => $permissions, 'buscar' => null));
         }
         else{
@@ -31,6 +54,11 @@ class PermissionController extends Controller
     public function show($id){
         if(!(Gate::denies('read_permission'))){
             $permission = Permission::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.show");
+            //--------------------------------------------------------------------------------------------
+
             return view('permission.show', array('permission' => $permission));
         }
         else{
@@ -44,7 +72,12 @@ class PermissionController extends Controller
             $buscaInput = $request->input('busca');
             $permissions = Permission::where('name', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('label', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);        
+                                ->paginate(40);  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
             return view('permission.index', array('permissions' => $permissions, 'buscar' => $buscaInput ));
 
         }
@@ -56,6 +89,10 @@ class PermissionController extends Controller
     // Criar
     public function create(){
         if(!(Gate::denies('read_permission'))){
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.create");
+            //--------------------------------------------------------------------------------------------
         
             return view('permission.create');
         }
@@ -80,6 +117,10 @@ class PermissionController extends Controller
             $permission->name = $request->input('name');
             $permission->label = $request->input('label');
 
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.store");
+            //--------------------------------------------------------------------------------------------
+
             if($permission->save()){
                 return redirect('permissions/')->with('success', 'Permission (Regra) cadastrada com sucesso!');
             }else{
@@ -96,6 +137,10 @@ class PermissionController extends Controller
         if(!(Gate::denies('read_permission'))){
             
             $permission = Permission::find($id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.edit.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('permission.edit', compact('permission','id'));
         }
@@ -116,7 +161,11 @@ class PermissionController extends Controller
             ]);
                     
             $permission->name = $request->get('name');
-            $permission->label = $request->get('label');       
+            $permission->label = $request->get('label');   
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.update.id=".$id);
+            //--------------------------------------------------------------------------------------------    
 
             if($permission->save()){
                 return redirect('permissions/')->with('success', 'Permission (Regra) atualizada com sucesso!');
@@ -136,6 +185,11 @@ class PermissionController extends Controller
             $permission = Permission::find($id);        
             
             $permission->delete();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.destroy.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
             return redirect()->back()->with('success','Permission (Regra) excluída com sucesso!');
 
         }
@@ -151,6 +205,10 @@ class PermissionController extends Controller
 
             //recuperar roles
             $roles = $permission->roles()->get();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.roles.id=".$id);
+            //--------------------------------------------------------------------------------------------
 
             return view('permission.role', compact('permission', 'roles'));
 
