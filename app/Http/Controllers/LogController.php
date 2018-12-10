@@ -82,7 +82,7 @@ class LogController extends Controller
                    $log->mac = $logmac[0]; 
                 }else{
                     $log->mac = "None";
-                } 
+                }   
             }else{
                 $log->mac = "None";
             }            
@@ -92,9 +92,14 @@ class LogController extends Controller
             $log->mac = "None";
         }
 
-       
+       if(isset($_SERVER["REMOTE_ADDR"])){
+            $log->host = array_key_exists( 'REMOTE_HOST', $_SERVER) ? $_SERVER['REMOTE_HOST'] : gethostbyaddr($_SERVER["REMOTE_ADDR"]);
 
-        $log->host = array_key_exists( 'REMOTE_HOST', $_SERVER) ? $_SERVER['REMOTE_HOST'] : gethostbyaddr($_SERVER["REMOTE_ADDR"]);
+       }else{
+            $log->host = "None";
+       }
+
+        
 
        
         $log->filename = $filename;
