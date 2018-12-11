@@ -143,9 +143,10 @@ class LivroController extends Controller
                                     ->orwhere('autenticacao', 'LIKE', '%'.$buscaInput.'%')
                                     ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
                                     ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
-                                    ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%');
                                 })
                                 ->paginate(40);
+
 
             $users = $setor->users()->get();
 
