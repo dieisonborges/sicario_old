@@ -21,7 +21,7 @@ class LogController extends Controller
     {
         //
         if(!(Gate::denies('read_log'))){
-            $logs = Log::orderBy('created_at', 'DESC')->paginate(40);         
+            $logs = Log::orderBy('created_at', 'DESC')->paginate(100);         
             return view('log.index', array('logs' => $logs, 'buscar' => null));
         }
         else{
@@ -41,7 +41,7 @@ class LogController extends Controller
                                 ->orwhere('created_at', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('updated_at', 'LIKE', '%'.$buscaInput.'%')
                                 ->orderBy('created_at', 'DESC')
-                                ->paginate(40);        
+                                ->paginate(100);        
             return view('log.index', array('logs' => $logs, 'buscar' => $buscaInput ));
         }
         else{

@@ -338,7 +338,8 @@ class LivroController extends Controller
                     $user_ticket = User::find($ticket->user_id);
                     $conteudo .= $user_ticket->cargo." ".$user_ticket->name."<br>";
                     $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
-                    $conteudo .= "".$ticket->titulo."<br>"; 
+                    $conteudo .= "".$ticket->titulo."<br>";
+                    $conteudo .= "".$ticket->descricao."<br>"; 
 
                     $conteudo .= "<ul>";
                     /* -----------------PRONTUARIO/ACOES---------------------*/
