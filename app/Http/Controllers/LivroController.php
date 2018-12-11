@@ -145,6 +145,7 @@ class LivroController extends Controller
                                     ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
                                     ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%');
                                 })
+                                ->orderBy('id','DESC')
                                 ->paginate(40);
 
 
