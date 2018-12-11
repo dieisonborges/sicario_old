@@ -147,9 +147,10 @@ class LogController extends Controller
     public function acesso (){
         //
         if(!(Gate::denies('read_log'))){
-            $logs = Log::select('ip')
-                    ->groupBy('ip')
-                    ->paginate(40);       
+            $logs = Log::select('ip', 'mac')
+                        ->distinct('ip')
+                        //->orderBy('created_at', 'DESC')
+                        ->get();         
             return view('log.acesso', array('logs' => $logs, 'buscar' => null));
         }
         else{
