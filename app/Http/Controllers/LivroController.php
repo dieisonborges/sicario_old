@@ -251,7 +251,7 @@ class LivroController extends Controller
                         $user_ticket_acoes = User::find($ticket->user_id);
                         $acoes .= strtoupper($user_ticket_acoes->cargo)." ".strtoupper($user_ticket_acoes->name)."<br>";
                         $acoes .= "".$ticket->titulo."<br> ";
-                        $acoes .= "".$ticket->descricao."<br>"; 
+                        $acoes .= "".preg_replace('/<[^>]*>/', '', $ticket->descricao)."<br>"; 
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
                         $acoes .= "<ul>";
@@ -341,7 +341,8 @@ class LivroController extends Controller
                     $conteudo .= strtoupper($user_ticket->cargo)." ".strtoupper($user_ticket->name)."<br>";
                     $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo .= "".$ticket->titulo."<br>";
-                    $conteudo .= "".$ticket->descricao."<br>"; 
+                    $conteudo .= "".$ticket->descricao."<br>";
+                    $conteudo .= "".preg_replace('/<[^>]*>/', '', $ticket->descricao)."<br>"; 
 
                     $conteudo .= "<ul>";
                     /* -----------------PRONTUARIO/ACOES---------------------*/
