@@ -251,6 +251,7 @@ class LivroController extends Controller
                         $user_ticket_acoes = User::find($ticket->user_id);
                         $acoes .= strtoupper($user_ticket_acoes->cargo)." ".strtoupper($user_ticket_acoes->name)."<br>";
                         $acoes .= "".$ticket->titulo."<br> ";
+                        $acoes .= "".$ticket->descricao."<br>"; 
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
                         $acoes .= "<ul>";

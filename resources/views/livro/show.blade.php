@@ -138,7 +138,7 @@
                       <p><b>&nbsp; &nbsp; &nbsp; &nbsp; II - Técnicos Presentes:</b></p>
                       <ol type="A">
                           @forelse ($tecnicos as $tecnico)
-                              <li>{{$tecnico->cargo}} {{$tecnico->name}}</li>
+                              <li>{{strtoupper($tecnico->cargo)}} {{strtoupper($tecnico->name)}}</li>
                           @empty
                       
                           @endforelse
