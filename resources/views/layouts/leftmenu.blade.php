@@ -91,7 +91,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ url('logs/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
+              <li><a href="{{ url('logs/') }}"><i class="fa fa-circle-o"></i> Todos</a></li>
+              <li><a href="{{ url('logs/acesso') }}"><i class="fa fa-circle-o"></i> Acesso</a></li>
             </ul>
           </li>
           @endcan

@@ -127,5 +127,9 @@ Route::get('livros/{setor}/{id}/excluir', 'LivroController@destroy');
 Route::get('livros/{setor}/{id}/aprovar', 'LivroController@aprovar');
 
 //LOGS
-Route::resource('logs', 'LogController');
+//Route::resource('logs', 'LogController');
+Route::get('logs/acesso', 'LogController@acesso');
+Route::get('logs/', 'LogController@index');
+Route::get('logs/{id}', 'LogController@show');
 Route::post('logs/busca', 'LogController@busca');
+
