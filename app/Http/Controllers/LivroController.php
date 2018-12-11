@@ -135,16 +135,19 @@ class LivroController extends Controller
 
             //setor
             $setor = Setor::where('name', $setor)->first();
+            
+            $livros = $setor->livros()
+                                ->where(function($query) use ($buscaInput) {
+                                    $query->where('inicio', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('fim', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('autenticacao', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%')
+                                })
+                                ->paginate(40);
 
             $users = $setor->users()->get();
-
-            $livros = $setor->livros()->where('inicio', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('fim', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('autenticacao', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('acoes', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);
 
             $week = $this->weekBr();
 
