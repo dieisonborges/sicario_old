@@ -11,7 +11,7 @@
               <div class="callout callout-info">
                 <h5>Usuário: <b>{{$ticket->users->name}}</b></h5>
                 <h5>Número de Protocolo: <b>{{$ticket->protocolo}}</b></h5>
-                <h5>Aberto em: <b>{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</b></h5>
+                <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
               </div>              
               
             </div>

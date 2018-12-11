@@ -11,8 +11,8 @@
               <div class="callout callout-info">
                 <h5>Responsável: {{$livro->users->cargo}} <b>{{$livro->users->name}}</b></h5>
                 <h5>Número de Protocolo: <b>{{$livro->protocolo}}</b></h5>                
-                <h5>Início do Serviço: <b>{{date('d/m/Y h:i:s', strtotime($livro->inicio))}}</b></h5>
-                <h5>Fim do Serviço: <b>{{date('d/m/Y h:i:s', strtotime($livro->fim))}}</b></h5>
+                <h5>Início do Serviço: <b>{{date('d/m/Y H:i:s', strtotime($livro->inicio))}}</b></h5>
+                <h5>Fim do Serviço: <b>{{date('d/m/Y H:i:s', strtotime($livro->fim))}}</b></h5>
                 <h5>Autenticação: <b>{{$livro->autenticacao}}</b></h5>
               </div>
         </div>	

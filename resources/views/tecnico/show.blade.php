@@ -11,7 +11,7 @@
               <div class="callout callout-info">
                 <h5>Usuário: <b>{{$ticket->users->name}}</b></h5>
                 <h5>Número de Protocolo: <b>{{$ticket->protocolo}}</b></h5>
-                <h5>Aberto em: <b>{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</b></h5>
+                <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
                 <h5>Dias abertos: <b>{{ number_format($data_aberto, 0) }}</b></h5>
               </div>
         </div>	
@@ -120,7 +120,7 @@
               <i class="fa fa-ticket bg-blue"></i>
 
               <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> {{date('h:i:s', strtotime($ticket->created_at))}}</span>
+                <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($ticket->created_at))}}</span>
 
                 <h3 class="timeline-header"><a href="#">{{$ticket->users->name}}</a> {{$ticket->titulo}}</h3>
 
@@ -147,7 +147,7 @@
                   <i class="fa fa-comments  bg-gray"></i>
 
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> {{date('h:i:s', strtotime($prontuario->created_at))}}</span>
+                    <span class="time"><i class="fa fa-clock-o"></i> {{date('H:i:s', strtotime($prontuario->created_at))}}</span>
 
                     <h3 class="timeline-header"><a href="#">{{$prontuario->users->name}}</a></h3>
 

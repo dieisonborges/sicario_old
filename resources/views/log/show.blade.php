@@ -14,10 +14,10 @@
 					<span class="form-control"> {{$log->id}}</span>
 
 					<label><strong>Created At: </strong> </label>
-					<span class="form-control">{{$log->created_at}}</span>
+					<span class="form-control"> {{date('d/m/Y H:i:s', strtotime($log->created_at))}}</span>
 
 					<label><strong>Updated At: </strong></label>				
-					<span class="form-control"> {{$log->updated_at}}</span>
+					<span class="form-control"> {{date('d/m/Y H:i:s', strtotime($log->updated_at))}}</span>
 
 					<label><strong>IP: </strong></label>
 					<span class="form-control">{{$log->ip}}</span>

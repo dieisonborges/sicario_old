@@ -66,7 +66,7 @@
                     </td>
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->users->name}}</a></td>
                     <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->titulo}}</a></td>
-                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{date('d/m/Y h:i:s', strtotime($ticket->created_at))}}</a></td>
+                    <td><a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</a></td>
                     <td>
                         <a href="{{URL::to('tickets')}}/{{$ticket->id}}">{{$ticket->equipamentos['nome']}}</a></td>
                     <td>
