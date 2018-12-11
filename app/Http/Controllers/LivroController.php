@@ -249,7 +249,7 @@ class LivroController extends Controller
                         $acoes .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> <br>";
                         $acoes .= "<small>".$setor->name."</small> <br>";
                         $user_ticket_acoes = User::find($ticket->user_id);
-                        $acoes .= $user_ticket_acoes->cargo." ".$user_ticket_acoes->name."<br>";
+                        $acoes .= strtoupper($user_ticket_acoes->cargo)." ".strtoupper($user_ticket_acoes->name)."<br>";
                         $acoes .= "".$ticket->titulo."<br> ";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
@@ -259,8 +259,7 @@ class LivroController extends Controller
                             $acoes .= "<li>";
                             $user_prontuario = User::find($prontuario->user_id);
                             $acoes .= "<small><b>".$prontuario->created_at."</b></small> ";
-                            $acoes .= $user_prontuario->cargo." ".$user_prontuario->name."<br>";
-                            
+                            $acoes .= strtoupper($user_prontuario->cargo)." ".strtoupper($user_prontuario->name)."<br>";                            
                             $acoes .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
                             $acoes .= "</li>";
                         }
@@ -338,7 +337,7 @@ class LivroController extends Controller
                     $conteudo .= "<li>";
                     $conteudo .= " Ticket: <b>".$ticket->protocolo."</b><br>";
                     $user_ticket = User::find($ticket->user_id);
-                    $conteudo .= $user_ticket->cargo." ".$user_ticket->name."<br>";
+                    $conteudo .= strtoupper($user_ticket->cargo)." ".strtoupper($user_ticket->name)."<br>";
                     $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo .= "".$ticket->titulo."<br>";
                     $conteudo .= "".$ticket->descricao."<br>"; 
@@ -351,7 +350,7 @@ class LivroController extends Controller
                         $user_prontuario = User::find($prontuario->user_id);
                         $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> ";
                         $conteudo .= "<small>".$setor->name."</small> ";
-                        $conteudo .= $user_prontuario->cargo." ".$user_prontuario->name."<br> ";
+                        $conteudo .= strtoupper($user_prontuario->cargo)." ".strtoupper($user_prontuario->name)."<br> ";
                         
                         $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br> ";
                         $conteudo .= "</li>";
