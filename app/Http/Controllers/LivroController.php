@@ -248,6 +248,8 @@ class LivroController extends Controller
                         $acoes .= " Ticket: <b>".$ticket->protocolo."</b> ";
                         $acoes .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> <br>";
                         $acoes .= "<small>".$setor->name."</small> <br>";
+                        $user_ticket_acoes = User::find($ticket->user_id);
+                        $acoes .= $user_ticket_acoes->cargo." ".$user_ticket_acoes->name."<br>";
                         $acoes .= "".$ticket->titulo."<br> ";
                         $prontuarios = $ticket->prontuarioTicketsShow()->get();
                         //lista os prontuarios dos tickets
