@@ -144,7 +144,9 @@ class TecnicoController extends Controller
 
             $setor = $temp_setor;
 
-            $tickets = $setor->tickets()->paginate(40);
+            $tickets = $setor->tickets()
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tecnico.index");
@@ -180,6 +182,7 @@ class TecnicoController extends Controller
                                     ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
                                     ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%');
                                 })
+                                ->orderBy('id', 'DESC')
                                 ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
@@ -209,6 +212,7 @@ class TecnicoController extends Controller
 
             $tickets = $setor->tickets()                                
                                 ->where('status', $status)
+                                ->orderBy('id', 'DESC')
                                 ->paginate(40);
             
             //LOG ----------------------------------------------------------------------------------------
@@ -247,6 +251,7 @@ class TecnicoController extends Controller
                                     ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%');
                                 })
                                 ->where('status', $status)
+                                ->orderBy('id', 'DESC')
                                 ->paginate(40);
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tecnico.status=".$status."busca=".$buscaInput);

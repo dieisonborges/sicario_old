@@ -50,7 +50,8 @@ class TicketController extends Controller
         if(!(Gate::denies('read_ticket'))){
 
 
-            $tickets = Ticket::paginate(40);
+            $tickets = Ticket::orderBy('id', 'DESC')
+                                ->paginate(40);;
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("ticket.index");
@@ -124,7 +125,8 @@ class TicketController extends Controller
             $tickets = Ticket::where('titulo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);  
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40); 
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("ticket.index.busca=".$buscaInput);
@@ -530,7 +532,9 @@ class TicketController extends Controller
         if(!(Gate::denies('read_ticket'))){
 
 
-            $tickets = Ticket::where('status', $status)->paginate(40);
+            $tickets = Ticket::where('status', $status)
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);;
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("ticket.status=".$status);
