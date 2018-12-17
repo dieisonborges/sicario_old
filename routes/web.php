@@ -69,6 +69,8 @@ Route::post('tickets/storeAcao', 'TicketController@storeAcao');
 Route::get('tickets/{id}/encerrar', 'TicketController@encerrar');
 Route::post('tickets/storeEncerrar', 'TicketController@storeEncerrar');
 Route::get('tickets/{status}/status', 'TicketController@status');
+//Route::get('tickets/{id}/reabrir', 'TicketController@reabrir');
+//Route::post('tickets/storeReabrir', 'TicketController@storeReabrir');
 
 //Setor Ticket
 Route::get('tickets/{id}/setors', 'TicketController@setors');
@@ -104,8 +106,8 @@ Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status
 Route::post('tecnicos/storeAcao', 'TecnicoController@storeAcao');
 Route::get('tecnicos/{setor}/{id}/encerrar', 'TecnicoController@encerrar');
 Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');
-//Route::get('tecnicos/{status}/status', 'TecnicoController@status');
-//Route::get('tecnicos/{id}/acao', 'TecnicoController@acao');
+Route::get('tecnicos/{setor}/{id}/reabrir', 'TecnicoController@reabrir');
+Route::post('tecnicos/storeReabrir', 'TecnicoController@storeReabrir');
 
 //Setor Tecnico
 Route::get('tecnicos/{setor}/{id}/setors', 'TecnicoController@setors');

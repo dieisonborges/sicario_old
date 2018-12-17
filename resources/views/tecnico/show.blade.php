@@ -153,10 +153,7 @@
 
                     <div class="timeline-body">
                      {!!html_entity_decode($prontuario->descricao)!!}
-                    </div>
-                        <div class="timeline-footer">
-                      <span class="btn btn-primary btn-xs">Ação</span>
-                    </div>                   
+                                      
                   </div>
                 </li>
                 <!-- END timeline item -->
@@ -214,16 +211,18 @@
     <section class="content">
 
     @if (($ticket->status)==1)
+
+      <a  class="btn btn-warning btn-md" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
     
       <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
       <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
 
     @else
-        
-    @endif
 
-    <a  class="btn btn-warning btn-md" style="float: right; margin-left: 5px; margin-right: 5px;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
+    <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/reabrir" class="btn btn-success btn-md"><i class="fa fa-arrow-up"></i> Reabrir Ticket</a>
+        
+    @endif    
 
     <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
     

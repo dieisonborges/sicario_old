@@ -569,6 +569,8 @@ class TecnicoController extends Controller
 
             $descricao = $request->input('descricao');
 
+            $descricao .= '<br><span class="btn btn-primary btn-xs">Ação</span>';
+
             $ticket = Ticket::find($ticket_id);
 
             /* ------------------------------ Security --------------------------------*/
@@ -586,8 +588,8 @@ class TecnicoController extends Controller
                 'ticket_id' => $ticket_id, 
                 'user_id' => $user_id, 
                 'descricao' => $descricao,
-                'created_at' => date ("Y-m-d h:i:s"),
-                'updated_at' => date ("Y-m-d h:i:s")
+                'created_at' => date ("Y-m-d H:i:s"),
+                'updated_at' => date ("Y-m-d H:i:s")
             ]]); 
 
             //LOG ----------------------------------------------------------------------------------------
@@ -653,6 +655,8 @@ class TecnicoController extends Controller
 
             $descricao = $request->input('descricao');
 
+            $descricao .= '<br><br><span class="btn btn-danger btn-xs">Fechado em: '.date("d/m/Y H:i:s").'</span>';
+
             $ticket = Ticket::find($ticket_id);
 
             /* ------------------------------ Security --------------------------------*/
@@ -668,8 +672,8 @@ class TecnicoController extends Controller
                 'ticket_id' => $ticket_id, 
                 'user_id' => $user_id, 
                 'descricao' => $descricao,
-                'created_at' => date ("Y-m-d h:i:s"),
-                'updated_at' => date ("Y-m-d h:i:s")
+                'created_at' => date ("Y-m-d H:i:s"),
+                'updated_at' => date ("Y-m-d H:i:s")
             ]]); 
 
             /* ----------------- Encerra -------------*/
@@ -684,6 +688,96 @@ class TecnicoController extends Controller
 
             if((!$status)and($ticket->save())){
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Encerrado com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    public function reabrir($setor, $id)
+    {
+        //
+        if(!(Gate::denies('update_'.$setor))){           
+            $ticket = Ticket::find($id); 
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.encerrar:".$id);
+            //--------------------------------------------------------------------------------------------
+
+            return view('tecnico.reabrir', compact('ticket', 'setor'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+    public function storeReabrir(Request $request)
+    {
+
+        $setor = $request->input('setor');
+
+        //
+        if(!(Gate::denies('update_'.$setor))){  
+            //Validação
+            $this->validate($request,[
+                    'descricao' => 'required|string|min:15',
+                    
+            ]);
+                                 
+
+            $ticket_id = $request->input('ticket_id');
+
+            //usuário
+            $user_id = auth()->user()->id;
+
+            $descricao = $request->input('descricao');
+
+            $descricao .= '<br><br><span class="btn btn-success btn-xs">Reaberto em: '.date("d/m/Y H:i:s").'</span>';
+
+            $ticket = Ticket::find($ticket_id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $ticket->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            $status = $ticket->prontuarioTickets()->attach([[
+                'ticket_id' => $ticket_id, 
+                'user_id' => $user_id, 
+                'descricao' => $descricao,
+                'created_at' => date ("Y-m-d H:i:s"),
+                'updated_at' => date ("Y-m-d H:i:s")
+            ]]); 
+
+            /* ----------------- Reabre -------------*/
+            
+            $ticket->status = 1;
+
+            /* ---------------------- Encerra FIM ----------*/
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.storeReabrir:".$ticket_id);
+            //--------------------------------------------------------------------------------------------
+
+            if((!$status)and($ticket->save())){
+                return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/show')->with('success', ' Ticket Reaberto com sucesso!');
             }else{
                 return redirect('tecnicos/'.$setor.'/'.$ticket_id.'/acao')->with('danger', 'Houve um problema, tente novamente.');
             }

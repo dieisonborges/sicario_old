@@ -151,10 +151,7 @@
 
                     <div class="timeline-body">
                      {!!html_entity_decode($prontuario->descricao)!!}
-                    </div>
-                        <div class="timeline-footer">
-                      <span class="btn btn-primary btn-xs">Ação</span>
-                    </div>                   
+                                       
                   </div>
                 </li>
                 <!-- END timeline item -->

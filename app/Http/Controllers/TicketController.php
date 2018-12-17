@@ -438,8 +438,8 @@ class TicketController extends Controller
                 'ticket_id' => $ticket_id, 
                 'user_id' => $user_id, 
                 'descricao' => $descricao,
-                'created_at' => date ("Y-m-d h:i:s"),
-                'updated_at' => date ("Y-m-d h:i:s")
+                'created_at' => date ("Y-m-d H:i:s"),
+                'updated_at' => date ("Y-m-d H:i:s")
             ]]); 
 
             //LOG ----------------------------------------------------------------------------------------
@@ -500,8 +500,8 @@ class TicketController extends Controller
                 'ticket_id' => $ticket_id, 
                 'user_id' => $user_id, 
                 'descricao' => $descricao,
-                'created_at' => date ("Y-m-d h:i:s"),
-                'updated_at' => date ("Y-m-d h:i:s")
+                'created_at' => date ("Y-m-d H:i:s"),
+                'updated_at' => date ("Y-m-d H:i:s")
             ]]); 
 
             /* ----------------- Encerra -------------*/
