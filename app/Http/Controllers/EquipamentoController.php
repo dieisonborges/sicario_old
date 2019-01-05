@@ -171,11 +171,13 @@ class EquipamentoController extends Controller
         if(!(Gate::denies('update_equipamento'))){            
             $equipamento = Equipamento::find($id);
 
+            $sistemas = Sistema::all();
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("equipamento.edit=".$id);
             //--------------------------------------------------------------------------------------------
 
-            return view('equipamento.edit', compact('equipamento','id'));
+            return view('equipamento.edit', compact('equipamento','id', 'sistemas'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -201,8 +203,8 @@ class EquipamentoController extends Controller
                     /*'part_number' => 'unique:equipamentos',*/
                     'serial_number' => '',
                     'descricao' => 'required|min:15',
-            ]);
-                    
+                    //'sistema_id' => 'required',
+            ]);                   
         
             
             $equipamento->nome = $request->get('nome');

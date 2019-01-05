@@ -26,10 +26,17 @@
 			 	<div class="form-group mb-12">
 				    <label for="descricao">Descrição</label>
 				    <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite a Descrição.." required="required">{{$equipamento->descricao}}</textarea>
-			 	</div>
+			 	</div>			 	
+
 			 	<div class="form-group mb-12">
-				    <label for="sistema">Sistema</label>
-				    <input type="text" class="form-control" id="sistema" name="sistema" value="{{$equipamento->sistema}}" placeholder="Digite o Sistema...">
+				    <label for="sistema_id">Sistema</label>
+	                <select class="form-control select2" name="sistema_id">
+	                	<option value="{{$equipamento->sistema_id}}">{{$equipamento->sistema_id}}</option>
+						@forelse ($sistemas as $sistema)
+							<option value="{{$sistema->id}}">{{$sistema->nome}} - {{str_limit($sistema->descricao,60)}} </option>
+						@empty                    
+						@endforelse 
+	                </select>
 			 	</div>
 			 	
 
