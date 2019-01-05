@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Equipamento;
+use App\Sistema;
 use Illuminate\Http\Request;
 use Gate;
 
@@ -252,4 +253,105 @@ class EquipamentoController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
     }
+
+
+    /* ------------------------------ DASHBOARD --------------------------*/
+    public function dashboard()
+    {
+        
+        //
+        if(!(Gate::denies('read_equipamento'))){
+
+            //carrega todos os sistemas Cadastrados
+            $sistemas = Sistema::all(); 
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.dashboard");
+            //--------------------------------------------------------------------------------------------
+
+
+
+            return view('equipamento.dashboard', compact('sistemas'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+    /* ----------------------------- END DASHBOARD ---------------------*/
+
+    /* ------------------------------ DASHBOARD SISTEMA --------------------------*/
+    public function dashboardSistema($id)
+    {
+        
+        //
+        if(!(Gate::denies('read_equipamento'))){
+
+            /* --------------------- Verifica setor do usuário -------------------*/
+            $setores = Setor::all();
+
+            setorUser
+
+            $flagClient=0;
+
+            foreach ($setores as $setor) {
+                
+                if(!(Gate::denies('read_'.$setor->name))){
+                    return redirect('tecnicos/'.$setor->name.'/dashboard');
+                }
+
+            }
+            /* ----------------------- END Verifica setor do usuário --------------------- */
+
+            //carrega todos os sistemas Cadastrados
+            $sistema = Sistema::find($id); 
+
+            $equipamentos = $sistema->equipamentos()->get();
+
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.dashboardsistema");
+            //--------------------------------------------------------------------------------------------
+
+
+
+            return view('equipamento.dashboardsistema', compact('sistema', 'equipamentos'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+    /* ----------------------------- END DASHBOARD SISTEMA ---------------------*/
+
+
+    public function status($id, $status, $sistema)
+    {
+        //
+        if(!(Gate::denies('read_equipamento'))){
+
+            $equipamento = Equipamento::find($id);            
+            
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("equipamento.index.status=".$status);
+            //--------------------------------------------------------------------------------------------
+
+            $equipamento->status = $status;            
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("ticket.update.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
+            if($equipamento->save()){
+                return redirect('equipamentos/dashboard/'.$sistema)->with('success', 'Status atualizado com sucesso!');
+            }else{
+                return redirect('equipamentos/dashboard/'.$sistema)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+
+
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
 }

@@ -346,7 +346,6 @@ class LivroController extends Controller
                     $conteudo .= strtoupper($user_ticket->cargo)." ".strtoupper($user_ticket->name)."<br>";
                     $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
                     $conteudo .= "".$ticket->titulo."<br>";
-                    $conteudo .= "".$ticket->descricao."<br>";
                     $conteudo .= "".preg_replace('/<[^>]*>/', '', $ticket->descricao)."<br>"; 
 
                     $conteudo .= "<ul>";

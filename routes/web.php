@@ -57,8 +57,11 @@ Route::post('user/setorDestroy', 'UserController@setorDestroy');
 //TEST
 //Route::get('user/roleUpdateTest', 'UserController@roleUpdateTest');
 
-Route::resource('equipamentos', 'EquipamentoController');
 Route::post('equipamentos/busca', 'EquipamentoController@busca');
+Route::get('equipamentos/dashboard', 'EquipamentoController@dashboard');
+Route::get('equipamentos/dashboard/{id}', 'EquipamentoController@dashboardSistema');
+Route::get('equipamentos/status/{id}/{status}/{sistema}', 'EquipamentoController@status');
+Route::resource('equipamentos', 'EquipamentoController');
 
 
 // TicketController

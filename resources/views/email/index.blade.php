@@ -23,12 +23,16 @@
 
 			<div class="form-group mb-3">
 			    <label for="nome">Nome</label>
-			    <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o seu Nome..." required>
+			    
+			    <input type="hidden" id="nome" name="nome" value="{{ Auth::user()->cargo }} {{ Auth::user()->name }}">
+			    <span class="form-control">{{ Auth::user()->cargo }} {{ Auth::user()->name }}</span>
 		 	</div>
 
 		 	<div class="form-group mb-3">
-			    <label for="email">E-mail</label>
-			    <input type="email" class="form-control" id="email" name="email" placeholder="Digite o seu E-mail..." required>
+			    <label for="email">E-mail</label>			    
+
+			    <input type="hidden" id="email" name="email" value="{{ Auth::user()->email }}">
+			    <span class="form-control">{{ Auth::user()->email }}</span>
 		 	</div>
 
 			<div class="form-group mb-3">

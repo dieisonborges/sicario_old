@@ -111,6 +111,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
+              <li><a href="{{ url('equipamentos/dashboard') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
               <li><a href="{{ url('equipamentos/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
               <li><a href="{{ url('equipamentos/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
             </ul>

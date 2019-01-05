@@ -34,13 +34,14 @@
 
 			 	<div class="form-group col-md-6">
 				    <label for="equipamento_id">Equipamento</label>
-				    <select class="form-control" name="equipamento_id">
-				    	@forelse ($equipamentos as $equipamento)
-				    		<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{$equipamento->descricao}} </option>
-					    @empty                    
-	                	@endforelse 			
-					</select>
-			 	</div>
+	                <select class="form-control select2" name="equipamento_id">
+	                	<option value="0">Nenhum - Nenhum equipamento.</option>
+						@forelse ($equipamentos as $equipamento)
+							<option value="{{$equipamento->id}}">{{$equipamento->nome}} - {{str_limit($equipamento->descricao,30)}} </option>
+						@empty                    
+						@endforelse 
+	                </select>
+			 	</div>			 	
 
 			 	<div class="form-group col-md-12">
 				    <label for="titulo">Título (Descrição Resumida)</label>
