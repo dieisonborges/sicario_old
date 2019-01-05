@@ -60,14 +60,14 @@
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{url('tiop_supervisao/tickets/1/status'.$equipamento->id)}}">
+                    <a href="{{url($setor->name.'/tickets/1/status'.$equipamento->id)}}">
                       Tickets Abertos
                       <span class="fa fa-ticket"></span>
                       <span class="pull-right badge bg-red">--</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{url('tiop_supervisao/tickets/0/status'.$equipamento->id)}}">
+                <li>tecnicos/tiop_hardware/tickets/1/status
+                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status'.$equipamento->id)}}">
                       Tickets Fechados
                       <span class="fa fa-ticket"></span>
                       <span class="pull-right badge bg-green">--</span>

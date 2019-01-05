@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Equipamento;
 use App\Sistema;
+use App\User;
 use Illuminate\Http\Request;
 use Gate;
 
@@ -287,35 +288,30 @@ class EquipamentoController extends Controller
         //
         if(!(Gate::denies('read_equipamento'))){
 
-            /* --------------------- Verifica setor do usuário -------------------*/
-            $setores = Setor::all();
-
-            setorUser
-
-            $flagClient=0;
-
-            foreach ($setores as $setor) {
-                
-                if(!(Gate::denies('read_'.$setor->name))){
-                    return redirect('tecnicos/'.$setor->name.'/dashboard');
-                }
-
-            }
-            /* ----------------------- END Verifica setor do usuário --------------------- */
-
             //carrega todos os sistemas Cadastrados
             $sistema = Sistema::find($id); 
 
             $equipamentos = $sistema->equipamentos()->get();
 
-
             //LOG ----------------------------------------------------------------------------------------
             $this->log("equipamento.dashboardsistema");
             //--------------------------------------------------------------------------------------------
 
+            /* --------------------- Verifica setor do usuário -------------------*/
+
+            $usuario = User::find(auth()->user()->id);
+
+            $setor = $usuario->setors()->first();
+
+            if(!isset($setor)){
+                return redirect('equipamentos/dashboard/')->with('danger', 'Vocẽ não está alocado em nenhum setor.');
+            }
+            
+            /* ----------------------- END Verifica setor do usuário --------------------- */
 
 
-            return view('equipamento.dashboardsistema', compact('sistema', 'equipamentos'));
+
+            return view('equipamento.dashboardsistema', compact('sistema', 'equipamentos', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

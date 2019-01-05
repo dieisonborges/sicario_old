@@ -24,7 +24,8 @@ return [
     |
     */
 
-    'version' => env('APP_VERSION', 'version'),
+    //'version' => env('APP_VERSION', 'version'),
+    'version' => ('0.3 Beta'),    
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ return [
     |
     */
 
-    'compilation' => env('APP_COMPILATION', 'compilation'),
+    'compilation' => ('05 de Jan de 2019'),
     
     /*
     |--------------------------------------------------------------------------
