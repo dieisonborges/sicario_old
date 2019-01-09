@@ -29,7 +29,7 @@
       <div class="row">
         
 
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-blue">
             <div class="inner">
@@ -47,7 +47,7 @@
         </div>
         <!-- ./col -->  
 
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-purple">
             <div class="inner">
@@ -61,6 +61,24 @@
               </div>
             </a>
             <a href="{{url('livros/'.$setor->name.'/create')}}" class="small-box-footer">Novo Livro <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
+        <div class="col-lg-4 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>Equipamentos</h3>
+
+              <p>Verificar situação dos equipamentos</p>
+            </div>
+            <a href="{{url('equipamentos/dashboard')}}">
+              <div class="icon">
+                <i class="fa fa-wrench"></i>
+              </div>
+            </a>
+            <a href="{{url('equipamentos/dashboard')}}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

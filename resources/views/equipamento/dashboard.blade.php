@@ -51,7 +51,7 @@
                       <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
-                          <a href="{{url('tecnicos/'.'/tickets/2/1')}}" class="text-white"> Mais Informações </a>
+                          <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamentos_inop->id.'/1')}}" style="color: white;"> Mais Informações </a>
                     </span>
                   </div>
                   <!-- /.info-box-content -->

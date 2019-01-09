@@ -303,6 +303,19 @@ class EquipamentoController extends Controller
 
             }
 
+            /* --------------------- Verifica setor do usuário -------------------*/
+
+            $usuario = User::find(auth()->user()->id);
+
+            $setor = $usuario->setors()->first();
+
+
+            if(!isset($setor)){
+                return redirect('equipamentos/dashboard/')->with('danger', 'Vocẽ não está alocado em nenhum setor.');
+            }
+            
+            /* ----------------------- END Verifica setor do usuário --------------------- */
+
             
             
 
@@ -317,7 +330,7 @@ class EquipamentoController extends Controller
 
 
 
-            return view('equipamento.dashboard', compact('sistemas', 'sistema_ticket_qtd_abertos', 'sistema_ticket_qtd_fechados', 'equipamentos_inops'));
+            return view('equipamento.dashboard', compact('sistemas', 'sistema_ticket_qtd_abertos', 'sistema_ticket_qtd_fechados', 'equipamentos_inops', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
