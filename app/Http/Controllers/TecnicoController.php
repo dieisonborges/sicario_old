@@ -266,6 +266,42 @@ class TecnicoController extends Controller
         }
     }
 
+    public function buscaStatusId($setor, $equipamento_id, $status)
+    {
+        
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $tickets = $setor->tickets()
+                                ->where('equipamento_id', $equipamento_id)
+                                ->where('status', $status)
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+
+            $equipamento = Equipamento::find($equipamento_id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.status.id=".$status."equipamento_id=".$equipamento_id);
+            //--------------------------------------------------------------------------------------------
+
+            return view('tecnico.index', array('tickets' => $tickets, 'buscar' => $equipamento->nome, 'setor' => $setor ));
+        }
+
+        
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
     public function show($setor, $id)
     {    
         //

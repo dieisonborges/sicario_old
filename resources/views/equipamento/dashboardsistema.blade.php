@@ -30,7 +30,7 @@
 
       <div class="row">
 
-        @foreach($equipamentos as $equipamento)
+        @foreach($equipamentos as $equipamento)        
 
         <div class="col-md-4">
           <!-- Widget: user widget style 1 -->
@@ -51,7 +51,7 @@
               <h3 class="widget-user-username"><b>{{$equipamento->nome}}</b></h3>
               <h5 class="widget-user-desc">{{$equipamento->descricao}}</h3>
               @if($equipamento->status==0)
-                <h5 class="widget-user-desc">Status: <b>INOPERÂNCIA</b></h5>
+                <h5 class="widget-user-desc">Status: <b>INOPERÂNCIA(s)</b></h5>
               @else
                 <h5 class="widget-user-desc">Status: Operacional</h5>
               @endif           
@@ -60,17 +60,17 @@
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{url($setor->name.'/tickets/1/status'.$equipamento->id)}}">
+                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/1')}}">
                       Tickets Abertos
                       <span class="fa fa-ticket"></span>
-                      <span class="pull-right badge bg-red">--</span>
+                      <span class="pull-right badge bg-red">{{$equipamento->tickets()->where('tickets.status', '1')->count()}}</span>
                     </a>
                 </li>
-                <li>tecnicos/tiop_hardware/tickets/1/status
-                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status'.$equipamento->id)}}">
+                <li>
+                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/0')}}">
                       Tickets Fechados
                       <span class="fa fa-ticket"></span>
-                      <span class="pull-right badge bg-green">--</span>
+                      <span class="pull-right badge bg-green">{{$equipamento->tickets()->where('tickets.status', '0')->count()}}</span>
                     </a>
                 </li>
                 <!--
@@ -95,7 +95,29 @@
 
                 @endif
                 <br><br>
-              </div>              
+              </div> 
+
+              <!-- Tickets abertos e status Operacional -->
+              @if(($equipamento->tickets()->where('tickets.status', '1')->count()>0)&&($equipamento->status==1))
+              <div class="box-footer"> 
+                <div class="callout callout-warning">
+                  <h4>Inconsistência Detectada!</h4>
+                  <p>Existem tickets abertos para o equipamento {{$equipamento->nome}}, porém o seu status encontra-se <span class="text-green" >Operacional</span>.</p>
+                </div>
+              </div>
+              @endif
+
+              <!-- Tickets abertos e status Operacional -->
+              @if(($equipamento->tickets()->where('tickets.status', '1')->count()==0)&&($equipamento->status==0))
+              <div class="box-footer"> 
+                <div class="callout callout-warning">
+                  <h4>Inconsistência Detectada!</h4>
+                  <p>Não existem tickets abertos para o equipamento {{$equipamento->nome}}, porém o seu status encontra-se com <span class="text-red" >Inoperâncias</span>.</p>
+                </div>
+              </div>
+              @endif
+
+
             </div>
           </div>
           <!-- /.widget-user -->

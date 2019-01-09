@@ -98,7 +98,7 @@ Route::get('clients/{id}/acao', 'ClientController@acao');
 Route::get('tecnicos/{setor}/{id}/edit', 'TecnicoController@edit');
 Route::get('tecnicos/{setor}/{id}/show', 'TecnicoController@show');
 Route::get('tecnicos/{setor}/{id}/acao', 'TecnicoController@acao');
-
+Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}', 'TecnicoController@buscaStatusId');
 Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
 
 //Route::get('tecnicos/update/', 'TecnicoController@update');

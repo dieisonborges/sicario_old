@@ -261,12 +261,54 @@ class EquipamentoController extends Controller
     /* ------------------------------ DASHBOARD --------------------------*/
     public function dashboard()
     {
-        
         //
         if(!(Gate::denies('read_equipamento'))){
 
             //carrega todos os sistemas Cadastrados
             $sistemas = Sistema::all(); 
+
+            /* --------------------Tickets por Sistema --------------------- */
+
+            foreach ($sistemas as $sistema) {
+
+                
+
+                $equipamentos = Equipamento::where('sistema_id', $sistema->id)->get();
+
+                //Todos os TICKETs ABERTOS
+                $sistema_ticket_qtd_abertos[$sistema->id]=0;
+                foreach ($equipamentos as $equipamento) {
+
+                        $equipamento_find = Equipamento::find($equipamento->id);
+                    
+                        $sistema_ticket_qtd_abertos[$sistema->id]+= $equipamento_find
+                                                                        ->tickets()
+                                                                        ->where('status', '1')
+                                                                        ->count();
+
+                }
+
+                //Todos os TICKETs FECHADOS
+                $sistema_ticket_qtd_fechados[$sistema->id]=0;
+                foreach ($equipamentos as $equipamento) {
+
+                        $equipamento_find = Equipamento::find($equipamento->id);
+                    
+                        $sistema_ticket_qtd_fechados[$sistema->id]+= $equipamento_find
+                                                                        ->tickets()
+                                                                        ->where('status', '0')
+                                                                        ->count();
+
+                }
+
+            }
+
+            
+            
+
+            /* --------------------FIM Tickets por Sistema --------------------- */
+
+            $equipamentos_inops = Equipamento::where('status', 0)->get();
 
 
             //LOG ----------------------------------------------------------------------------------------
@@ -275,7 +317,7 @@ class EquipamentoController extends Controller
 
 
 
-            return view('equipamento.dashboard', compact('sistemas'));
+            return view('equipamento.dashboard', compact('sistemas', 'sistema_ticket_qtd_abertos', 'sistema_ticket_qtd_fechados', 'equipamentos_inops'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -294,7 +336,7 @@ class EquipamentoController extends Controller
             $sistema = Sistema::find($id); 
 
             $equipamentos = $sistema->equipamentos()->get();
-
+            
             //LOG ----------------------------------------------------------------------------------------
             $this->log("equipamento.dashboardsistema");
             //--------------------------------------------------------------------------------------------
@@ -305,6 +347,7 @@ class EquipamentoController extends Controller
 
             $setor = $usuario->setors()->first();
 
+
             if(!isset($setor)){
                 return redirect('equipamentos/dashboard/')->with('danger', 'Vocẽ não está alocado em nenhum setor.');
             }
@@ -313,7 +356,7 @@ class EquipamentoController extends Controller
 
 
 
-            return view('equipamento.dashboardsistema', compact('sistema', 'equipamentos', 'setor'));
+            return view('equipamento.dashboardsistema', compact('sistema', 'equipamentos', 'setor', 'tickets'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
