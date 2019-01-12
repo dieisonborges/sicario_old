@@ -92,7 +92,9 @@
                 @if($equipamento->status==0)
                     <a href="{{url('equipamentos/status/'.$equipamento->id.'/'.'1'.'/'.$sistema->id)}}" class="btn bg-aqua text-white"><span class="fa fa-check"></span> Restabelecer</a>
 
-                    <a href="{{url('clients/create')}}" class="btn bg-aqua text-white"><span class="fa fa-ticket"></span> Abrir Ticket</a>
+                    @if(($equipamento->tickets()->where('tickets.status', '1')->count()==0)&&($equipamento->status==0))
+                      <a href="{{url('clients/create')}}" class="btn bg-aqua text-white"><span class="fa fa-ticket"></span> Abrir Ticket</a>
+                    @endif
                 @else
                     <a href="{{url('equipamentos/status/'.$equipamento->id.'/'.'0'.'/'.$sistema->id)}}" class="btn bg-blue text-white">Abrir Inoperância</a>
 
