@@ -61,14 +61,14 @@
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/1')}}">
+                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/1/equipamento')}}">
                       Tickets Abertos
                       <span class="fa fa-ticket"></span>
                       <span class="pull-right badge bg-red">{{$equipamento->tickets()->where('tickets.status', '1')->count()}}</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/0')}}">
+                    <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamento->id.'/0/equipamento')}}">
                       Tickets Fechados
                       <span class="fa fa-ticket"></span>
                       <span class="pull-right badge bg-green">{{$equipamento->tickets()->where('tickets.status', '0')->count()}}</span>
