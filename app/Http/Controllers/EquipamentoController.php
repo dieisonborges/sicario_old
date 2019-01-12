@@ -267,6 +267,12 @@ class EquipamentoController extends Controller
             //carrega todos os sistemas Cadastrados
             $sistemas = Sistema::all(); 
 
+            //Sistema Nomes
+
+            foreach ($sistemas as $sistema_tmp) {
+                $sistema_nome[$sistema_tmp->id] =  $sistema_tmp->nome;
+            }
+
             /* --------------------Tickets por Sistema --------------------- */
 
             foreach ($sistemas as $sistema) {
@@ -321,7 +327,7 @@ class EquipamentoController extends Controller
 
             /* --------------------FIM Tickets por Sistema --------------------- */
 
-            $equipamentos_inops = Equipamento::where('status', 0)->get();
+            $equipamentos_inops = Equipamento::where('status', 0)->orderBy('sistema_id')->get();
 
 
             //LOG ----------------------------------------------------------------------------------------
@@ -330,7 +336,7 @@ class EquipamentoController extends Controller
 
 
 
-            return view('equipamento.dashboard', compact('sistemas', 'sistema_ticket_qtd_abertos', 'sistema_ticket_qtd_fechados', 'equipamentos_inops', 'setor'));
+            return view('equipamento.dashboard', compact('sistemas', 'sistema_ticket_qtd_abertos', 'sistema_ticket_qtd_fechados', 'equipamentos_inops', 'sistema_nome', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

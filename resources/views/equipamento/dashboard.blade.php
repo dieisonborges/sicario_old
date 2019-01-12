@@ -39,19 +39,24 @@
 
               @foreach($equipamentos_inops as $equipamentos_inop)
 
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="info-box bg-red">
-                  <span class="info-box-icon"><i class="ion ion-nuclear"></i></span>
+                  <span class="info-box-icon">                    
+                    <span style="font-size: 80%;">
+                      <i class="ion ion-nuclear"></i>                      
+                    </span>
+                  </span>
 
                   <div class="info-box-content">
-                    <span class="info-box-text">{{str_limit(($equipamentos_inop->descricao), 20)}}</span>
-                    <span class="info-box-number">{{str_limit(($equipamentos_inop->nome), 15)}}</span>
+                    <span class="info-box-text">{{$sistema_nome[$equipamentos_inop->sistema_id]}}</span>
+                    <span class="info-box-number">{{str_limit(($equipamentos_inop->nome), 10)}} | <small>{{str_limit(($equipamentos_inop->descricao), 30)}}</small></span>
 
                     <div class="progress">
                       <div class="progress-bar" style="width: 100%"></div>
                     </div>
                     <span class="progress-description">
-                          <a href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamentos_inop->id.'/1')}}" style="color: white;"> Mais Informações </a>
+                          <a class="btn btn-info btn-xs" href="{{url('tecnicos/'.$setor->name.'/tickets/'.$equipamentos_inop->id.'/1/equipamento')}}" style="color: white;"> <span class="fa fa-ticket"></span> Ver Tickets </a>
+                          <a class="btn btn-info btn-xs" href="{{url('equipamentos/'.$equipamentos_inop->id)}}" style="color: white;"> <span class="fa fa-wrench"></span> Ver Equipamento </a>
                     </span>
                   </div>
                   <!-- /.info-box-content -->

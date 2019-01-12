@@ -266,7 +266,7 @@ class TecnicoController extends Controller
         }
     }
 
-    public function buscaStatusId($setor, $equipamento_id, $status)
+    public function buscaStatusIdEquipamento($setor, $equipamento_id, $status)
     {
         
         //

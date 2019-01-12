@@ -41,9 +41,10 @@
             @else
             <div class="widget-user-header bg-green">
             @endif
-              <a href="{{url('equipamentos/1/edit')}}" class="btn btn-primary btn-sm text-right" style="float: right;">
-                  <span class="fa fa-edit"></span>
+              <a href="{{url('equipamentos/1')}}" class="btn btn-primary btn-sm text-right" style="float: right;">
+                  <span class="fa fa-eye"></span>
               </a>
+              
               <div class="widget-user-image">
                 <img class="img-circle" src="../../img/equipamentos/sagitario-128x128.jpg" alt="User Avatar">
               </div>

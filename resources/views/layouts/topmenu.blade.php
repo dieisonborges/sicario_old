@@ -18,8 +18,7 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
-
-
+              
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
                 <a href="{{ url('/home') }}" class="dropdown-toggle">
@@ -27,6 +26,16 @@
                 </a>
                 
               </li>
+
+              @can('read_equipamento')
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                <a href="{{ url('/equipamentos/dashboard') }}" class="dropdown-toggle">
+                  <i class="fa fa-wrench"></i>
+                </a>
+                
+              </li>
+              @endcan
 
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">

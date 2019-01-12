@@ -98,14 +98,14 @@ Route::get('clients/{id}/acao', 'ClientController@acao');
 Route::get('tecnicos/{setor}/{id}/edit', 'TecnicoController@edit');
 Route::get('tecnicos/{setor}/{id}/show', 'TecnicoController@show');
 Route::get('tecnicos/{setor}/{id}/acao', 'TecnicoController@acao');
-Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}', 'TecnicoController@buscaStatusId');
 Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
 
 //Route::get('tecnicos/update/', 'TecnicoController@update');
 
 Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
-Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
+Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}/equipamento', 'TecnicoController@buscaStatusIdEquipamento');
 Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status');
+Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');
 Route::post('tecnicos/storeAcao', 'TecnicoController@storeAcao');
 Route::get('tecnicos/{setor}/{id}/encerrar', 'TecnicoController@encerrar');
 Route::post('tecnicos/storeEncerrar', 'TecnicoController@storeEncerrar');
