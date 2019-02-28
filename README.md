@@ -1,5 +1,4 @@
-<p align="center"><img width="500" src="http://sicario.hospedagemdesites.ws/images/sicario-logo-preto-no-branco.jpg"></p>
-
+<p align="center"><img width="500" src="https://i.ibb.co/VjWzr3Y/logo-branco-preto.jpg" alt="logo-branco-preto" border="0" /></p>
 <p align="center">
 <a href="https://travis-ci.org/dieisonborges/sicario"><img src="https://travis-ci.org/dieisonborges/sicario.svg" alt="Build Status"></a>
 <a href="http://escolhaumalicenca.com.br/licencas/mit/"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
