@@ -177,10 +177,6 @@
           
           @foreach((session()->get('setors')) as $sess_setors)
 
-          {{$sess_setors}}
-          ----
-          {{'read_'.$sess_setors->name}}
-
             @can('read_'.$sess_setors->name)             
 
               <li class="header">{{$sess_setors->label}}</li>
