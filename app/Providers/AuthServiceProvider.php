@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\User;
 use App\Role;
 use App\Permission;
+use App\Setor; 
 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
@@ -58,7 +59,8 @@ class AuthServiceProvider extends ServiceProvider
 
         //Comente esse bloco no primeiro migrate
 
-        /* --------------------- Primeiro Migrate ----------------- */
+        /* --------------------- Comentar no Primeiro Migrate ----------------- */
+        /* --------------------- Carrega as permissões ------------------------ */
     
         $permissions = Permission::with('roles')->get();
 
@@ -85,7 +87,16 @@ class AuthServiceProvider extends ServiceProvider
 
         }
         
-        /*--------------------------------Primeiro Migrate----------------*/
+        /*------------------------- Comentar no Primeiro Migrate----------------*/
+
+        /* ------------- Carega setores para MENUS ---------------------*/
+
+        // Criar uma sessão
+        $setors = Setor::select('name', 'label')->get();
+        session(['setors' => $setors]);
+        /* ------------- Carega setores para MENUS ---------------------*/
+
+
 
     }
 }

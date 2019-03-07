@@ -103,6 +103,7 @@ Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
 //Route::get('tecnicos/update/', 'TecnicoController@update');
 
 Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
+Route::get('tecnicos/{setor}/buscaData', 'TecnicoController@buscaData');
 Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}/equipamento', 'TecnicoController@buscaStatusIdEquipamento');
 Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status');
 Route::get('tecnicos/{setor}/tickets', 'TecnicoController@index');

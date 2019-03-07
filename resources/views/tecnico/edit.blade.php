@@ -58,7 +58,7 @@
 
 			 	<div class="form-group col-md-4">
 				    <label for="equipamento_id">Equipamento</label>
-				    <select class="form-control" name="equipamento_id">
+				    <select class="form-control  select2" name="equipamento_id" style="width: 100%;">
 				    	@if($ticket->equipamento_id)
 				    		<option selected="selected" value="{{$ticket->equipamentos->id}}">{{$ticket->equipamentos->nome}} - {{$ticket->equipamentos->descricao}} </option>
 				    	@else
@@ -69,7 +69,7 @@
 					    @empty                    
 	                	@endforelse			
 					</select>
-			 	</div>
+			 	</div>		 	
 			 	
 
 		        <div class="form-group col-md-12">
@@ -94,7 +94,9 @@
 			 		<hr>
 			 	</div>
 
-			 	<input type="submit" form="form-edit" class="btn btn-primary" value="Atualizar">
+			 	<div class="form-group col-md-12">
+			 		<input type="submit" form="form-edit" class="btn btn-primary" value="Atualizar" style="float: right;">
+			 	</div>
 
 			</form>
 

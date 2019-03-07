@@ -1011,5 +1011,42 @@ class TecnicoController extends Controller
 
     }
 
+    public function buscaData (Request $request, $setor){
+        if(!(Gate::denies('read_'.$setor))){
+
+            $buscaInput = $request->input('busca');
+
+             //usuário
+            //$user_id = auth()->user()->id;
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+
+            $tickets = $setor->tickets()
+                                ->where(function($query) use ($buscaInput) {
+                                    $query->where('titulo','LIKE' , '%'.$buscaInput.'%')
+                                    ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%');
+                                })
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.busca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
+            return view('tecnico.data', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
 
 }

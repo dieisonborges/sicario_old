@@ -61,30 +61,62 @@
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    $('#datemask2').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     //Money Euro
     $('[data-mask]').inputmask()
 
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker
-    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    $('#reservationtime').daterangepicker({ 
+      timePicker: true, 
+      timePicker24Hour: true, 
+      timePickerIncrement: 1, 
+      locale: {
+        'format': 'DD/MM/YYYY HH:mm',
+        'applyLabel': 'Confirmar',
+        'cancelLabel': 'Cancelar',
+        'daysOfWeek': [
+            "Dom",
+            "Seg",
+            "Ter",
+            "Qua",
+            "Qui",
+            "Sex",
+            "Sab"
+        ],
+        'monthNames': [
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Set",
+            "Out",
+            "Nov",
+            "Dez"
+        ],
+      }
+    })
     //Date range as a button
     $('#daterange-btn').daterangepicker(
       {
         ranges   : {
-          'Today'       : [moment(), moment()],
-          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
-          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          'Hoje'       : [moment(), moment()],
+          'Ontem'   : [moment().subtract(1, 'dias'), moment().subtract(1, 'dias')],
+          'Últimos 7 dias' : [moment().subtract(6, 'dias'), moment()],
+          'Últimos 30 dias': [moment().subtract(29, 'dias'), moment()],
+          'Este mês'  : [moment().startOf('mês'), moment().endOf('mês')],
+          'Mês passado'  : [moment().subtract(1, 'mês').startOf('mês'), moment().subtract(1, 'mês').endOf('mês')]
         },
-        startDate: moment().subtract(29, 'days'),
+        startDate: moment().subtract(29, 'dias'),
         endDate  : moment()
       },
       function (start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        $('#daterange-btn span').html(start.format('DD MMMM, YYYY') + ' - ' + end.format('DD MMMM, YYYY'))
       }
     )
 
