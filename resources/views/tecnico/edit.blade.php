@@ -14,25 +14,14 @@
                 <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</b></h5>
               </div>              
               
-            </div>
-
-
-			
+            </div>			
 
 			<form method="POST" enctype="multipart/form-data" action="{{url('tecnicos/'.$setor.'/'.$id.'/update')}}" id="form-edit">
 				@csrf
 
 				<input type="hidden" name="my_setor" value="{{$setor}}">			
 
-			 	<div class="form-group col-md-2">
-				    <label for="status">Status</label>
-				    <select class="form-control" name="status">
-						<option value="{{$ticket->status}}">{{$status[$ticket->status]}}</option>
-						@foreach ($status as $Key => $statu)
-						   <option value="{{$Key}}"> {{$statu}}</option>
-						@endforeach 	
-					</select>
-			 	</div>
+			 	
 
 			 	<div class="form-group col-md-4">					
 				    <label for="rotulo">Rótulo (Criticidade)</label>				    
@@ -56,7 +45,7 @@
 					</select>
 			 	</div>
 
-			 	<div class="form-group col-md-4">
+			 	<div class="form-group col-md-6">
 				    <label for="equipamento_id">Equipamento</label>
 				    <select class="form-control  select2" name="equipamento_id" style="width: 100%;">
 				    	@if($ticket->equipamento_id)
@@ -72,20 +61,39 @@
 			 	</div>		 	
 			 	
 
-		        <div class="form-group col-md-12">
-				    <label for="titulo">Título (Descrição Resumida)</label>
-				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{$ticket->titulo}}">
+		        
+
+			 	<div class="form-group col-md-12">
+				    <label for="titulo">Título (Descrição Resumida) <span style="color: red; font-size: 10px;">*80 caract.</span></label>
+				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{$ticket->titulo}}" onkeyup="limite_textarea(this.value)" id="texto">
+				    <div style="font-size: 10px; color: #AA0000; float: right;">
+				    	*<span id="cont">--</span> Restantes <br>
+				    </div>
 			 	</div>
+
+			 	<script type="text/javascript">
+					
+				function limite_textarea(valor) {
+				    quant = 80;
+				    total = valor.length;
+				    if(total <= quant) {
+				        resto = quant - total;
+				        document.getElementById('cont').innerHTML = resto;
+				    } else {
+				        document.getElementById('texto').value = valor.substr(0,quant);
+				    }
+				}
+
+				</script>
 
 			 	<div class="form-group col-md-12">
 				    <label for="descricao">Descrição</label>				    
 					<!-- /.box-header -->
 		            <div class="box-body pad">
 		              <form>
-		                <textarea disabled="disabled" class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
+		                <textarea class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
 		                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$ticket->descricao}}</textarea>
 		              </form>
-		              <small>*Não é possível editar a descrição.</small>
 		            </div>
 			 	</div> 	
 

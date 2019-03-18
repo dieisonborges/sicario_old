@@ -2,6 +2,7 @@
 	@extends('layouts.app')
 	@section('title', 'Editar Ticket')
 	@section('content')
+	<!--
 			<h1>
 		        Editar Ticket
 		        <small>{{$ticket->protocolo}}</small>
@@ -78,7 +79,7 @@
 
 			 	<div class="form-group col-md-12">
 				    <label for="descricao">Descrição</label>				    
-					<!-- /.box-header -->
+					
 		            <div class="box-body pad">
 		              <form>
 		                <textarea class="textarea" placeholder="Detalhe seu o problema ou solicitação" required="required" name="descricao" 
@@ -95,5 +96,5 @@
 			 	<input type="submit" form="form-edit" class="btn btn-primary" value="Atualizar">
 
 			</form>
-			
+	-->		
 	@endsection

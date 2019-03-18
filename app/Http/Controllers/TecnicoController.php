@@ -126,6 +126,36 @@ class TecnicoController extends Controller
         return $week;
     }
 
+    private function storeAcaoAuto($setor, $descricao, $ticket_id)
+    {
+
+        //usuário
+        $user_id = auth()->user()->id;
+
+        $descricao .= '<br><span class="btn btn-primary btn-xs">Ação</span>';
+
+        $ticket = Ticket::find($ticket_id);
+
+        $status = $ticket->prontuarioTickets()->attach([[
+            'ticket_id' => $ticket_id, 
+            'user_id' => $user_id, 
+            'descricao' => $descricao,
+            'created_at' => date ("Y-m-d H:i:s"),
+            'updated_at' => date ("Y-m-d H:i:s")
+        ]]); 
+
+        //LOG ----------------------------------------------------------------------------------------
+        $this->log("tecnico.storeAcao:".$ticket_id);
+        //--------------------------------------------------------------------------------------------
+
+        if(!$status){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
     public function index($setor)
     {       
 
@@ -347,7 +377,8 @@ class TecnicoController extends Controller
     public function edit($setor, $id)
     {
         //
-        if(!(Gate::denies('update_'.$setor))){           
+        if(!(Gate::denies('update_'.$setor))){
+
             $ticket = Ticket::find($id);  
 
             /* ------------------------------ Security --------------------------------*/
@@ -391,9 +422,12 @@ class TecnicoController extends Controller
     public function update(Request $request, $setor, $id)
     {
         //
-        if(!(Gate::denies('update_'.$setor))){ 
+        if(!(Gate::denies('update_'.$setor))){             
 
             $ticket = Ticket::find($id);
+
+            //Titulo anterior
+            $ticket_anterior = Ticket::find($id);
 
             /* ------------------------------ Security --------------------------------*/
             //verifica se o setor tem permissão ao ticket
@@ -406,17 +440,13 @@ class TecnicoController extends Controller
 
             //Validação
             $this->validate($request,[
-                    'status' => 'required',
                     'rotulo' => 'required',
                     'tipo' => 'required',
-                    'titulo' => 'required|string|max:30',
-                    /*'descricao' => 'required|string|min:15',*/
+                    'titulo' => 'required|string|max:80',
+                    'descricao' => 'required|string|min:15',
             ]);
 
-
-            $ticket->status = $request->get('status');
-
-            $ticket->rotulo = $request->get('rotulo');
+            $ticket->rotulo = $request->get('rotulo');            
 
             $ticket->tipo = $request->get('tipo');
 
@@ -426,13 +456,77 @@ class TecnicoController extends Controller
 
             $ticket->titulo = $request->get('titulo');
 
-            //$ticket->descricao = $request->get('descricao');
+            $ticket->descricao = $request->get('descricao');
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tecnico.edit.update.ticket".$id."-".$ticket);
             //--------------------------------------------------------------------------------------------
 
             if($ticket->save()){
+
+                /* -----------Salva mudanças na acao----------- */
+
+                
+
+                $ticketRotulo = $this->ticketRotulo();
+
+                $descricao_acao  = "Rótulo alterado de: <i style='color:red;'>";
+                $descricao_acao .= $ticketRotulo[$ticket_anterior->rotulo];
+                $descricao_acao .= "</i>";
+                $descricao_acao .= " Para: <i style='color:blue;'>";
+                $descricao_acao .= $ticketRotulo[$request->get('rotulo')];
+                $descricao_acao .= "</i>";
+
+                $descricao_acao .= "<br>";
+
+                $ticketTipo = $this->ticketTipo();
+
+                $descricao_acao .= "Tipo alterado de: <i style='color:red;'>";
+                $descricao_acao .= $ticketTipo[$ticket_anterior->tipo];
+                $descricao_acao .= "</i>";
+                $descricao_acao .= " Para: <i style='color:blue;'>";
+                $descricao_acao .= $ticketTipo[$request->get('tipo')];
+                $descricao_acao .= "</i>";
+
+                $descricao_acao .= "<br>";
+
+                if ($request->get('equipamento_id')) {   
+
+                $equipamento_anterior = Equipamento::find($ticket_anterior->equipamento_id);
+
+                $equipamento_novo = Equipamento::find($request->get('equipamento_id'));         
+
+                $descricao_acao .= "Equipamento alterado de: <i style='color:red;'>";
+                $descricao_acao .= "Nome: ".$equipamento_anterior->nome." ID: ".$equipamento_anterior->id;
+                $descricao_acao .= "</i>";
+                $descricao_acao .= " Para: <i style='color:blue;'>";             
+                $descricao_acao .= "Nome: ".$equipamento_novo->nome." ID: ".$equipamento_novo->id;
+                $descricao_acao .= "</i>";
+
+                $descricao_acao .= "<br>";
+
+                }
+
+                $descricao_acao .= "Título alterado de: <i style='color:red;'>";
+                $descricao_acao .= $ticket_anterior->titulo;
+                $descricao_acao .= "</i>";
+                $descricao_acao .= " Para: <i style='color:blue;'>";
+                $descricao_acao .= $request->get('titulo');
+                $descricao_acao .= "</i>";
+
+                $descricao_acao .= "<br>";
+
+                $descricao_acao .= "Descrição alterado de: <i style='color:red;'>";
+                $descricao_acao .= $ticket_anterior->descricao;
+                $descricao_acao .= "</i>";
+                $descricao_acao .= " Para: <i style='color:blue;'>";
+                $descricao_acao .= $request->get('descricao');
+                $descricao_acao .= "</i>";
+
+                $this->storeAcaoAuto($setor, $descricao_acao, $id);
+                /* -----------End Salva mudanças na acao----------- */
+
+
                 return redirect('tecnicos/'.$setor.'/tickets')->with('success', 'Ticket atualizado com sucesso!');
             }else{
                 return redirect('tecnicos/'.$setor.'/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
@@ -955,24 +1049,31 @@ class TecnicoController extends Controller
     }
 
     public function alocarSetors($setor, $id){
-
+        //Area dos tickets sem nenhuma alocacao
         $my_setor = $setor;
 
         if(!(Gate::denies('read_'.$setor))){  
 
+            /* --------------- Verifica se o ticket não tem alocação ----------------- */
 
             $ticket = $this->ticket->find($id);
 
             //recuperar setors
             $setors = $ticket->setors()->get();
 
-            //todos setores
-            $all_setors = Setor::all();
+            if(($ticket->setors()->count())>0){
+                return redirect('erro')->with('permission_error', '403');
 
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocarSetors:".$id);
-            //--------------------------------------------------------------------------------------------
+            }else{
 
+                //todos setores
+                $all_setors = Setor::all();
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("tecnico.alocarSetors:".$id);
+                //--------------------------------------------------------------------------------------------
+
+            }
 
             return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }

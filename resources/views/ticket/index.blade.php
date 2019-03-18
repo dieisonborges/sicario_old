@@ -42,8 +42,8 @@
                     <th>Rótulo</th>
                     <th>Tipo</th>
                     <th>Setor de <br> Trabalho</th>
-                    <th>Editar</th>
-                    <th>Excluir</th>
+                    <!--<th>Editar</th>
+                    <th>Excluir</th>-->
                 </tr>
                 @forelse ($tickets as $ticket)
                 <tr>
@@ -116,6 +116,7 @@
                     <td>
                         <a class="btn btn-primary btn-xs" href="{{URL::to('tickets/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setor</a>
                     </td>
+                    <!--
                     <td>
                         <a class="btn btn-warning btn-xs" href="{{URL::to('tickets/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
                     </td>
@@ -124,8 +125,7 @@
                         <form method="POST" action="{{action('TicketController@destroy', $ticket->id)}}" id="formDelete{{$ticket->id}}">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
-                            <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
-                            <!--<input type="submit" name="Excluir">-->
+                            
 
                             <a href="javascript:confirmDelete{{$ticket->id}}();" class="btn btn-danger btn-xs"> <i class="fa fa-close"></i> Excluir</a>
                         </form> 
@@ -144,6 +144,7 @@
                         </script>
 
                     </td>
+                -->
                 </tr>                
                 @empty
                     
