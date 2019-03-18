@@ -1,5 +1,5 @@
 <!-- /.content-wrapper -->
-  <footer class="main-footer">
+  <footer class="main-footer" id="footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> {{ config('app.version') }} <small>Comp: {{ config('app.compilation') }}</small>
     </div>
