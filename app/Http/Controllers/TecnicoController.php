@@ -126,13 +126,13 @@ class TecnicoController extends Controller
         return $week;
     }
 
-    private function storeAcaoAuto($setor, $descricao, $ticket_id)
+    private function storeAcaoAuto($setor, $descricao, $ticket_id, $tipo_acao, $tipo_acao_cor)
     {
 
         //usuário
         $user_id = auth()->user()->id;
 
-        $descricao .= '<br><span class="btn btn-primary btn-xs">Ação</span>';
+        $descricao .= '<br><span class="btn btn-'.$tipo_acao_cor.' btn-xs">'.$tipo_acao.'</span>';
 
         $ticket = Ticket::find($ticket_id);
 
@@ -523,7 +523,10 @@ class TecnicoController extends Controller
                 $descricao_acao .= $request->get('descricao');
                 $descricao_acao .= "</i>";
 
-                $this->storeAcaoAuto($setor, $descricao_acao, $id);
+                $tipo_acao="Alteração";
+                $tipo_acao_cor="warning";
+
+                $this->storeAcaoAuto($setor, $descricao_acao, $id, $tipo_acao, $tipo_acao_cor);
                 /* -----------End Salva mudanças na acao----------- */
 
 
