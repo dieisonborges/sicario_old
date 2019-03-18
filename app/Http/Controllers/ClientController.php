@@ -217,7 +217,7 @@ class ClientController extends Controller
                     'setor' => 'required',
                     'rotulo' => 'required',
                     'tipo' => 'required',
-                    'titulo' => 'required|string|max:30',
+                    'titulo' => 'required|string|max:80',
                     'descricao' => 'required|string|min:15',
                     
             ]);

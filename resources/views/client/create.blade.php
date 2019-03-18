@@ -41,12 +41,30 @@
 						@empty                    
 						@endforelse 
 	                </select>
-			 	</div>			 	
-
+			 	</div>		 	
+				
 			 	<div class="form-group col-md-12">
-				    <label for="titulo">Título (Descrição Resumida)</label>
-				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{ old('titulo') }}">
+				    <label for="titulo">Título (Descrição Resumida) <span style="color: red; font-size: 10px;">*80 caract.</span></label>
+				    <input type="text" class="form-control" placeholder="Descrição resumida do problema" name="titulo" value="{{ old('titulo') }}" onkeyup="limite_textarea(this.value)" id="texto">
+				    <div style="font-size: 10px; color: #AA0000; float: right;">
+				    	*<span id="cont">80</span> Restantes <br>
+				    </div>
 			 	</div>
+
+			 	<script type="text/javascript">
+					
+				function limite_textarea(valor) {
+				    quant = 80;
+				    total = valor.length;
+				    if(total <= quant) {
+				        resto = quant - total;
+				        document.getElementById('cont').innerHTML = resto;
+				    } else {
+				        document.getElementById('texto').value = valor.substr(0,quant);
+				    }
+				}
+
+				</script>
 
 			 	<!--
 
