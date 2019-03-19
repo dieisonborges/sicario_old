@@ -105,12 +105,7 @@
                   </tr>
                   <tr>
                     <td align="center">
-                      <h5><b>Ministério da Defesa</b><br>                     
-                      Comando da Aeronáutica<br>
-                      Segundo Centro Integrado de Defesa Aérea e Controle de Tráfego Aéreo<br>                     
-                      Divisão Técnica<br>
-                      Subdivisão de Tecnologia da Informação<br>
-                      Seção de Informática Operacional</h5>
+                      {!!html_entity_decode($setor->cabecalho)!!}
                     </td>
                   </tr>
                   <tr>
@@ -123,7 +118,7 @@
                     <td align="left">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{strtoupper(str_replace('_',' ', $setor))}} do dia {{date('d/m/Y à\s H:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s H:i:s', strtotime($livro->fim))}}.</p></td>
+                    <td align="left"><p>&nbsp; &nbsp; &nbsp; &nbsp; Parte relativa ao serviço de técnico à {{strtoupper(str_replace('_',' ', $setor->name))}} do dia {{date('d/m/Y à\s H:i:s', strtotime($livro->inicio))}} até o dia {{date('d/m/Y à\s H:i:s', strtotime($livro->fim))}}.</p></td>
                   </tr>
                   <tr>
                     <td align="left">
@@ -147,7 +142,7 @@
                   </tr>
                   <tr class="justify-tb">
                     <td align="left">
-                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; III - Ocorrências:</b></p>
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; III - Ocorrências finalizadas:</b></p>
                       <ol type="A">
                         {!!html_entity_decode($livro->conteudo)!!}
                         
@@ -157,7 +152,7 @@
 
                   <tr class="justify-tb">
                     <td align="left">
-                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; IV - Ações para o próximo serviço:</b></p>
+                      <p><b>&nbsp; &nbsp; &nbsp; &nbsp; IV - Ocorrências em andamento:</b></p>
                       <p><small id="acompanhar"> Acompanhar os seguintes tickets:</small></p>
                       <ol type="A">
                         {!!html_entity_decode($livro->acoes)!!}
@@ -213,9 +208,9 @@
 
     @if (($livro->status)==0)
     <section class="content">
-      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Fechar Livro (Aprovar)</a>
+      <a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/aprovar"  class="btn btn-success btn-md"><i class="fa fa-check"></i> Fechar Livro (Aprovar)</a>
 
-      <a href="{{URL::to('livros')}}/{{$setor}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro (Descartar)</a>
+      <a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/excluir" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Exluir Livro (Descartar)</a>
     </section>
     @else
         

@@ -143,6 +143,7 @@ class SetorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd("erro");
         //
         if(!(Gate::denies('update_setor'))){
             $setor = Setor::find($id);
@@ -181,6 +182,48 @@ class SetorController extends Controller
             
             $setor->delete();
             return redirect()->back()->with('success','Setor (Regra) excluída com sucesso!');
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+
+    public function editCabecalho($id)
+    {
+        //Modifica o cabeçalho dos livros
+        if(!(Gate::denies('update_setor'))){        
+            $setor = Setor::find($id);
+            return view('setor.cabecalho', compact('setor','id'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+    public function updateCabecalho(Request $request)
+    {
+        //Modifica o cabeçalho dos livros
+        if(!(Gate::denies('update_setor'))){
+
+            $id = $request->get('id');
+
+            $setor = Setor::find($id);
+
+            //Validação
+            $this->validate($request,[
+                    'cabecalho' => 'required|min:3',       
+            ]);
+                    
+            $setor->cabecalho = $request->get('cabecalho');      
+
+            if($setor->save()){
+                return redirect('setors/')->with('success', 'Cabeçalho atualizada com sucesso!');
+            }else{
+                return redirect('setors/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
+            }
         }
         else{
             return redirect('erro')->with('permission_error', '403');

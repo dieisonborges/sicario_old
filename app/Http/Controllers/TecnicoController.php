@@ -303,13 +303,8 @@ class TecnicoController extends Controller
         if(!(Gate::denies('read_'.$setor))){
 
             //setor
-            $setors = Setor::where('name', $setor)->limit(1)->get();
-
-            foreach ($setors as $setor ) {
-                $temp_setor = $setor;
-            }
-
-            $setor = $temp_setor;
+            $setor = Setor::where('name', $setor)->first();
+           
 
             $tickets = $setor->tickets()
                                 ->where('equipamento_id', $equipamento_id)
@@ -346,6 +341,8 @@ class TecnicoController extends Controller
                 return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
+
+
 
             //Tipos
             $tipos = $this->ticketTipo();

@@ -80,9 +80,14 @@ Route::get('tickets/{id}/setors', 'TicketController@setors');
 Route::post('tickets/setorUpdate', 'TicketController@setorUpdate');
 Route::post('tickets/setorDestroy', 'TicketController@setorDestroy');
 
+//Route::get('tickets/{id}/setorEditCabecalho', 'TicketController@setorEditCabecalho');
+//Route::post('tickets/setorUpdateCabecalho', 'TicketController@setorUpdateCabecalho');
 
 Route::resource('setors', 'SetorController');
 Route::post('setors/busca', 'SetorController@busca');
+Route::get('setors/{id}/editCabecalho', 'SetorController@editCabecalho');
+
+Route::post('setors/updateCabecalho', 'SetorController@updateCabecalho');
 
 // ClientController
 Route::resource('clients', 'ClientController');

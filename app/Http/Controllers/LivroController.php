@@ -422,22 +422,26 @@ class LivroController extends Controller
 
             $tecnicos = $livro->userLivros()->get();
 
+
+
             /* ------------------------------ Security --------------------------------*/
-            //verifica se o setor tem permissão ao livro
-            $setors_security = $livro->setors()->where('name', $setor)->get();
-            foreach ($setors_security as $setor_sec ) {
-                $setors_security = $setor_sec;
-            }
+            //verifica se o setor tem permissão ao ticket
+            $setors_security = $livro->setors()->where('name', $setor)->first();
+
+            //dd($setor, $setors_security);
 
             if(!(isset($setors_security->id))){
                 //return redirect('erro')->with('permission_error', '403');
             }
             /* ------------------------------ END Security --------------------------------*/
 
+
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("livro.show.id=".$id);
             //--------------------------------------------------------------------------------------------
-            
+
+            $setor = Setor::where('name', $setor)->first();            
 
             return view('livro.show', compact('livro', 'setor', 'tecnicos'));
         }
