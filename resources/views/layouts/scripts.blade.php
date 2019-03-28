@@ -48,7 +48,7 @@
 <script src="{{ asset('plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
 
 <!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
 

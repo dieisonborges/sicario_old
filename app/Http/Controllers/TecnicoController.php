@@ -952,11 +952,25 @@ class TecnicoController extends Controller
                                 ->get();
             /* .................... END QTD Tickets Abertos ................... */
 
+            /* ........................ Última Ação do Ticket Aberto .............*/
+
+            foreach ($tickets as $ticket) {
+
+                $ticket_prontuario = Ticket::find($ticket->id);
+                $prontuarios[$ticket->id] = $ticket_prontuario->prontuarioTicketsShow()->orderBy('id', 'desc')->first();                
+            }
+
+
+
+            //dd($prontuarios);
+
+            /* ........................ Última Ação do Ticket Aberto .............*/
+
             /* .................... Últimos Livros ................... */
 
             $livros = $setor->livros()
                             ->orderBy('id','DESC')
-                            ->limit(4)
+                            ->limit(8)
                             ->get();
 
             /* .................... END Últimos Livros ................... */
@@ -1003,7 +1017,8 @@ class TecnicoController extends Controller
                             'tickets',
                             'livros',
                             'week',
-                            'cont_aloc'
+                            'cont_aloc',
+                            'prontuarios'
                         ));
         }
         else{
