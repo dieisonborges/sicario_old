@@ -273,8 +273,8 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              <a href="#" class="btn btn-success">Mais Informações</a>
-              <a href="#" class="btn btn-danger" style="float: right;">Fechar Ticket</a>              
+              <a href="{{url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="btn btn-success"><i class="fa fa-plus"></i> Mais Informações</a>
+              <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/encerrar"  style="float: right;" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>            
             </div>
             <!-- /.box-footer-->
           </div>
