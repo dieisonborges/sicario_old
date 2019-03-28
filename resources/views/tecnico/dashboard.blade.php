@@ -187,7 +187,9 @@
 
             <div class="box-header with-border">
               <h3 class="box-title">
-                <a href="{{url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="text-black" style="font-size: 25px;">{{$ticket->titulo}}</a></h3><br>
+                <a href="{{url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}" class="text-black" style="font-size: 25px;">
+                  {{ str_limit($ticket->titulo, $limit = 20, $end = '...') }}
+                </a></h3><br>
               <a href="{{url('tecnicos/'.$setor->name.'/'.$ticket->id.'/show')}}">Ticket {{$ticket->id}} Nº <b>{{$ticket->protocolo}}</b></a><br>
               <small>Aberto há <b>{{floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($ticket->created_at)))) / (60 * 60 * 24))}} dia(s)</b></small><br>
 
