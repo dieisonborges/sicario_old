@@ -171,10 +171,10 @@
                   <div class="box box-danger direct-chat direct-chat-primary collapsed-box">
               @break
               @case(1)
-                  <div class="box bg-warning direct-chat direct-chat-primary collapsed-box">
+                  <div class="box box-warning direct-chat direct-chat-primary collapsed-box">
               @break
               @case(2)
-                  <div class="box bg-info direct-chat direct-chat-primary collapsed-box">
+                  <div class="box box-info direct-chat direct-chat-primary collapsed-box">
               @break
               @case(3)
                   <div class="box box-default direct-chat direct-chat-primary collapsed-box">
