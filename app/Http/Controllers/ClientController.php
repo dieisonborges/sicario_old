@@ -253,11 +253,11 @@ class ClientController extends Controller
                 //Vincula tecnicos ao livro
                 foreach ($setores as $setor) {
                     Ticket::find($ticket_id)->setors()->attach($setor);
-            }
+                }
 
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("client.store");
-            //-------------------------------------------------------------------------------------------- 
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("client.store");
+                //-------------------------------------------------------------------------------------------- 
 
                 return redirect('clients/1/status')->with('success', 'Ticket cadastrado com sucesso!');
             }else{

@@ -34,16 +34,13 @@
         <div class="col-md-12">
           <!-- general form elements -->
           <div class="small-box">
-            <form action="{{ url('tecnicos/'.$setor->name.'/busca') }}" >
-              <div class="input-group input-group-lg">
-                    <input type="text" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="submit" class="btn btn-info btn-flat"><b>Buscar</b></button>
-                    </span>
-              </div>
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control">
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-info btn-flat"><b>Buscar</b></button>
+                  </span>
+            </div>
             <!-- /input-group -->
-
-            </form>
           </div>
         </div>
 
@@ -59,12 +56,12 @@
 
               <p class="text-center">Dicas e Manuais</p>
             </div>
-            <a href="{{ url('tutorials/'.$setor->name.'/create') }}">
+            <a href="{{ url('tutorials/'.$setor->name.'/') }}">
               <div class="icon">
                 <i class="fa fa-graduation-cap"></i>
               </div>
             </a>
-            <a href="{{ url('tutorials/'.$setor->name.'/create') }}" class="small-box-footer">Novo Tutorial <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('clients/create')}}" class="small-box-footer">Novo Tutorial <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->  

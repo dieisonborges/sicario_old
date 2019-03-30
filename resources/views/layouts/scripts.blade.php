@@ -23,8 +23,6 @@
 <script src="{{ asset('abower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <!-- datepicker -->
 <script src="{{ asset('abower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-<!-- CK Editor -->
-<script src="{{ asset('abower_components/ckeditor/ckeditor.js')}}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <!-- Slimscroll -->
@@ -51,6 +49,21 @@
 <script src="{{ asset('dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js')}}"></script>
+
+<!-- CK Editor -->
+<script src="{{ asset('../../abower_components/ckeditor/ckeditor.js')}}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      CKEDITOR.replace('editorLoad1', 
+      {
+        extraPlugins : 'uicolor',
+        height: '800px',
+        
+      });
+   })
+
+</script>
 
 <script type="text/javascript">
 
@@ -151,7 +164,7 @@
       showInputs: false
     })
 
-    CKEDITOR.replace('editor1')
+    
   })
 
 
@@ -189,3 +202,5 @@
 
 });
 </script>
+
+

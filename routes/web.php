@@ -144,3 +144,16 @@ Route::get('logs/', 'LogController@index');
 Route::get('logs/{id}', 'LogController@show');
 Route::post('logs/busca', 'LogController@busca');
 
+
+//Tutoriais
+Route::get('tutorials/{setor}/', 'TutorialController@index');
+Route::get('tutorials/{setor}/busca', 'TutorialController@busca');
+
+Route::get('tutorials/{setor}/create', 'TutorialController@create');
+Route::post('tutorials/{setor}/store', 'TutorialController@store');
+Route::get('tutorials/{setor}/busca', 'TutorialController@busca');
+Route::get('tutorials/{setor}/{id}/show', 'TutorialController@show');
+Route::get('tutorials/{setor}/{id}/excluir', 'TutorialController@destroy');
+Route::get('tutorials/{setor}/{id}/setors', 'TutorialController@setors');
+
+

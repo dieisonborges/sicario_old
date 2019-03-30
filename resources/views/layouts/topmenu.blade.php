@@ -12,17 +12,26 @@
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">Navegação</span>
       </a>
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
+          
+
+              <li class="dropdown messages-menu" alt="Novo Ticket">
+                <a href="{{url('clients/create')}}" class="dropdown-toggle">
+                  <i class="fa fa-ticket"></i> Novo Ticket
+                </a>
+                
+              </li>
+
               
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
                 <a href="{{ url('/home') }}" class="dropdown-toggle">
-                  <i class="fa fa-home"></i>
+                  <i class="fa fa-home"></i> Home
                 </a>
                 
               </li>
@@ -31,7 +40,7 @@
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
                 <a href="{{ url('/equipamentos/dashboard') }}" class="dropdown-toggle">
-                  <i class="fa fa-wrench"></i>
+                  <i class="fa fa-wrench"></i> Equipamentos
                 </a>
                 
               </li>
@@ -40,7 +49,7 @@
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
                 <a href="{{ url('/contato') }}" class="dropdown-toggle">
-                  <i class="fa fa-envelope"></i>
+                  <i class="fa fa-envelope"></i> Contato
                 </a>
                 
               </li>

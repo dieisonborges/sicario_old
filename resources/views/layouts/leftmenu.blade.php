@@ -182,16 +182,11 @@
               <li class="header">{{$sess_setors->label}}</li>
 
               
-                <li class="treeview">
-                  <a href="#">  
-                    <i class="fa fa-tachometer"></i> <span>Dashboard</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <li>
+                  <a href="{{ url('tecnicos/'.$sess_setors->name.'/dashboard/') }}">  
+                    <i class="fa fa-tachometer"></i> <span>Dashboard</span>                    
                   </a>
-                  <ul class="treeview-menu">
-                    <li><a href="{{ url('tecnicos/'.$sess_setors->name.'/dashboard/') }}"><i class="fa fa-circle-o"></i> Dashboard</a></li>
-                  </ul>
+                  
                 </li>
 
                 <li class="treeview">
@@ -213,8 +208,6 @@
                   </ul>
                 </li>
 
-
-
                 <li class="treeview">
                   <a href="#">
                     <i class="fa fa-book"></i> <span>Livro de Serviço</span>
@@ -225,6 +218,19 @@
                   <ul class="treeview-menu">
                     <li><a href="{{ url('livros/'.$sess_setors->name.'/') }}"><i class="fa fa-circle-o"></i> Listar</a></li>
                     <li><a href="{{ url('livros/'.$sess_setors->name.'/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
+                  </ul>
+                </li>
+
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-graduation-cap"></i> <span>Tutoriais</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="{{ url('tutorials/'.$sess_setors->name.'/') }}"><i class="fa fa-circle-o"></i> Buscar</a></li>
+                    <li><a href="{{ url('tutorials/'.$sess_setors->name.'/create') }}"><i class="fa fa-circle-o"></i> Novo</a></li>
                   </ul>
                 </li>
 

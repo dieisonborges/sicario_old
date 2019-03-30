@@ -66,22 +66,7 @@
 
 				</script>
 
-			 	<!--
-
-			 	<div class="form-group col-md-12">
-	                <label>Categoria</label>
-	                <select name="categoria[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais categorias"
-	                        style="width: 100%;">
-		                  <option value="Ocorrência">Ocorrência</option>
-		                  <option value="Atividade">Atividade</option>
-		                  <option value="Ferramentaria">Ferramentaria</option>
-		                  <option value="Canais">Canais</option>
-		                  <option value="Radares">Radares</option>
-		                  <option value="DBS">BDS</option>
-	                </select>
-	            </div>
-
-	        	-->
+			 	
 	            <!-- /.form-group -->
 
 	            <div class="form-group col-md-12">
