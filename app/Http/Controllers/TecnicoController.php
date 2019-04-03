@@ -371,7 +371,7 @@ class TecnicoController extends Controller
             $setor = Setor::where('name', $setor)->first();
 
             $titulo = $ticket->titulo;
-            $titulo .= $ticket->descricao;
+            //$titulo .= $ticket->descricao;
             $titulo_exps = explode(' ', $titulo);           
 
 
