@@ -374,15 +374,31 @@ class TecnicoController extends Controller
 
             $titulo_exps = explode(' ', $titulo);
 
-            $tutorials = $setor->tutorials();
+
+            /*
+            $pages = Page->where(function($query) use($word){
+
+            foreach($searchWords as $word){
+                $query->orWhere('content', 'LIKE', '%'.$word.'%');
+            }
+
+            })->get();
+
+            */
+
+            $tutorials = $setor->tutorials()->where(function($query) use($titulo_exps){
 
                 foreach ($titulo_exps as $titulo_exp) {
-                    $tutorials->where('titulo', 'LIKE', '%'.$titulo_exp.'%');
-                    $tutorials->orwhere('palavras_chave', 'LIKE', '%'.$titulo_exp.'%');
-                    $tutorials->orwhere('conteudo', 'LIKE', '%'.$titulo_exp.'%');
+                    if((strlen($titulo_exp))>5){
+                        $query->orWhere('titulo', 'LIKE', '%'.$titulo_exp.'%');
+                        $query->orWhere('palavras_chave', 'LIKE', '%'.$titulo_exp.'%');
+                        $query->orWhere('conteudo', 'LIKE', '%'.$titulo_exp.'%');
+                    }
                 }
 
-            $tutorials = $tutorials->orderBy('id', 'DESC')->limit('5')->get();
+            })->orderBy('id', 'DESC')->limit('5')->get();
+
+            //dd( $tutorials);
 
             /* ----------- FIM Tutoriais parecidos ------------ */
 
