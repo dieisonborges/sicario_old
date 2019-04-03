@@ -13,6 +13,8 @@ use App\Equipamento;
 use App\Setor; 
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
+use App\Tutorial;
+use DB;
 
 class TecnicoController extends Controller
 {
@@ -205,6 +207,7 @@ class TecnicoController extends Controller
             }
 
             $setor = $temp_setor;
+
 
             $tickets = $setor->tickets()
                                 ->where(function($query) use ($buscaInput) {
@@ -949,6 +952,7 @@ class TecnicoController extends Controller
             /* .................... Tickets Abertos ................... */
             $tickets = $setor->tickets()                                
                                 ->where('status', 1)
+                                ->orderBy('id', 'DESC')
                                 ->get();
             /* .................... END QTD Tickets Abertos ................... */
 
@@ -1158,6 +1162,94 @@ class TecnicoController extends Controller
             //--------------------------------------------------------------------------------------------
 
             return view('tecnico.data', array('tickets' => $tickets, 'buscar' => $buscaInput, 'setor' => $setor ));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+    public function superBusca (Request $request, $setor){
+        if(!(Gate::denies('read_'.$setor))){
+
+            $buscaInput = $request->input('busca');
+
+             //usuário
+            //$user_id = auth()->user()->id;
+
+            //setor
+            $setors = Setor::where('name', $setor)->limit(1)->get();
+
+            foreach ($setors as $setor ) {
+                $temp_setor = $setor;
+            }
+
+            $setor = $temp_setor;
+            /*
+            $tickets = Ticket::where('titulo','LIKE' , '%'.$buscaInput.'%')
+                                ->orwhere('descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+            */
+
+            /* ------------------- TICKETS --------------------- */
+            $tickets = Ticket::where('tickets.titulo','LIKE' , '%'.$buscaInput.'%')
+                                ->orwhere('tickets.descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('tickets.protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+            /* --------------------  END TICKETs -----------------*/
+
+            /* ------------------- TICKETS AÇÕES --------------------- */
+            $tickets_acoes = DB::table('tickets')
+                                ->join('prontuario_tickets', 'tickets.id', '=', 'prontuario_tickets.ticket_id')
+                                ->select('tickets.*', 'prontuario_tickets.descricao AS acao_descricao')
+                                ->where('tickets.titulo','LIKE' , '%'.$buscaInput.'%')
+                                ->orwhere('tickets.descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('tickets.protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('prontuario_tickets.descricao', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+            /* --------------------  END TICKETs -----------------*/
+
+            /* ------------------- TICKETS SETORS --------------------- */
+
+            $all_ticket_setors = DB::table('setor_ticket')
+                                ->join('setors', 'setors.id', '=', 'setor_ticket.setor_id')
+                                ->select('setor_ticket.*', 'setors.name', 'setors.label')
+                                ->get();
+            
+            /* --------------------  END TICKETs SETORS -----------------*/
+
+            /* ------------------- TUTORIAIS -------------------- */
+            $tutorials = Tutorial::where('titulo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+            /* ------------------- END TUTORIAIS -------------------- */
+
+            /* ------------------- TUTORIAIS -------------------- */
+            $all_tutorial_setors = DB::table('setor_tutorial')
+                                ->join('setors', 'setors.id', '=', 'setor_tutorial.setor_id')
+                                ->select('setor_tutorial.*', 'setors.name', 'setors.label')
+                                ->get();
+            /* ------------------- END TUTORIAIS -------------------- */
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tecnico.SuperBusca=".$buscaInput);
+            //--------------------------------------------------------------------------------------------
+
+            return view('tecnico.super_busca', array(
+                                                    'tickets' => $tickets, 
+                                                    'tickets_acoes' => $tickets_acoes, 
+                                                    'buscar' => $buscaInput, 
+                                                    'setor' => $setor,
+                                                    'tutorials' => $tutorials,
+                                                    'all_tutorial_setors' => $all_tutorial_setors,
+                                                    'all_ticket_setors' => $all_ticket_setors
+                                                ));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

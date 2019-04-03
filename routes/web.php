@@ -108,6 +108,7 @@ Route::post('tecnicos/{setor}/{id}/update', 'TecnicoController@update');
 //Route::get('tecnicos/update/', 'TecnicoController@update');
 
 Route::post('tecnicos/{setor}/busca', 'TecnicoController@busca');
+Route::post('tecnicos/{setor}/superBusca', 'TecnicoController@superBusca');
 Route::get('tecnicos/{setor}/buscaData', 'TecnicoController@buscaData');
 Route::get('tecnicos/{setor}/tickets/{equipamento_id}/{status}/equipamento', 'TecnicoController@buscaStatusIdEquipamento');
 Route::get('tecnicos/{setor}/tickets/{status}/status', 'TecnicoController@status');
@@ -147,13 +148,17 @@ Route::post('logs/busca', 'LogController@busca');
 
 //Tutoriais
 Route::get('tutorials/{setor}/', 'TutorialController@index');
-Route::get('tutorials/{setor}/busca', 'TutorialController@busca');
+Route::post('tutorials/{setor}/busca', 'TutorialController@busca');
 
 Route::get('tutorials/{setor}/create', 'TutorialController@create');
 Route::post('tutorials/{setor}/store', 'TutorialController@store');
 Route::get('tutorials/{setor}/busca', 'TutorialController@busca');
 Route::get('tutorials/{setor}/{id}/show', 'TutorialController@show');
+Route::get('tutorials/{setor}/{id}/edit', 'TutorialController@edit');
+Route::post('tutorials/{setor}/{id}/update', 'TutorialController@update');
 Route::get('tutorials/{setor}/{id}/excluir', 'TutorialController@destroy');
 Route::get('tutorials/{setor}/{id}/setors', 'TutorialController@setors');
+Route::post('tutorials/setorUpdate', 'TutorialController@setorUpdate');
+Route::post('tutorials/setorDestroy', 'TutorialController@setorDestroy');
 
 

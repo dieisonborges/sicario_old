@@ -7,9 +7,8 @@
 	    </h1>
 		
 
-		<form method="POST" enctype="multipart/form-data" action="{{action('TutorialController@update',$id)}}">
+		<form method="POST" enctype="multipart/form-data" action="{{url('tutorials/'.$setor.'/'.$tutorial->id.'/update')}}">
 			@csrf			
-			<input type="hidden" name="_method" value="PATCH">
 			<div class="form-group col-lg-12">
 			    <label for="titulo">Título</label>
 			    <input type="text" class="form-control" id="titulo" name="titulo" value="{{$tutorial->titulo}}" placeholder="Digite o título do seu tutorial..." required>

@@ -38,8 +38,16 @@ class TutorialController extends Controller
     }
 
     public function index($setor){
-        if(!(Gate::denies('read_tutorial'))){
-            $tutorials = Tutorial::paginate(40); 
+        $my_setor = $setor;
+
+        if(!(Gate::denies('read_'.$setor))){ 
+
+            $setor = Setor::where('name', $setor)->first();
+
+
+            $tutorials = $setor->tutorials()
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tutorial.index");
@@ -52,45 +60,75 @@ class TutorialController extends Controller
         }
     }
 
-    // Seleciona por id
-    public function show($id, $setor){
-        if(!(Gate::denies('read_tutorial'))){
-            $tutorial = Tutorial::find($id);
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("tutorial.show.id=".$id);
-            //--------------------------------------------------------------------------------------------
-
-            return view('tutorial.show', array('tutorial' => $tutorial));
-        }
-        else{
-            return redirect('erro')->with('permission_error', '403');
-        }
-
-    }
-
     public function busca (Request $request, $setor){
-        if(!(Gate::denies('read_tutorial'))){
+        $my_setor = $setor;
+
+        if(!(Gate::denies('read_'.$setor))){ 
+
+
+            $setor = Setor::where('name', $setor)->first();
+
+            $setor_id = $setor->id;
+
             $buscaInput = $request->input('busca');
 
-            $tutorials = Tutorial::where('name', 'LIKE', '%'.$buscaInput.'%')
-                                ->orwhere('label', 'LIKE', '%'.$buscaInput.'%')
-                                ->paginate(40);  
+            $tutorials = $setor->tutorials()
+                                ->where(function($query) use ($buscaInput) {
+                                    $query->where('titulo', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
+                                    ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%');
+                                })
+                                ->orderBy('id', 'DESC')
+                                ->paginate(40);
+            
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tutorial.ibusca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
 
-            return view('tutorial.index', array('tutorials' => $tutorials, 'buscar' => $buscaInput ));
+            return view('tutorial.index', array('tutorials' => $tutorials, 'buscar' => $buscaInput, 'setor_atual' => $setor ));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
         }
     }
 
+    // Seleciona por id
+    public function show($setor, $id){
+
+        $my_setor = $setor;
+
+        if(!(Gate::denies('read_'.$setor))){ 
+            $tutorial = Tutorial::find($id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao tutorial
+            $setors_security = $tutorial->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("tutorial.show.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
+            return view('tutorial.show', compact('tutorial', 'setor'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
+
+    
+
     // Criar
     public function create($setor){
-        if(!(Gate::denies('create_tutorial'))){
+        $my_setor = $setor;
+
+        if(!(Gate::denies('create_'.$setor))){
 
             $setores = Setor::all();
 
@@ -112,7 +150,7 @@ class TutorialController extends Controller
 
         $setor_atual = $setor;
 
-        if(!(Gate::denies('create_tutorial'))){
+        if(!(Gate::denies('create_'.$setor))){
             //Validação
             $this->validate($request,[
                     'titulo' => 'required|min:3',
@@ -142,7 +180,7 @@ class TutorialController extends Controller
                     Tutorial::find($tutorial_id)->setors()->attach($setor);
                 }
                 
-                return redirect('tutorials/'.$setor_atual)->with('success', 'Tutorial (Regra) cadastrada com sucesso!');
+                return redirect('tutorials/'.$setor_atual)->with('success', 'Tutorial  cadastrada com sucesso!');
             }else{
                 return redirect('tutorials/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
             }
@@ -154,14 +192,23 @@ class TutorialController extends Controller
     }
 
     public function edit($setor, $id){  
-        if(!(Gate::denies('update_tutorial'))){        
+        if(!(Gate::denies('update_'.$setor))){      
             $tutorial = Tutorial::find($id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao tutorial
+            $setors_security = $tutorial->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tutorial.edit.id=".$id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tutorial.edit', compact('tutorial','id'));
+            return view('tutorial.edit', compact('tutorial','id', 'setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -172,8 +219,18 @@ class TutorialController extends Controller
     }
 
     public function update(Request $request, $setor, $id){
-        if(!(Gate::denies('update_tutorial'))){
+
+        if(!(Gate::denies('update_'.$setor))){      
             $tutorial = Tutorial::find($id);
+
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao tutorial
+            $setors_security = $tutorial->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/
 
             //Validação
             $this->validate($request,[
@@ -191,7 +248,7 @@ class TutorialController extends Controller
             //--------------------------------------------------------------------------------------------      
 
             if($tutorial->save()){
-                return redirect('tutorials/')->with('success', 'Tutorial (Regra) atualizada com sucesso!');
+                return redirect('tutorials/'.$setor)->with('success', 'Tutorial  atualizada com sucesso!');
             }else{
                 return redirect('tutorials/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
             }
@@ -204,9 +261,17 @@ class TutorialController extends Controller
 
     public function destroy($setor, $id){
 
+        if(!(Gate::denies('delete_'.$setor))){
+            $tutorial = Tutorial::find($id);    
 
-        if(!(Gate::denies('delete_tutorial'))){
-            $tutorial = Tutorial::find($id);        
+            /* ------------------------------ Security --------------------------------*/
+            //verifica se o setor tem permissão ao tutorial
+            $setors_security = $tutorial->setors()->where('name', $setor)->first();
+
+            if(!(isset($setors_security->id))){
+                return redirect('erro')->with('permission_error', '403');
+            }
+            /* ------------------------------ END Security --------------------------------*/    
             
             $tutorial->delete();
 
@@ -286,7 +351,7 @@ class TutorialController extends Controller
             //--------------------------------------------------------------------------------------------
           
             if(!$status){
-                return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('success', 'Setor  atualizada com sucesso!');
             }else{
                 return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
             }
@@ -327,7 +392,7 @@ class TutorialController extends Controller
 
             
             if($status){
-                return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('success', 'Setor  atualizada com sucesso!');
             }else{
                 return redirect('tutorials/'.$my_setor."/".$tutorial_id.'/setors')->with('danger', 'Houve um problema, tente novamente.');
             }

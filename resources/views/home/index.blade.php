@@ -5,7 +5,7 @@
     
     <div class="row">
         <div class="col-md-12"> 
-            Bem vindo!
+            SICARIO: Sistema de Controle, Análise, Resposta e Inspeção Operacional.
         </div>
     </div>
 

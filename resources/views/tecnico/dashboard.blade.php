@@ -34,11 +34,12 @@
         <div class="col-md-12">
           <!-- general form elements -->
           <div class="small-box">
-            <form action="{{ url('tecnicos/'.$setor->name.'/busca') }}" >
+            <form method="POST" action="{{url('tecnicos/'.$setor->name.'/superBusca') }}" >
+              @csrf
               <div class="input-group input-group-lg">
-                    <input type="text" class="form-control">
+                    <input type="text" name="busca" class="form-control">
                     <span class="input-group-btn">
-                      <button type="submit" class="btn btn-info btn-flat"><b>Buscar</b></button>
+                      <button type="submit" class="btn btn-info btn-flat"><b>Super Busca</b></button>
                     </span>
               </div>
             <!-- /input-group -->
@@ -46,7 +47,6 @@
             </form>
           </div>
         </div>
-
         <!-- ---------------- FIM Super Busca -------------- -->
 
         
@@ -180,6 +180,7 @@
 
 
        <div class="col-md-4">
+
           <!-- DIRECT CHAT PRIMARY -->
           <!--
           0   =>  "Crítico - Emergência (resolver imediatamente)",
@@ -233,6 +234,14 @@
               4   =>  "Nenhum",
               -->
               <div class="box-tools pull-right">
+
+                <!-- Verifica se existe a menos de 03 dias -->
+                @if((floor((strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($ticket->created_at)))) / (60 * 60 * 24)))<3)
+                    <span data-toggle="tooltip" title="Crítico" class="badge bg-yellow"><i class="fa fa-star"></i> Novo</span>
+                @endif
+                <!-- END FIM Verifica se existe a menos de 03 dias -->
+
+
                 @switch($ticket->rotulo)
                     @case(0)
                         <span data-toggle="tooltip" title="Crítico" class="badge bg-red">Crítico</span>

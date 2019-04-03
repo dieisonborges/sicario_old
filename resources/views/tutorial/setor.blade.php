@@ -5,19 +5,20 @@
 
     <h1>Setor(es) de Trabalho Associados ao Tutorial <small>{{$tutorial->protocolo}}</small></h1>
         <div class="box-body col-md-6">              
-              <div class="callout callout-info">
-                <h5>Usuário: <b>{{$tutorial->users->name}}</b></h5>
-                <h5>Número de Protocolo: <b>{{$tutorial->protocolo}}</b></h5>
-                <h5>Aberto em: <b>{{date('d/m/Y H:i:s', strtotime($tutorial->created_at))}}</b></h5>
-                <h5>Título: <b>{{$tutorial->titulo}}</b></h5>
-              </div>
+                <div class="callout callout-info">
+                    <h5>Título: <b>{{$tutorial->titulo}}</b></h5>            
+                    <h5>Criado em: <b>{{date('d/m/Y H:i:s', strtotime($tutorial->created_at))}}</b></h5>
+                    <h5>Última edição: <b>{{date('d/m/Y H:i:s', strtotime($tutorial->updated_at))}}</b></h5>
+                    <h5>Palavras chave: <b>{{$tutorial->palavras_chave}}</b></h5>
+                </div>
         </div>
 
 
         <div class="col-md-12">  
-            <form method="POST" action="{{action('TutorialController@setorUpdate')}}">
+            <form method="POST" action="{{url('tutorials/setorUpdate')}}">
                 @csrf
                 <input type="hidden" name="tutorial_id" value="{{$tutorial->id}}">
+                <input type="hidden" name="my_setor" value="{{$my_setor}}">
                 <label>Adicionar Setor:</label>
                 <select name="setor_id">
                     @forelse ($all_setors as $all_setor)
@@ -63,6 +64,7 @@
                             @csrf
                             <input type="hidden" name="setor_id" value="{{$setor->id}}">
                             <input type="hidden" name="tutorial_id" value="{{$tutorial->id}}">
+                            <input type="hidden" name="my_setor" value="{{$my_setor}}">
                             <!--<button class="btn btn-danger btn-xs" >Excluir</button>-->
                             <!--<input type="submit" name="Excluir">-->
 

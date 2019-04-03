@@ -28,8 +28,8 @@
 
 	<a  class="btn btn-success btn-md" href="javascript:history.go(-1)"><span class="fa fa-arrow-left"></span> Voltar</a>
 
-	<a  class="btn btn-warning btn-md" href="{{URL::to('tutorials/'.$tutorial->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Tutorial</a>
+	<a  class="btn btn-warning btn-md" href="{{URL::to('tutorials/'.$setor.'/'.$tutorial->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Tutorial</a>
 
-	<a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tutorials/'.$tutorial->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Tutorial</a>
+	<a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tutorials/'.$setor.'/'.$tutorial->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Tutorial</a>
 
 @endsection

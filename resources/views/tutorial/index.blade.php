@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Regras')
 @section('content')
-<h1>Tutoriais <a href="{{url('tutorials/'.$setor_atual.'/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a></h1>
+<h1>Tutoriais <a href="{{url('tutorials/'.$setor_atual->name.'/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a></h1>
 
     @if (session('status'))
         <div class="alert alert-success" tutorial="alert">
@@ -10,7 +10,7 @@
     @endif
     <div class="col-md-12">	
 
-        <form method="POST" enctype="multipart/form-data" action="{{url('tutorials/'.$setor_atual.'/busca')}}">
+        <form method="POST" enctype="multipart/form-data" action="{{url('tutorials/'.$setor_atual->name.'/busca')}}">
             @csrf
             <div class="input-group input-group-lg">			
                 <input type="text" class="form-control" id="busca" name="busca" placeholder="Procurar..." value="{{$buscar}}">
@@ -44,19 +44,19 @@
             </tr>
             @forelse ($tutorials as $tutorial)
             <tr>
-                <td><a href="{{URL::to('tutorials/'.$tutorial->id)}}">{{$tutorial->id}}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$tutorial->id)}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$tutorial->id)}}">{{$tutorial->palavras_chave}}</a></td>
-                <!--<td><a href="{{URL::to('tutorials/'.$tutorial->id)}}">{{ str_limit($tutorial->conteudo, $limit = 40, $end = '...') }}</a></td>-->
+                <td><a href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->id}}</a></td>
+                <td><a href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
+                <td><a href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
+                <!--<td><a href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->conteudo, $limit = 40, $end = '...') }}</a></td>-->
                 <td>
-                    <a class="btn btn-primary btn-xs" href="{{URL::to('tutorials/'.$tutorial->id.'/setors')}}"><i class="fa fa-group"></i> Setores</a>
+                    <a class="btn btn-primary btn-xs" href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/setors')}}"><i class="fa fa-group"></i> Setores</a>
                 </td>
                 <td>
-                    <a class="btn btn-warning btn-xs" href="{{URL::to('tutorials/'.$tutorial->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-warning btn-xs" href="{{URL::to('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
                 </td>
                 <td>
 
-                    <form method="GET" action="{{url('tutorials/'.$setor_atual.'/'.$tutorial->id.'/excluir')}}" id="formDelete{{$tutorial->id}}">
+                    <form method="GET" action="{{url('tutorials/'.$setor_atual->name.'/'.$tutorial->id.'/excluir')}}" id="formDelete{{$tutorial->id}}">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="id" value="{{$tutorial->id}}">
