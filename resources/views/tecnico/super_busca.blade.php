@@ -149,7 +149,7 @@
         </div>
         <!-- /.box-body -->
 
-        {{$tickets->links()}}
+        <span class="btn btn-primary btn-xs">*Limite 100</span>
 
         <br><br><br>
 
@@ -274,7 +274,7 @@
         </div>
         <!-- /.box-body -->
 
-        {{$tickets_acoes->links()}}
+        <span class="btn btn-primary btn-xs">*Limite 100</span>
 
         <br><br><br>
 
@@ -334,7 +334,7 @@
         </table>
     </div>
     <!-- /.box-body -->
-    {{$tutorials->links()}}
+    <span class="btn btn-primary btn-xs">*Limite 100</span>
 
     @endsection
 @endcan

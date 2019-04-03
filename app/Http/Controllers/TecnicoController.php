@@ -1198,7 +1198,8 @@ class TecnicoController extends Controller
                                 ->orwhere('tickets.descricao', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('tickets.protocolo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orderBy('id', 'DESC')
-                                ->paginate(40);
+                                ->limit('100')
+                                ->get();
             /* --------------------  END TICKETs -----------------*/
 
             /* ------------------- TICKETS AÇÕES --------------------- */
@@ -1210,7 +1211,8 @@ class TecnicoController extends Controller
                                 ->orwhere('tickets.protocolo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('prontuario_tickets.descricao', 'LIKE', '%'.$buscaInput.'%')
                                 ->orderBy('id', 'DESC')
-                                ->paginate(40);
+                                ->limit('100')
+                                ->get();
             /* --------------------  END TICKETs -----------------*/
 
             /* ------------------- TICKETS SETORS --------------------- */
@@ -1227,7 +1229,8 @@ class TecnicoController extends Controller
                                 ->orwhere('palavras_chave', 'LIKE', '%'.$buscaInput.'%')
                                 ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
                                 ->orderBy('id', 'DESC')
-                                ->paginate(40);
+                                ->limit('100')
+                                ->get();
             /* ------------------- END TUTORIAIS -------------------- */
 
             /* ------------------- TUTORIAIS -------------------- */
