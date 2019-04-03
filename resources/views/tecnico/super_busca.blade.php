@@ -29,6 +29,65 @@
         <br><br><br>
 
         <div class="box-header">
+            <h3 class="box-title">Todos <small>os Tutoriais do Sistema</small></h3>            
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Palavras Chave</th>
+                    <th>Setores <br>com Acesso</th>
+                    <th>Ver</th>
+                </tr>
+                @forelse ($tutorials as $tutorial)
+                <tr>
+                    <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->id}}</a></td>
+                    <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
+                    <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
+                    <!--<td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->conteudo, $limit = 40, $end = '...') }}</a></td>-->
+                    <td>
+                        @foreach($all_tutorial_setors as $all_setor)
+                            @if(($all_setor->tutorial_id)==$tutorial->id)
+                                @if(($setor->id)==($all_setor->setor_id))
+                                    <span class="btn btn-primary btn-xs">{{$all_setor->label}}</span>
+                                @else
+                                    <span class="btn btn-danger btn-xs">{{$all_setor->label}}</span>
+                                @endif                        
+                            @endif
+                        @endforeach
+                        @php
+                            $all_setor=null;
+                        @endphp                    
+                    </td>
+                    <td>
+                        <a class="btn btn-success btn-xs" href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}"><i class="fa fa-eye"></i> Visualizar</a>
+                    </td>
+                    
+                </tr>                
+                @empty
+
+                <tr>
+                    <td>
+                        <span class="btn btn-warning">
+                            <i class="fa fa-frown-o"></i>
+                             Nenhum Resultado Para Esse Critério.
+                        </span>
+                    </td>
+                    
+                </tr>
+                    
+                @endforelse            
+                
+            </table>
+        </div>
+        <!-- /.box-body -->
+        <span class="btn btn-primary btn-xs">*Limite 100</span>
+
+        <br><br><br>
+
+        <div class="box-header">
             <h3 class="box-title">Todos <small>os Tickets do Sistema</small></h3>            
         </div>
         <!-- /.box-header -->
@@ -279,62 +338,7 @@
         <br><br><br>
 
         
-        <div class="box-header">
-            <h3 class="box-title">Todos <small>os Tutoriais do Sistema</small></h3>            
-        </div>
-        <!-- /.box-header -->
-    <div class="box-body table-responsive no-padding">
-        <table class="table table-hover">
-            <tr>
-                <th>ID</th>
-                <th>Titulo</th>
-                <th>Palavras Chave</th>
-                <th>Setores <br>com Acesso</th>
-                <th>Ver</th>
-            </tr>
-            @forelse ($tutorials as $tutorial)
-            <tr>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->id}}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
-                <!--<td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->conteudo, $limit = 40, $end = '...') }}</a></td>-->
-                <td>
-                    @foreach($all_tutorial_setors as $all_setor)
-                        @if(($all_setor->tutorial_id)==$tutorial->id)
-                            @if(($setor->id)==($all_setor->setor_id))
-                                <span class="btn btn-primary btn-xs">{{$all_setor->label}}</span>
-                            @else
-                                <span class="btn btn-danger btn-xs">{{$all_setor->label}}</span>
-                            @endif                        
-                        @endif
-                    @endforeach
-                    @php
-                        $all_setor=null;
-                    @endphp                    
-                </td>
-                <td>
-                    <a class="btn btn-success btn-xs" href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}"><i class="fa fa-eye"></i> Visualizar</a>
-                </td>
-                
-            </tr>                
-            @empty
-
-            <tr>
-                <td>
-                    <span class="btn btn-warning">
-                        <i class="fa fa-frown-o"></i>
-                         Nenhum Resultado Para Esse Critério.
-                    </span>
-                </td>
-                
-            </tr>
-                
-            @endforelse            
-            
-        </table>
-    </div>
-    <!-- /.box-body -->
-    <span class="btn btn-primary btn-xs">*Limite 100</span>
+        
 
     @endsection
 @endcan
