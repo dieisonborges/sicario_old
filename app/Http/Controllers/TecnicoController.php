@@ -365,8 +365,30 @@ class TecnicoController extends Controller
             $this->log("tecnico.show.ticket=".$ticket->id);
             //--------------------------------------------------------------------------------------------
 
+            /* ----------- Tutoriais parecidos ------------ */           
 
-            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor'));
+            //filtro setor
+            $setor = Setor::where('name', $setor)->first();
+
+            $titulo = $ticket->titulo;
+
+            $titulo_exps = explode(' ', $titulo);
+
+            $tutorials = $setor->tutorials();
+
+                foreach ($titulo_exps as $titulo_exp) {
+                    $tutorials->where('titulo', 'LIKE', '%'.$titulo_exp.'%');
+                    $tutorials->orwhere('palavras_chave', 'LIKE', '%'.$titulo_exp.'%');
+                    $tutorials->orwhere('conteudo', 'LIKE', '%'.$titulo_exp.'%');
+                }
+
+            $tutorials = $tutorials->orderBy('id', 'DESC')->limit('5')->get();
+
+            /* ----------- FIM Tutoriais parecidos ------------ */
+
+
+
+            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'tutorials'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

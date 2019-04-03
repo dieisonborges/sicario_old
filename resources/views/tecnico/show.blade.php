@@ -217,21 +217,71 @@
 
     @if (($ticket->status)==1)
 
-      <a  class="btn btn-warning btn-md" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
+      <a  class="btn btn-warning btn-md" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/edit')}}"><i class="fa fa-edit"></i> Editar Ticket</a>
     
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
+      <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/acao"  class="btn btn-info btn-md"><i class="fa fa-plus-circle"></i> Nova Ação</a>
 
-      <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
+      <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/encerrar" class="btn btn-danger btn-md"><i class="fa fa-times-circle"></i> Encerrar Ticket</a>
 
     @else
 
-    <a href="{{URL::to('tecnicos')}}/{{$setor}}/{{$ticket->id}}/reabrir" class="btn btn-success btn-md"><i class="fa fa-arrow-up"></i> Reabrir Ticket</a>
+    <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/reabrir" class="btn btn-success btn-md"><i class="fa fa-arrow-up"></i> Reabrir Ticket</a>
         
     @endif    
 
-    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
+    <a  class="btn btn-info btn-md" style="float: right;" href="{{URL::to('tecnicos/'.$setor->name.'/'.$ticket->id.'/setors')}}"><i class="fa fa-group"></i> Setores Vinculados Ao Ticket</a>
     
     </section>
+
+
+    <section class="content">
+
+      <div class="form-group col-md-12">
+        <div class="box-header">
+        <h3 class="box-title">Tutoriais Relacionados</h3>
+        
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+            <tr>
+                <th>Titulo</th>
+                <th>Palavras Chave</th>
+                <th>Conteúdo</th>
+                <th>Ver</th>
+            </tr>
+            @forelse ($tutorials as $tutorial)
+            <tr>
+                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
+                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
+                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit(strip_tags($tutorial->conteudo), $limit = 80, $end = '...') }}</a></td>
+                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}" class="btn btn-primary"><i class="fa fa-eye"></i>Visualizar</a></td>            
+                
+            </tr>                
+            @empty
+
+            <tr>
+                <td>
+                    <a href="{{url('tutorials/'.$setor->name.'/create') }}" class="btn btn-primary">
+                        <i class="fa fa-frown-o"></i>
+                         Nenhum tutorial relacionado a este tipo de Ticket. Aproveite e inicie um Tutorial.
+                    </a>
+                </td>
+                
+            </tr>
+                
+            @endforelse            
+            
+        </table>
+    </div>
+    <!-- /.box-body -->
+        
+      </div>
+
+    </section>
+
+
+
 
     <a href="#main-header" class="btn btn-primary" style="float: right;"><span class="fa fa-arrow-up"></span></a>
 
