@@ -337,6 +337,77 @@
 
         <br><br><br>
 
+
+        <div class="box-header">
+            <h3 class="box-title"><small>Livros</small></h3>
+
+            
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Protocolo</th>
+                    <th>Início do Serviço</th>
+                    <th>Término do Serviço</th> 
+                    <th>Responsável</th>
+                    <th>Status</th>
+                    <th>Setores <br>com Acesso</th>
+                    <th>Ver</th>
+                                       
+                </tr>
+                @forelse ($livros as $livro)
+                <tr>
+                    <td>{{$livro->id}}</td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{str_replace('/'.$setor->name,'', $livro->protocolo)}}</a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
+                    {{date('d/m/Y H:i:s', strtotime($livro->inicio))}}
+                    {{$week[date('l', strtotime($livro->inicio))]}}</a>
+                    </td>
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
+                    {{date('d/m/Y H:i:s', strtotime($livro->fim))}}
+                    {{$week[date('l', strtotime($livro->fim))]}}
+                    </a>
+                    </td>                  
+                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
+                    <td>
+                        <a href="{{URL::to('livros')}}/{{$livro->id}}">
+                            <!--
+                            0  => "Fechado",
+                            1  => "Aberto",  
+                            -->
+                            @switch($livro->status)
+                                @case(1)
+                                    <span class="btn btn-success btn-xs">Aprovado</span>
+                                    @break                                                               
+                                @default
+                                    <span class="btn btn-warning btn-xs">Aberto</span>
+                            @endswitch
+                        </a>
+                    </td>
+                    <td>
+                        @php
+                            $livro_setor = explode('/',$livro->protocolo);
+                        @endphp
+                        <span class="btn btn-success btn-xs">{{$livro_setor[1]}}</span>                                                 
+                    </td>
+
+                    <td>
+                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show" class="btn btn-success btn-xs"> <span class="fa fa-eye"></span> Visualizar </a>
+                    </td>
+                </tr>
+
+                @empty
+                    
+                @endforelse            
+                
+            </table>
+        </div>
+        <!-- /.box-body -->
+
+        <span class="btn btn-primary btn-xs">*Limite 100</span>
+
         
         
 

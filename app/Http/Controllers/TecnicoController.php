@@ -14,6 +14,7 @@ use App\Setor;
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 use App\Tutorial;
+use App\Livro;
 use DB;
 
 class TecnicoController extends Controller
@@ -104,29 +105,6 @@ class TecnicoController extends Controller
         return $dias;
     }
 
-    private function weekBr(){
-        /*
-        Sunday      Domingo
-        Monday      Segunda
-        Tuesday     Terça
-        Wednesday   Quarta
-        Thursday    Quinta
-        Friday      Sexta
-        Saturday    Sábado
-        */
-
-        $week = array(
-            'Sunday' => 'Domingo',
-            'Monday' => 'Segunda',
-            'Tuesday' => 'Terça',
-            'Wednesday' => 'Quarta',
-            'Thursday' => 'Quinta',
-            'Friday' => 'Sexta',
-            'Saturday' => 'Sábado',
-        );
-
-        return $week;
-    }
 
     private function storeAcaoAuto($setor, $descricao, $ticket_id, $tipo_acao, $tipo_acao_cor)
     {
@@ -156,6 +134,30 @@ class TecnicoController extends Controller
             return false;
         }
         
+    }
+
+    private function weekBr(){
+        /*
+        Sunday      Domingo
+        Monday      Segunda
+        Tuesday     Terça
+        Wednesday   Quarta
+        Thursday    Quinta
+        Friday      Sexta
+        Saturday    Sábado
+        */
+
+        $week = array(
+            'Sunday' => 'Domingo',
+            'Monday' => 'Segunda',
+            'Tuesday' => 'Terça',
+            'Wednesday' => 'Quarta',
+            'Thursday' => 'Quinta',
+            'Friday' => 'Sexta',
+            'Saturday' => 'Sábado',
+        );
+
+        return $week;
     }
 
     public function index($setor)
@@ -1278,9 +1280,19 @@ class TecnicoController extends Controller
                                 ->get();
             /* ------------------- END TUTORIAIS -------------------- */
 
+            /* ------------------- TUTORIAIS -------------------- */
+            $livros = Livro::where('protocolo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orwhere('conteudo', 'LIKE', '%'.$buscaInput.'%')
+                                ->orderBy('id', 'DESC')
+                                ->limit('100')
+                                ->get();
+            /* ------------------- END TUTORIAIS -------------------- */
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tecnico.SuperBusca=".$buscaInput);
             //--------------------------------------------------------------------------------------------
+
+            $week = $this->weekBr();
 
             return view('tecnico.super_busca', array(
                                                     'tickets' => $tickets, 
@@ -1289,7 +1301,9 @@ class TecnicoController extends Controller
                                                     'setor' => $setor,
                                                     'tutorials' => $tutorials,
                                                     'all_tutorial_setors' => $all_tutorial_setors,
-                                                    'all_ticket_setors' => $all_ticket_setors
+                                                    'all_ticket_setors' => $all_ticket_setors,
+                                                    'livros' => $livros,
+                                                    'week' => $week
                                                 ));
         }
         else{
