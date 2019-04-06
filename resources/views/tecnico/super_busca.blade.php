@@ -339,9 +339,7 @@
 
 
         <div class="box-header">
-            <h3 class="box-title"><small>Livros</small></h3>
-
-            
+            <h3 class="box-title">Livros</h3>            
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -358,19 +356,23 @@
                                        
                 </tr>
                 @forelse ($livros as $livro)
+
+                @php
+                    $livro_setor = explode('/',$livro->protocolo);
+                @endphp
                 <tr>
                     <td>{{$livro->id}}</td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{str_replace('/'.$setor->name,'', $livro->protocolo)}}</a></td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
+                    <td><a href="{{URL::to('livros')}}/{{$livro_setor[1]}}/{{$livro->id}}/show">{{str_replace('/'.$livro_setor[1],'', $livro->protocolo)}}</a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$livro_setor[1]}}/{{$livro->id}}/show">
                     {{date('d/m/Y H:i:s', strtotime($livro->inicio))}}
                     {{$week[date('l', strtotime($livro->inicio))]}}</a>
                     </td>
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">
+                    <td><a href="{{URL::to('livros')}}/{{$livro_setor[1]}}/{{$livro->id}}/show">
                     {{date('d/m/Y H:i:s', strtotime($livro->fim))}}
                     {{$week[date('l', strtotime($livro->fim))]}}
                     </a>
                     </td>                  
-                    <td><a href="{{URL::to('livros')}}/{{$setor->name}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
+                    <td><a href="{{URL::to('livros')}}/{{$livro_setor[1]}}/{{$livro->id}}/show">{{$livro->users->name}}</a></td>
                     <td>
                         <a href="{{URL::to('livros')}}/{{$livro->id}}">
                             <!--
@@ -386,15 +388,12 @@
                             @endswitch
                         </a>
                     </td>
-                    <td>
-                        @php
-                            $livro_setor = explode('/',$livro->protocolo);
-                        @endphp
+                    <td>                        
                         <span class="btn btn-success btn-xs">{{$livro_setor[1]}}</span>                                                 
                     </td>
 
                     <td>
-                        <a href="{{URL::to('tecnicos')}}/{{$setor->name}}/{{$ticket->id}}/show" class="btn btn-success btn-xs"> <span class="fa fa-eye"></span> Visualizar </a>
+                        <a href="{{URL::to('livros')}}/{{$livro_setor[1]}}/{{$livro->id}}/show" class="btn btn-success btn-xs"> <span class="fa fa-eye"></span> Visualizar </a>
                     </td>
                 </tr>
 
