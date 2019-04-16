@@ -23,6 +23,13 @@ class CreateUploadsTable extends Migration
             $table->mediumText('dir');
             //extensao = .jpg, pdf e etc
             $table->string('ext');
+            //Tipo de arquivo
+            $table->string('tipo');
+            //Nome Original
+            $table->string('nome');
+            //Tamanho do arquivo
+            $table->string('tam');
+
             $table->timestamps();
         });
 

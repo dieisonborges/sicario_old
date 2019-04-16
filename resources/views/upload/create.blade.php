@@ -7,22 +7,33 @@
 	    </h1>
 		
 
-		<form method="POST" action="{{url('uploads')}}">
-			@csrf			
+		<form action="{{url('uploads')}}" method="POST" enctype="multipart/form-data">
+			@csrf	
+
+			<input type="hidden" name="id" value="{{$id}}">	
+
+			<input type="hidden" name="area" value="{{$area}}">	
+
 			<div class="form-group mb-12">
-			    <label for="name">Nome</label>
-			    <input type="text" class="form-control" id="name" name="name" value="" placeholder="Digite o Nome..." required>
+			    <label for="titulo">Título: </label>
+			    <input type="text" class="form-control" id="titulo" name="titulo" value="" placeholder="Digite o Título do Arquivo..." required>
 		 	</div>
+
 		 	<div class="form-group mb-12">
-			    <label for="label">Rótulo</label>
-			    <input type="text" class="form-control" id="label" name="label" value="" placeholder="Digite o Rótulo..." required>
+			    <label for="file" >Arquivo: </label>
+			    <input type="file" name="file" required="required" accept="image/*|application/pdf">
+			    <span style="font-size: 15px; color: red;">Arquivos suportados: <b>jpeg,png,jpg,pdf</b></span>
 		 	</div>
+		 	
+    		<button type="submit" class="btn btn-success">Enviar</button>
 		 	
 
 		 	<div>
-		 		<hr>
+		 		<hr class="hr col-md-12">
 		 	</div>
 
-		 	<button type="submit" class="btn btn-primary">cadastrar</button>
+		 	
 		</form>
+
+		<a class="btn btn-primary" href="javascript:history.go(-1)"><i class="fa fa-arrow-left"></i> Voltar</a>
 @endsection

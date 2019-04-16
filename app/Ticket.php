@@ -30,8 +30,9 @@ class Ticket extends Model
     }
 
     public function uploads(){        
-        return $this->belongsTo(\App\Upload::class);
+        return $this->belongsToMany('App\Upload','upload_ticket');
     }
+
  
 
 
