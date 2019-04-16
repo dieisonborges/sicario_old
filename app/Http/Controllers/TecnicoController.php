@@ -15,6 +15,7 @@ use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 use App\Tutorial;
 use App\Livro;
+use App\Upload;
 use DB;
 
 class TecnicoController extends Controller
@@ -347,7 +348,7 @@ class TecnicoController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
-
+            $uploads = $ticket->uploads()->get();
 
             //Tipos
             $tipos = $this->ticketTipo();
@@ -406,7 +407,7 @@ class TecnicoController extends Controller
 
 
 
-            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'tutorials'));
+            return view('tecnico.show', compact('ticket', 'tipos', 'rotulos', 'status', 'data_aberto', 'prontuarios', 'setor', 'tutorials', 'uploads'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');

@@ -233,50 +233,95 @@
     
     </section>
 
+    <section class="content">
+
+        <div class="form-group col-md-12">
+            <div class="box-header">
+            <h3 class="box-title">Arquivos: </h3>
+
+            <a href="{{URL::to('uploads')}}/{{$ticket->id}}/create/ticket"  class="btn btn-info btn-md" style="float: right;"><i class="fa fa-plus-circle"></i> Novo Arquivo</a>
+            
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Ver</th>
+                    </tr>
+                    @forelse ($uploads as $upload)
+                    <tr>
+                        <td><a href="{{URL::to('uploads/'.$upload->id.'/show')}}">{{ $upload->titulo }}</a></td>
+                        
+                        <td><a href="{{URL::to('uploads/'.$upload->id.'/show')}}" class="btn btn-primary"><i class="fa fa-eye"></i>Visualizar</a></td>            
+                        
+                    </tr>                
+                    @empty
+
+                    <tr>
+                        <td>
+                            <span class="btn btn-primary">
+                                <i class="fa fa-archive"></i>
+                                 Nenhum arquivo relacionado.
+                            </span>
+                        </td>
+                        
+                    </tr>
+                        
+                    @endforelse            
+                    
+                </table>
+            </div>
+            <!-- /.box-body -->
+        
+        </div>
+
+    </section>
+
 
     <section class="content">
 
-      <div class="form-group col-md-12">
-        <div class="box-header">
-        <h3 class="box-title">Tutoriais Relacionados</h3>
+        <div class="form-group col-md-12">
+            <div class="box-header">
+                <h3 class="box-title">Tutoriais Relacionados</h3>
         
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body table-responsive no-padding">
-        <table class="table table-hover">
-            <tr>
-                <th>Titulo</th>
-                <th>Palavras Chave</th>
-                <th>Conteúdo</th>
-                <th>Ver</th>
-            </tr>
-            @forelse ($tutorials as $tutorial)
-            <tr>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit(strip_tags($tutorial->conteudo), $limit = 80, $end = '...') }}</a></td>
-                <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}" class="btn btn-primary"><i class="fa fa-eye"></i>Visualizar</a></td>            
-                
-            </tr>                
-            @empty
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Palavras Chave</th>
+                        <th>Conteúdo</th>
+                        <th>Ver</th>
+                    </tr>
+                    @forelse ($tutorials as $tutorial)
+                    <tr>
+                        <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit($tutorial->titulo, $limit = 40, $end = '...') }}</a></td>
+                        <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{$tutorial->palavras_chave}}</a></td>
+                        <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}">{{ str_limit(strip_tags($tutorial->conteudo), $limit = 80, $end = '...') }}</a></td>
+                        <td><a href="{{URL::to('tutorials/'.$setor->name.'/'.$tutorial->id.'/show')}}" class="btn btn-primary"><i class="fa fa-eye"></i>Visualizar</a></td>            
+                        
+                    </tr>                
+                    @empty
 
-            <tr>
-                <td>
-                    <a href="{{url('tutorials/'.$setor->name.'/create') }}" class="btn btn-primary">
-                        <i class="fa fa-frown-o"></i>
-                         Nenhum tutorial relacionado a este tipo de Ticket. Aproveite e inicie um Tutorial.
-                    </a>
-                </td>
-                
-            </tr>
-                
-            @endforelse            
-            
-        </table>
-    </div>
-    <!-- /.box-body -->
+                    <tr>
+                        <td>
+                            <a href="{{url('tutorials/'.$setor->name.'/create') }}" class="btn btn-primary">
+                                <i class="fa fa-frown-o"></i>
+                                 Nenhum tutorial relacionado a este tipo de Ticket. Aproveite e inicie um Tutorial.
+                            </a>
+                        </td>
+                        
+                    </tr>
+                        
+                    @endforelse            
+                    
+                </table>
+            </div>
+            <!-- /.box-body -->
         
-      </div>
+        </div>
 
     </section>
 

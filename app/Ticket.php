@@ -28,6 +28,10 @@ class Ticket extends Model
         
         return $this->belongsToMany(\App\Setor::class);
     }
+
+    public function uploads(){        
+        return $this->belongsTo(\App\Upload::class);
+    }
  
 
 

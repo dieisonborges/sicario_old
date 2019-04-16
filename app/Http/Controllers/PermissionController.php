@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Permission;
+use App\Role;
 use Gate;
 
 //Log
@@ -217,6 +218,93 @@ class PermissionController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
 
+
+    }
+
+    // Criar
+    public function createAuto(){
+
+        if(!(Gate::denies('read_permission'))){
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.auto.create");
+            //---------------------------------------------------------------------------------------
+        
+            return view('permission.create_auto');
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }      
+
+    }
+
+    // Criar usuário
+    public function storeAuto(Request $request){
+
+        if(!(Gate::denies('read_permission'))){
+            //Validação
+            $this->validate($request,[
+                    'name' => 'required|min:3|unique:permissions',
+                    'label' => 'required|min:3|unique:permissions',                
+            ]);
+
+            //variavel de controle dos 04 stores
+            $controle = 0;
+
+            
+            //create  -----------------------------------------------------                  
+            $permission = new Permission();
+            $permission->name = "create_".$request->input('name');
+            $permission->label = "Create - ".$request->input('label');
+            if($permission->save()){
+                $controle = $controle+1;
+            }
+
+            //read  -----------------------------------------------------                  
+            $permission = new Permission();
+            $permission->name = "read_".$request->input('name');
+            $permission->label = "Read - ".$request->input('label');
+            if($permission->save()){
+                $controle = $controle+1;
+            }
+
+            //update  -----------------------------------------------------                  
+            $permission = new Permission();
+            $permission->name = "update_".$request->input('name');
+            $permission->label = "Update - ".$request->input('label');
+            if($permission->save()){
+                $controle = $controle+1;
+            }
+
+            //delete  -----------------------------------------------------                  
+            $permission = new Permission();
+            $permission->name = "delete_".$request->input('name');
+            $permission->label = "Delete - ".$request->input('label');
+            if($permission->save()){
+                $controle = $controle+1;
+            }
+
+            //delete  -----------------------------------------------------                  
+            $role = new Role();
+            $role->name = $request->input('name');
+            $role->label = $request->input('label');
+            if($role->save()){
+                $controle = $controle+1;
+            }
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("permission.auto.store");
+            //---------------------------------------------------------------------------------------
+
+            if($controle>=5){
+                return redirect('permissions/')->with('success', 'Permission (Regra) Automatizadas cadastrada com sucesso!');
+            }else{
+                return redirect('permissions/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
 
     }
 

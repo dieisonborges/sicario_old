@@ -41,6 +41,9 @@ Route::resource('permissions', 'PermissionController');
 Route::post('permissions/busca', 'PermissionController@busca');
 Route::get('permission/{id}/roles', 'PermissionController@roles');
 
+Route::get('permission/createAuto', 'PermissionController@createAuto');
+Route::post('permission/storeAuto', 'PermissionController@storeAuto');
+
 // UserController - Permissoes
 Route::resource('/users', 'UserController');
 Route::post('users/busca', 'UserController@busca');
@@ -162,3 +165,6 @@ Route::post('tutorials/setorUpdate', 'TutorialController@setorUpdate');
 Route::post('tutorials/setorDestroy', 'TutorialController@setorDestroy');
 
 
+// UploadController
+//Route::resource('uploads', 'UploadController');
+Route::get('uploads/{id}/create/{area}', 'UploadController@create');
