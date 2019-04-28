@@ -49,6 +49,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
+	
+    try {      
         //LOG ----------------------------------------------------------------------------------------
         $this->log("GateContract");
         //--------------------------------------------------------------------------------------------
@@ -57,9 +59,6 @@ class AuthServiceProvider extends ServiceProvider
 
         //
 
-        //Comente esse bloco no primeiro migrate
-
-        /* --------------------- Comentar no Primeiro Migrate ----------------- */
         /* --------------------- Carrega as permissões ------------------------ */
     
         $permissions = Permission::with('roles')->get();
@@ -77,7 +76,7 @@ class AuthServiceProvider extends ServiceProvider
             );
         
             /* Permissão total para o Grupo adm */
-        
+       
             Gate::before(function ($user) {
                 if ($user->hasRole('adm')) {
                     return true;
@@ -87,7 +86,6 @@ class AuthServiceProvider extends ServiceProvider
 
         }
         
-        /*------------------------- Comentar no Primeiro Migrate----------------*/
 
         /* ------------- Carega setores para MENUS ---------------------*/
 
@@ -97,6 +95,9 @@ class AuthServiceProvider extends ServiceProvider
         /* ------------- Carega setores para MENUS ---------------------*/
 
 
+	} catch (\Exception $e) {
+        return [];
+    }
 
     }
 }
