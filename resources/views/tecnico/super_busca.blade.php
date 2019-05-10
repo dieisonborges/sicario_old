@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Super Busca')
     @section('content')    
-    <h1>Super Busca SICARIO</h1>
+    <h1>Super Busca SICARIO <small>{{$setor->label}}</small></h1>
 
     <div class="box-body col-md-12">              
           <div class="callout callout-info">

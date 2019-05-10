@@ -8,8 +8,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
-        <small>Painel de Controle</small>
+        {{$setor->label}} <small>Dashboard
+        <small>Painel de Controle</small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>

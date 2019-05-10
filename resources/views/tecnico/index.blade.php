@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Tickets')
     @section('content')    
-    <h1>Tickets</h1>
+    <h1>{{$setor->label}} <small>Tickets</small></h1>
     
     <a href="{{url('tecnicos/'.$setor->name.'/tickets')}}" class="btn btn-info btn-xs"><i class="fa fa-ticket"> </i> Todos</a>
 
