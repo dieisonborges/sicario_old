@@ -147,6 +147,9 @@ class TicketController extends Controller
      */
     public function create()
     {
+        
+        return redirect('erro')->with('permission_error', '403');
+        die();
         //
         if(!(Gate::denies('create_ticket'))){
             $equipamentos = Equipamento::all(); 
@@ -181,6 +184,8 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        return redirect('erro')->with('permission_error', '403');
+        die();
         //
         if(!(Gate::denies('create_ticket'))){
             //Validação
@@ -292,6 +297,8 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
+        return redirect('erro')->with('permission_error', '403');
+        die();
         //
          if(!(Gate::denies('update_ticket'))){            
             $ticket = Ticket::find($id);  
@@ -328,13 +335,18 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        return redirect('erro')->with('permission_error', '403');
+        die();
+
+
         //
-        /*
+        
         if(!(Gate::denies('update_ticket'))){
             $ticket = Ticket::find($id);
-        */
+        
             //Validação
-        /*
+        
             $this->validate($request,[
                     'status' => 'required',
                     'rotulo' => 'required',
@@ -357,11 +369,11 @@ class TicketController extends Controller
             $ticket->titulo = $request->get('titulo');
 
             $ticket->descricao = $request->get('descricao');
-        */
+        
             //LOG ----------------------------------------------------------------------------------------
         //    $this->log("ticket.update.id=".$id);
             //--------------------------------------------------------------------------------------------
-        /*
+        
             if($ticket->save()){
                 return redirect('tickets/')->with('success', 'Ticket atualizado com sucesso!');
             }else{
@@ -371,7 +383,7 @@ class TicketController extends Controller
         else{
             return redirect('erro')->with('permission_error', '403');
         }
-        */
+        
     }
 
     /**
@@ -382,22 +394,26 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
+        
+        return redirect('erro')->with('permission_error', '403');
+        die();
+
         //
-        /*
+        
         if(!(Gate::denies('delete_ticket'))){
             $ticket = Ticket::find($id);        
-        */   
+           
             //LOG ----------------------------------------------------------------------------------------
         //    $this->log("ticket.destroy.id=".$id);
             //--------------------------------------------------------------------------------------------
-        /*
+        
             $ticket->delete();
             return redirect()->back()->with('success','Ticket excluído com sucesso!');
         }
         else{
             return redirect('erro')->with('permission_error', '403');
         }
-        */
+        
     }
 
     public function acao($id)

@@ -3,7 +3,7 @@
 
   @include('layouts.head')
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition {{ config('app.skin') }} sidebar-mini">
 <div class="wrapper">
   <div class="col-md-2">
     <a href="/">

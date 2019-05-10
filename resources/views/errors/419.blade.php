@@ -17,8 +17,16 @@
     
     <div class="alert alert-warning alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4><i class="icon fa fa-ban"></i> Erro: 404</h4>
-        Ops... Ficamos perdidos e não encontramos a página procurada;
+        <h4><i class="icon fa fa-ban"></i> Erro: 419 </h4>
+
+        <h2><i class="fa fa-bug"></i> 
+        A página expirou devido a inatividade. por favor atualize e tente novamente</h2>
+        
+
+        <br>
+        <small>the page has expired due to inactivity.</small>
+        <br>
+        <small>please refresh and try again</small>
     </div>
 
     <a class="btn btn-primary" href="javascript:history.go(-1)">Voltar</a>

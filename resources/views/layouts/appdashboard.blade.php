@@ -11,7 +11,7 @@
 
 @include('layouts.head')
 
-<body class="hold-transition skin-blue sidebar-mini  sidebar-collapse">
+<body class="hold-transition {{ config('app.skin') }} sidebar-mini  sidebar-collapse">
 <div class="wrapper">
 
   <!-- TOP MENU -->

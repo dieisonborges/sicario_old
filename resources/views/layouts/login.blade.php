@@ -4,7 +4,7 @@
 
   @include('layouts.head')
 
-<body class="hold-transition login-page">
+<body class="hold-transition {{ config('app.skin') }} login-page">
 
 	@include('layouts.error')
 

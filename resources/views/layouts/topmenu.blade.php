@@ -22,7 +22,7 @@
 
               <li class="dropdown messages-menu" alt="Novo Ticket">
                 <a href="{{url('clients/create')}}" class="dropdown-toggle">
-                  <i class="fa fa-ticket"></i> Novo Ticket
+                  <i class="fa fa-ticket"></i> + Ticket
                 </a>
                 
               </li>
@@ -31,29 +31,113 @@
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
                 <a href="{{ url('/home') }}" class="dropdown-toggle">
-                  <i class="fa fa-home"></i> Home
+                  <i class="fa fa-home"></i>
                 </a>
                 
               </li>
 
-              @can('read_equipamento')
-              <!-- Messages: style can be found in dropdown.less-->
-              <li class="dropdown messages-menu">
-                <a href="{{ url('/equipamentos/dashboard') }}" class="dropdown-toggle">
-                  <i class="fa fa-wrench"></i> Equipamentos
-                </a>
-                
-              </li>
-              @endcan
-
+              
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
                 <a href="{{ url('/contato') }}" class="dropdown-toggle">
-                  <i class="fa fa-envelope"></i> Contato
+                  <i class="fa fa-envelope"></i>
                 </a>
                 
               </li>
               <!-- Tasks: style can be found in dropdown.less --> 
+
+              <!-- ------------------------------- Adm MENU ---------------------------------- -->
+              @canany([
+              'read_user',               
+              'read_role', 
+              'read_permission', 
+              'read_setor',
+              'read_log', 
+              'read_equipamento', 
+              'read_ticket',
+              ])
+
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i>                  
+                  <span class="label label-info">!</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header"></li>
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                      
+                      @can('read_user')
+                      <li>
+                        <a href="{{ url('users/') }}">
+                          <i class="fa fa-user text-aqua"></i> Usuários
+                        </a>
+                      </li>
+                      @endcan                      
+
+                      @can('read_role')
+                      <li>
+                        <a href="{{ url('roles/') }}">
+                          <i class="fa fa-group"></i> <span>Roles (grupo)</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_permission')
+                      <li class="treeview">
+                        <a href="{{ url('permissions/') }}">
+                          <i class="fa fa-lock"></i> <span>Permissions</span>              
+                        </a>            
+                      </li>
+                      @endcan
+                      
+                      @can('read_setor')
+                      <li class="treeview">
+                        <a href="{{ url('setors/') }}">
+                          <i class="fa fa-black-tie"></i> <span>Setores Internos</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_log')
+                      <li>
+                        <a href="{{ url('logs/') }}">
+                          <i class="fa fa-history"></i> Logs
+                        </a>
+                      </li>
+                      @endcan
+
+                      @can('read_log')
+                      <li>
+                        <a href="{{ url('logs/acesso') }}">
+                          <i class="fa fa-history"></i> Logs de Acesso
+                        </a>
+                      </li>
+                      @endcan
+
+                      @can('read_equipamento')
+                      <li>
+                        <a href="{{ url('equipamentos/dashboard') }}">
+                          <i class="fa fa-wrench"></i> <span>Equipamentos</span>              
+                        </a>            
+                      </li>
+                      @endcan
+
+                      @can('read_ticket')
+                      <li>
+                        <a href="{{ url('tickets/1/status') }}">  
+                          <i class="fa fa-ticket"></i> <span>Tickets (Root)</span>                          
+                        </a>                        
+                      </li>
+                      @endcan
+
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              @endcanany
               
               
               <!-- User Account: style can be found in dropdown.less -->

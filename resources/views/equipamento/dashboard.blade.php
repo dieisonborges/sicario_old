@@ -11,6 +11,12 @@
         Dashboard
         <small>Equipamentos</small>
       </h1>
+
+      <br>
+
+      <a href="{{url('equipamentos')}}" class="btn btn-primary btn-xs"><i class="fa fa-list"> </i> Listar</a>
+      <a href="{{url('equipamentos/create')}}" class="btn btn-info btn-xs"><i class="fa fa-plus"> </i> Novo</a>
+
       <ol class="breadcrumb">
         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>

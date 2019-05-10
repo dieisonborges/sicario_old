@@ -6,7 +6,7 @@
   <div class="login-box-body">
 
     <a href="/">
-        <b style="display:none;">SICARIO</b>
+        <b style="display:none;">{{ config('app.name') }}</b>
         <img src="{{ asset('img/logo/logo-branco-preto.jpg') }}" width="100%">
     </a>
 
