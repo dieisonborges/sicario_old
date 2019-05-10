@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Upload;
 use App\Ticket;
+use App\Tutorial;
 use Illuminate\Http\Request;
 use Gate;
 use DB;
@@ -147,6 +148,10 @@ class UploadController extends Controller
                 //ticket
                 if($area=='ticket'){
                     $status = Ticket::find($id)->uploads()->attach($upload_id);
+                }
+                //ticket
+                if($area=='tutorial'){
+                    $status = Tutorial::find($id)->uploads()->attach($upload_id);
                 }                
 
                 /* ------------END Vinculo do Arquivo------------- */

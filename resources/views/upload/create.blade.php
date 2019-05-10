@@ -25,7 +25,7 @@
 			    <span style="font-size: 15px; color: red;">Arquivos suportados: <b>jpeg,png,jpg,pdf</b></span>
 		 	</div>
 		 	
-    		<button type="submit" class="btn btn-success">Enviar</button>
+    		<button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Enviar</button>
 		 	
 
 		 	<div>

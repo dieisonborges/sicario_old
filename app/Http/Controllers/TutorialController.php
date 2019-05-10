@@ -110,11 +110,13 @@ class TutorialController extends Controller
             }
             /* ------------------------------ END Security --------------------------------*/
 
+            $uploads = $tutorial->uploads()->get();
+
             //LOG ----------------------------------------------------------------------------------------
             $this->log("tutorial.show.id=".$id);
             //--------------------------------------------------------------------------------------------
 
-            return view('tutorial.show', compact('tutorial', 'setor'));
+            return view('tutorial.show', compact('tutorial', 'setor', 'uploads'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
