@@ -143,7 +143,7 @@ class SetorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("erro");
+        
         //
         if(!(Gate::denies('update_setor'))){
             $setor = Setor::find($id);
@@ -151,7 +151,7 @@ class SetorController extends Controller
             //Validação
             $this->validate($request,[
                     'name' => 'required|min:3|unique:setors',
-                    'label' => 'required|min:3|unique:setors',       
+                    'label' => 'required|min:3|unique:setors',     
             ]);
                     
             $setor->name = $request->get('name');
