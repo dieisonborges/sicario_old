@@ -106,6 +106,47 @@ class TecnicoController extends Controller
         return $dias;
     }
 
+    private function removePreposicoes($string){
+        $expressao = strip_tags ($string);
+        // Retira preposições da expressão. É importante que haja um espaço antes e depois de cada expressão
+         
+        $palavrasSemPreposicao = str_ireplace ( array (
+        " de ",
+        " da ",
+        " do ",
+        " na ",
+        " no ",
+        " em ",
+        " a ",
+        " o ",
+        " e ",
+        " as ",
+        " os ",
+        " um ",
+        " uma ",
+        " uns ",
+        " umas ",
+        " por ",
+        " para ",
+        " meu ",
+        " minha ",
+        " seu ",
+        " sua ",
+        " não ",
+        " sim ",
+        " muito ",
+        " pouco ",
+        " bem ",
+        " mau ",
+        " mal ",
+        " este ",
+        " estes ",
+        " esta ",
+        " estas ",
+        ), " ", $expressao ); 
+        return $palavrasSemPreposicao; //Retorna array com palavras sem preposições ou artigos
+    }
+
 
     private function storeAcaoAuto($setor, $descricao, $ticket_id, $tipo_acao, $tipo_acao_cor)
     {
@@ -375,8 +416,13 @@ class TecnicoController extends Controller
 
             $titulo = $ticket->titulo;
             //$titulo .= $ticket->descricao;
+
+            //Remove Preposições
+            $titulo = $this->removePreposicoes($titulo);
+
             $titulo_exps = explode(' ', $titulo);           
 
+            $titulo_exps = $titulo;
 
             /*
             $pages = Page->where(function($query) use($word){
@@ -389,19 +435,21 @@ class TecnicoController extends Controller
 
             */
 
-            $tutorials = $setor->tutorials()->where(function($query) use($titulo_exps){
-
-                foreach ($titulo_exps as $titulo_exp) {
-                    if((strlen($titulo_exp))>5){
-                        $query->orWhere('titulo', 'LIKE', '%'.$titulo_exp.'%');
-                        $query->orWhere('palavras_chave', 'LIKE', '%'.$titulo_exp.'%');
-                        $query->orWhere('conteudo', 'LIKE', '%'.$titulo_exp.'%');
+            $tutorials = $setor->tutorials()
+                                ->where(function($query) use($titulo_exps){
+                    if(is_array($titulo_exps)){
+                        
+                        $query->orWhere('titulo', 'LIKE', '%'.array($titulo_exp).'%');
+                        $query->orWhere('palavras_chave', 'LIKE', '%'.array($titulo_exp).'%');
+                        $query->orWhere('conteudo', 'LIKE', '%'.array($titulo_exp).'%');
+                        
+                    }else{
+                        $query->orWhere('titulo', 'LIKE', '%'.$titulo_exps.'%');
+                        $query->orWhere('palavras_chave', 'LIKE', '%'.$titulo_exps.'%');
+                        $query->orWhere('conteudo', 'LIKE', '%'.$titulo_exps.'%');
                     }
-                }
+                })->orderBy('id', 'DESC')->limit('5')->get();
 
-            })->orderBy('id', 'DESC')->limit('5')->get();
-
-            //dd( $tutorials);
 
             /* ----------- FIM Tutoriais parecidos ------------ */
 
