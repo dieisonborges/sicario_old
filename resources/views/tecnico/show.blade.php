@@ -187,7 +187,7 @@
                         @endif
 
 
-                        <a href="#">{{strtoupper($ticket->users->cargo)}} {{strtoupper($prontuario->users->name_principal)}}</a>
+                        <a href="#">{{strtoupper($prontuario->users->cargo)}} {{strtoupper($prontuario->users->name_principal)}}</a>
                     </h3>
 
                     <div class="timeline-body">
