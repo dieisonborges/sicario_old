@@ -415,7 +415,20 @@
                   <ul class="users-list clearfix">
                     @foreach($equipe as $membro)
                     <li>
-                      <img src="{{asset('img/default-user-image.png')}}" width="50px" height="50px" alt="User Image">
+
+
+                      @php
+
+                        $imagem_perfil = $membro->uploads()->orderBy('id', 'DESC')->first();
+
+                      @endphp
+
+                      @if($imagem_perfil)  
+                          <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="img-circle" alt="User Image" style="width: 50px; height: 50px;" >
+                      @else
+                          <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="50px" height="50px">
+                      @endif
+
                         <a class="users-list-name" href="#">{{$membro->name}}</a>
                       <span class="users-list-date">{{strtoupper($membro->cargo)}}</span>
                     </li>

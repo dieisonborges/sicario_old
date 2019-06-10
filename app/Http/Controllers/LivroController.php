@@ -13,6 +13,7 @@ use App\Setor;
 use App\Ticket;
 use App\User;
 use DB;
+use Mail;
 use Carbon\Carbon;
 
 //Log
@@ -457,6 +458,46 @@ class LivroController extends Controller
         if(!(Gate::denies('update_'.$setor))){
             $livro = Livro::find($id); 
 
+
+
+            //Envia o livro para os Chefes de Setor
+
+            //Setor
+            $setor = Setor::find($livro->setor_id);
+            //Lista de Chefes
+            $chefes = $setor->chefes()->get();
+
+            /* -------------------------- EMAIL ---------------------------- */
+
+            $cabecalho = "Livro TIOP"; 
+
+
+                $mailData = array(
+                    'nome' => "SICARIO",
+                    'email' => "nao-responder@sicario.info",
+                    'assunto' => "Livro de Serviço nº: ". $livro->protocolo,
+                    'msg' => $livro->conteudo."<br>".$livro->acoes,
+                );
+
+                foreach ($chefes as $chefe) {
+                        # code...
+                        //Destinatario
+                        $mailFrom = array(
+                                    'email'     => $chefe->email,
+                                    'name'      => $chefe->cargo." ".$chefe->name_principal,
+                                    'subject'   => 'SICARIO | Livro de Serviço nº: '.$livro->protocolo
+                                  );
+
+
+                        Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
+                            $m->from('nao-responder@sicario.info','SICARIO');
+                            $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+                        });
+                }
+
+                
+
+            /* -------------------------- END EMAIL ------------------------ */
 
 
             if($livro->status==1){
