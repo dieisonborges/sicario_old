@@ -61,6 +61,8 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -89,12 +91,13 @@ class RegisterController extends Controller
         //$data['telefone'] = sanitizeString($data['telefone']);
 
         //LOG ----------------------------------------------------------------------------------------
-        $this->log("register.validator:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        $this->log("register.validator:".$data['name']." ".$data['name_principal']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
         //--------------------------------------------------------------------------------------------
 
 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'name_principal' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',            
             'cpf' => 'required|string|cpf|unique:users',
@@ -118,11 +121,12 @@ class RegisterController extends Controller
         $data['cpf']  = preg_replace('/\D/', '', $data['cpf']);
 
         //LOG ----------------------------------------------------------------------------------------
-        $this->log("register.create:".$data['name']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
+        $this->log("register.create:".$data['name']." ".$data['name_principal']." ".$data['cargo']." ".$data['email']." ".$data['cpf']." ".$data['telefone']." ".(Hash::make($data['password'])));
         //--------------------------------------------------------------------------------------------
         
         return User::create([
             'name' => $data['name'],
+            'name_principal' => $data['name_principal'],
             'cargo' => $data['cargo'],
             'email' => $data['email'],
             'cpf' => $data['cpf'],

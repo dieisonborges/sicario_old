@@ -16,6 +16,10 @@
 				    <input type="text" class="form-control" id="name" name="name" value="{{$user->name}}" placeholder="Digite o nome completo..." required>
 			 	</div>
 			 	<div class="form-group mb-12">
+				    <label for="name_principal">Nome Principal (Guerra)</label>
+				    <input type="text" class="form-control" id="name_principal" name="name_principal" value="{{$user->name_principal}}" placeholder="Digite o seu nome principal ou de guerra..." required>
+			 	</div>
+			 	<div class="form-group mb-12">
 				    <label for="cargo">Cargo/Posto/Graduação/Formação</label>
 				    <input type="text" class="form-control" id="cargo" name="cargo" value="{{$user->cargo}}" placeholder="Digite o Cargo, Posto, Graduação ou Formação..." required>
 			 	</div>

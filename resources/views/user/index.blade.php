@@ -2,7 +2,7 @@
     @extends('layouts.app')
     @section('title', 'Usuários')
     @section('content')    
-    <h1>Usuários <a href="{{url('users/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>  </h1>
+    <h1>Usuários</h1>
 
 
 
@@ -33,7 +33,7 @@
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
+                    <th colspan="2">Nome</th>
                     <th>Email</th>
                     <th>CPF</th>
                     <th>Celular</th>
@@ -48,7 +48,8 @@
                 @forelse ($users as $user)
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->name}}</a></td>
+                    <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->cargo}}</a></td>
+                    <td><a href="{{URL::to('users')}}/{{$user->id}}">{{strtoupper($user->name_principal)}}</a></td>
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->email}}</a></td>
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->cpf}}</a></td>
                     <td><a href="{{URL::to('users')}}/{{$user->id}}">{{$user->telefone}}</a></td>

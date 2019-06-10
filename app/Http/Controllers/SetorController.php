@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Setor;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,21 @@ use Gate;
 class SetorController extends Controller
 {
     
+    /* ----------------------- LOGS ----------------------*/
+
+    private function log($info){
+        //path name
+        $filename="TicketController";
+
+        $log = new LogController;
+        $log->store($filename, $info);
+        return null;     
+    }
+
+    /* ----------------------- END LOGS --------------------*/
+
+
+
     private $setor;
 
     public function __construct(Setor $setor){
@@ -229,4 +245,89 @@ class SetorController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
     }
+
+
+    public function chefe($id){
+        if(!(Gate::denies('read_setor'))){
+            //Recupera a permissão
+            $setor = Setor::find($id);
+
+            //recuperar permissões
+            $chefes = $setor->chefes()->get();
+
+            //todas permissoes
+            $users = User::all();
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("setor.chefe.id=".$id);
+            //--------------------------------------------------------------------------------------------
+
+            return view('setor.chefe', compact('setor', 'chefes', 'users'));
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+
+    }
+
+    public function chefeUpdate(Request $request){
+
+        if(!(Gate::denies('update_setor'))){
+
+            $setor_id = $request->input('setor_id');
+            $chefe_ids = $request->input('chefe_id'); //user
+
+            foreach ($chefe_ids as $chefe_id) {
+
+                $status = User::find($chefe_id)->chefeSetor()->attach($setor_id);           
+            
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("setor.chefeUpdate.id=".$setor_id."User".$chefe_id);
+                //--------------------------------------------------------------------------------------------
+
+            }
+            
+            if(!$status){
+                return redirect('setors/'.$setor_id.'/chefe')->with('success', 'Chefes adicionados com sucesso!');
+            }else{
+                return redirect('setors/'.$setor_id.'/chefe')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
+
+    public function chefeDestroy(Request $request){
+        if(!(Gate::denies('delete_setor'))){
+
+            /* -------------------- */
+
+            $setor_id = $request->input('setor_id');
+            $chefe_id = $request->input('chefe_id'); 
+
+            $chefe  = User::find($chefe_id);
+
+            $status = $chefe->chefeSetor()->detach($setor_id);
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("setor.chefe.destroy.id=".$setor_id."User".$chefe_id);
+            //--------------------------------------------------------------------------------------------
+            
+            if($status){
+                return redirect('setors/'.$setor_id.'/chefe')->with('success', 'Chefes removidos com sucesso!');
+            }else{
+                return redirect('setors/'.$setor_id.'/chefe')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+
+
 }

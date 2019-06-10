@@ -221,7 +221,6 @@ class RoleController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
 
-
     }
 
     public function permissionUpdate(Request $request){
@@ -229,11 +228,13 @@ class RoleController extends Controller
         if(!(Gate::denies('update_role'))){
 
             $role_id = $request->input('role_id');
-            $permission_id = $request->input('permission_id'); 
+            $permission_id_array = $request->input('permission_id'); 
 
             $role  = Role::find($role_id);
 
-            $status = Permission::find($permission_id)->permissionRole()->attach($role_id);
+            foreach ($permission_id_array as $permission_id) {
+                    $status = Permission::find($permission_id)->permissionRole()->attach($role_id);
+            }            
 
             //LOG ----------------------------------------------------------------------------------------
             $this->log("role.permissionUpdate.id=".$role_id."Permission".$permission_id);
@@ -246,7 +247,7 @@ class RoleController extends Controller
             }
         }
         else{
-            return redirect('erro')->with('permission_error', '403');
+            return view('errors.403');
         }
 
     }

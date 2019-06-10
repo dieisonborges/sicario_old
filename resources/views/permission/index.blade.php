@@ -4,6 +4,8 @@
 <h1>Permissões  <a href="{{url('permissions/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
 
             <a href="{{ url('permission/createAuto') }}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Automatizado</a>
+
+            <a href="{{ url('roles') }}" class="btn btn-primary btn-lg"><i class="fa fa-users"> </i> Roles (Grupos)</a>
 </h1>
     @if (session('status'))
         <div class="alert alert-success" permission="alert">
@@ -27,11 +29,6 @@
 
     <br><br><br>
 
-    
-    <div class="box-header">
-        <h3 class="box-title">Responsive Hover Table</h3>
-        
-    </div>
     <!-- /.box-header -->
     <div class="box-body table-responsive no-padding">
         <table class="table table-hover">

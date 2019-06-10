@@ -92,6 +92,17 @@ Route::get('setors/{id}/editCabecalho', 'SetorController@editCabecalho');
 
 Route::post('setors/updateCabecalho', 'SetorController@updateCabecalho');
 
+Route::get('setors/{id}/chefe', 'SetorController@chefe');
+Route::post('setors/chefeUpdate', 'SetorController@chefeUpdate');
+Route::post('setors/chefeDestroy', 'SetorController@chefeDestroy');
+
+
+// ClientController
+Route::get('clients/perfil', 'ClientController@perfil');
+// Imagem Perfil
+Route::get('clients/imagem', 'ClientController@imagem');
+Route::post('clients/imagemUpdate', 'ClientController@imagemUpdate');
+
 // ClientController
 Route::resource('clients', 'ClientController');
 Route::post('clients/busca', 'ClientController@busca');
@@ -100,6 +111,8 @@ Route::post('clients/storeAcao', 'ClientController@storeAcao');
 Route::post('clients/storeEncerrar', 'ClientController@storeEncerrar');
 Route::get('clients/{status}/status', 'ClientController@status');
 Route::get('clients/{id}/acao', 'ClientController@acao');
+
+
 
 // TecnicoController
 //Route::resource('tecnicos/', 'TecnicoController');

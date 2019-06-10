@@ -28,7 +28,9 @@
         <small>Opa, parece que algo deu errado</small>
     </div>
 
-    <a class="btn btn-primary" href="javascript:history.go(-1)">Voltar</a>
+    <a class="btn btn-default" href="javascript:history.go(-1)"><span class="fa fa-arrow-left"></span> Voltar</a>
+
+    <a class="btn btn-default" href="{{url('/')}}" style="float: right;"><span class="fa fa-home"></span> Login</a>
 
        
 

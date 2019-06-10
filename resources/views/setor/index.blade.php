@@ -37,6 +37,7 @@
                 <th>ID</th>
                 <th>Nome (Name)</th>
                 <th>Rótulo (Label)</th>
+                <th>Chefe</th>
                 <th>Cabeçalho (Livro)</th>
                 <th>Editar</th>
                 <th>Excluir</th>
@@ -45,10 +46,14 @@
             <tr>
                 <td><a href="{{URL::to('setors')}}/{{$setor->id}}">{{$setor->id}}</a></td>
                 <td><a href="{{URL::to('setors')}}/{{$setor->id}}">{{$setor->name}}</a></td>
-                <td><a href="{{URL::to('setors')}}/{{$setor->id}}">{{$setor->label}}</a></td> 
+                <td><a href="{{URL::to('setors')}}/{{$setor->id}}">{{$setor->label}}</a></td>
+                <td>
+                    <a class="btn btn-default btn-xs" href="{{URL::to('setors/'.$setor->id.'/chefe')}}"><i class="fa fa-user-circle-o"></i> Chefe</a>
+                </td> 
                 <td>
                     <a class="btn btn-primary btn-xs" href="{{URL::to('setors/'.$setor->id.'/editCabecalho')}}"><i class="fa fa-book"></i> Editar Cabeçalho</a>
-                </td>               
+                </td>  
+                              
                 <td>
                     <a class="btn btn-warning btn-xs" href="{{URL::to('setors/'.$setor->id.'/edit')}}"><i class="fa fa-edit"></i> Editar</a>
                 </td>

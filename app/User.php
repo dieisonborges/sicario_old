@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'cargo', 'email', 'cpf','telefone', 'password',
+        'name', 'name_principal', 'cargo', 'email', 'cpf','telefone', 'password',
     ];
 
     /**
@@ -46,6 +46,14 @@ class User extends Authenticatable
     public function setors(){
         
         return $this->belongsToMany(\App\Setor::class);
+    }
+
+    public function uploads(){        
+        return $this->belongsToMany('App\Upload','upload_user');
+    }
+
+    public function chefeSetor(){        
+        return $this->belongsToMany('App\Setor','chefe_setor', 'user_id', 'setor_id');
     }
 
 

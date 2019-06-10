@@ -142,36 +142,56 @@
               
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
+
+                @php
+
+                  $imagem_perfil = Auth::user()->uploads()->orderBy('id', 'DESC')->first();
+
+                @endphp
+
+
+                
+
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image">
-                  <span class="hidden-xs">{{ Auth::user()->cargo }} {{ Auth::user()->name }}</span>
+                  @if($imagem_perfil)  
+                        <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="user-image" alt="User Image">
+                  @else
+                        <img src="{{ asset('img/default-user-image.png') }}" class="user-image" alt="User Image">
+                  @endif
+                  <span class="hidden-xs">{{ Auth::user()->cargo }} {{ Auth::user()->name_principal }}</span>
                 </a>
+
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image">
+                    @if($imagem_perfil)  
+                        <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="img-circle" alt="User Image">
+                    @else
+                        <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image">
+                    @endif
+                    
 
                     <p>
                       {{ Auth::user()->name }}
-                      <small>Sicário</small>
+                      <!--<small></small>-->                      
                     </p>
                   </li>
                   <!-- Menu Body -->
-                  <!--
+                  
                   <li class="user-body">
                     <div class="row">
                       <div class="col-xs-4 text-center">
-                        <a href="#">Followers</a>
+                        <a href="{{ url('clients/perfil') }}">Perfil</a>
+                      </div>
+                      <!--
+                      <div class="col-xs-4 text-center">
+                        <a href="#">Alterar Senha</a>
                       </div>
                       <div class="col-xs-4 text-center">
-                        <a href="#">Sales</a>
+                        <a href="#">Score</a>
                       </div>
-                      <div class="col-xs-4 text-center">
-                        <a href="#">Friends</a>
-                      </div>
+                      -->
                     </div>
-                  -->
-                    <!-- /.row -->
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
@@ -196,6 +216,8 @@
                     </div>
                   </li>
                 </ul>
+
+              
               </li>
         </ul>
       </div>

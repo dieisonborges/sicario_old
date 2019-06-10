@@ -11,7 +11,8 @@
 <form method="POST" action="{{action('RoleController@permissionUpdate')}}">
     @csrf
     <input type="hidden" name="role_id" value="{{$role->id}}">
-    <label>Adicionar Permissão:</label>
+    
+    <!--
     <select name="permission_id">
         @forelse ($all_permissions as $all_permission)
             <option value="{{$all_permission->id}}">
@@ -21,9 +22,31 @@
             <option>Nenhuma Opção</option>     
         @endforelse
     </select>
-    <label>Ao Grupo:</label>
-    <span>{{$role->name}} | <small>{{$role->label}}</small></span>
-    <input class="btn btn-success btn-sm" type="submit" value="Adicionar">
+    -->
+
+    <div class="form-group col-md-6">
+        <label>Adicionar Permissão:</label>
+        <select name="permission_id[]" class="form-control select2" multiple="multiple" data-placeholder="Selecione um ou mais permissões"
+                style="width: 100%;" required="required">
+                @forelse ($all_permissions as $all_permission)
+                    <option value="{{$all_permission->id}}">
+                        {{$all_permission->name}} | {{$all_permission->label}}
+                    </option>
+                @empty
+                    <option>Nenhuma Opção</option>     
+                @endforelse
+                      
+        </select>
+
+    </div>
+    <div class="form-group col-md-3">
+        <label>Ao Grupo:</label>
+        <span class="form-control">{{$role->name}} | <small>{{$role->label}}</small></span>
+    </div>
+    <div class="form-group col-md-3" style="margin-top: 25px;">   
+        <input class="btn btn-success btn-md" type="submit" value="Adicionar">
+    </div>
+    
 </form>
 
 

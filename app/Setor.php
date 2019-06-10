@@ -35,4 +35,8 @@ class Setor extends Model
     public function setorTicket(){        
         return $this->belongsToMany('App\Setor','setor_ticket', 'setor_id', 'ticket_id')->withPivot(['status']);
     }
+
+    public function chefes(){        
+        return $this->belongsToMany('App\User','chefe_setor', 'setor_id', 'user_id');
+    }
 }

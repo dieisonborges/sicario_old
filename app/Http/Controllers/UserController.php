@@ -93,74 +93,13 @@ class UserController extends Controller
 
     // Criar 
     public function create(){
-        if(!(Gate::denies('create_user'))){
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("user.create");
-            //--------------------------------------------------------------------------------------------
-
-            return view('user.create');
-        }
-        else{
-            return redirect('erro')->with('permission_error', '403');
-        }       
+        
+        return redirect('erro')->with('permission_error', '403');
+               
 
     }
 
-    // Criar 
-    public function store(Request $request){
-        if(!(Gate::denies('create_user'))){
-            //Validação
-            $this->validate($request,[
-                    'name' => 'required|min:3',
-                    'cargo' => 'required|min:3',
-                    'email' => 'required|min:3|unique:users',
-                    'cpf' => 'required|min:3|unique:users',
-                    'telefone' => 'required|min:3',
-                    'status' => 'required|numeric',
-                    'login' => 'required|numeric',
-            ]);
 
-            
-                    
-            $user = new User();
-            $user->name = $request->input('name');
-            $user->cargo = $request->input('cargo');
-            $user->email = $request->input('email');
-            $user->cpf = $request->input('cpf');
-            $user->telefone = $request->input('telefone');
-            $user->status = $request->input('status');
-            $user->login = $request->input('login');  
-
-            //Senha Aleatória
-            $user->password  = bcrypt(md5(rand()));
-
-
-            //Remove toda a pontuação do CPF
-            $user['cpf']  = preg_replace('/\D/', '', $user['cpf']);
-
-            //Remove a pontuzação do TELEFONE (99) 99999-9999        
-            $user['telefone']  = preg_replace('/\D/', '', $user['telefone']);
-            $ddd = substr($user['telefone'], 0, 2);
-            $ntelpre = substr($user['telefone'], 2, 5);
-            $ntel = substr($user['telefone'], 7, 4); 
-            $user['telefone'] = "(".$ddd.")".$ntelpre."-".$ntel;
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("user.store");
-            //--------------------------------------------------------------------------------------------
-
-            if($user->save()){
-                return redirect('users/')->with('success', 'Usuário cadastrado com sucesso!');
-            }else{
-                return redirect('users/'.$id.'/edit')->with('danger', 'Houve um problema, tente novamente.');
-            }
-        }
-        else{
-            return redirect('erro')->with('permission_error', '403');
-        }
-
-    }
 
     public function edit($id){  
         if(!(Gate::denies('update_user'))){
@@ -186,6 +125,7 @@ class UserController extends Controller
             //Validação
             $this->validate($request,[
                     'name' => 'required|min:3',
+                    'name_principal' => 'required|min:3',
                     'cargo' => 'required|min:3',
                     'email' => 'required|min:3',
                     'cpf' => 'required|min:3',
@@ -196,6 +136,7 @@ class UserController extends Controller
                     
         
             $user->name = $request->get('name');
+            $user->name_principal = $request->get('name_principal');
             $user->cargo = $request->get('cargo');
             $user->email = $request->get('email');
             $user->cpf = $request->get('cpf');

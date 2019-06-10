@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Regras')
 @section('content')
-<h1>Role - Grupo <a href="{{url('roles/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a></h1>
+<h1>Role - Grupo <a href="{{url('roles/create')}}" class="btn btn-info btn-lg"><i class="fa fa-plus"> </i> Novo</a>
+
+<a href="{{ url('permissions') }}" class="btn btn-primary btn-lg"><i class="fa fa-lock"> </i> Permissões</a>
+
+</h1>
 
     @if (session('status'))
         <div class="alert alert-success" role="alert">

@@ -25,10 +25,24 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="name_principal" class="col-md-4 col-form-label text-md-right">{{ __('Nome Principal ou Guerra') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name_principal" type="text" class="form-control{{ $errors->has('name_principal') ? ' is-invalid' : '' }}" name="name_principal" placeholder="Pereira" value="{{ old('name_principal') }}" required autofocus>
+
+                                @if ($errors->has('name_principal'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name_principal') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="cargo" class="col-md-4 col-form-label text-md-right">{{ __('Cargo/Posto/Graduação/Formação') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cargo" type="text" class="form-control{{ $errors->has('cargo') ? ' is-invalid' : '' }}" name="cargo" placeholder="Eng" value="{{ old('cargo') }}" required autofocus>
+                                <input id="cargo" type="text" class="form-control{{ $errors->has('cargo') ? ' is-invalid' : '' }}" name="cargo" placeholder="Ten/SO/CV/Eng" value="{{ old('cargo') }}" required autofocus>
 
                                 @if ($errors->has('cargo'))
                                     <span class="invalid-feedback" role="alert">
