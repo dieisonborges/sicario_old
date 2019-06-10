@@ -469,33 +469,47 @@ class LivroController extends Controller
 
             /* -------------------------- EMAIL ---------------------------- */
 
-            $cabecalho = "Livro TIOP"; 
+            $cabecalho = ' I - Técnico de Serviço: '.$livro->users->cargo.strtoupper($livro->users->name);
 
 
                 $mailData = array(
                     'nome' => "SICARIO",
-                    'email' => "nao-responder@sicario.info",
+                    'email' => "nao-responder@sicario.gov.br",
                     'assunto' => "Livro de Serviço nº: ". $livro->protocolo,
-                    'msg' => $livro->conteudo."<br>".$livro->acoes,
+                    'msg' => "<br><br><br> ".$setor->cabecalho."<br><br><br> ".$cabecalho."<br><br><br> III - Ocorrências finalizadas:<br><br>".$livro->conteudo."<br><br><br> IV - Ocorrências em andamento:<br><br>".$livro->acoes,
                 );
 
                 foreach ($chefes as $chefe) {
+
+
+                       
+
                         # code...
                         //Destinatario
-                        $mailFrom = array(
+                        $mailTo = array(
                                     'email'     => $chefe->email,
                                     'name'      => $chefe->cargo." ".$chefe->name_principal,
-                                    'subject'   => 'SICARIO | Livro de Serviço nº: '.$livro->protocolo
+                                    'subject'   => 'Livro de Serviço nº: '.$livro->protocolo
                                   );
 
 
-                        Mail::send('email.contato', $mailData, function ($m) use ($mailFrom) {
-                            $m->from('nao-responder@sicario.info','SICARIO');
-                            $m->to($mailFrom['email'], $mailFrom['name'])->subject($mailFrom['subject']);
+                        Mail::send('email.contato', $mailData, function ($m) use ($mailTo) {
+                            $m->from('dieisondsb@fab.mil.br','SICARIO');
+                            $m->to($mailTo['email'], $mailTo['name'])->subject($mailTo['subject']);
                         });
-                }
+                        
 
-                
+
+                        /*
+                        Mail::send('email.contato', $mailData, function($message){
+                            $message->from('dieisondsb@fab.mil.br','SICARIO');
+                            $message->subject('Contato SICARIO');
+                            $message->to('dieisondsb@fab.mil.br');
+                        });
+                        */
+
+
+                }
 
             /* -------------------------- END EMAIL ------------------------ */
 
