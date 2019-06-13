@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\Log;
 use App\Http\Controllers\LogController;
 
+
 class LoginController extends Controller
 {
     
@@ -53,7 +54,8 @@ class LoginController extends Controller
     {
         //LOG ----------------------------------------------------------------------------------------
         $this->log("login");
-        //--------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------          
+
         
         $this->middleware('guest')->except('logout');
     }

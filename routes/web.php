@@ -144,6 +144,12 @@ Route::get('tecnicos/{setor}/alocar', 'TecnicoController@alocar');
 Route::get('tecnicos/{setor}/{id}/alocarSetors', 'TecnicoController@alocarSetors');
 Route::post('tecnicos/alocarSetorUpdate', 'TecnicoController@alocarSetorUpdate');
 
+Route::get('tecnicos/{setor}/chefe', 'TecnicoController@chefe');
+
+Route::get('tecnicos/{setor}/users', 'TecnicoController@users');
+Route::post('tecnicos/userUpdate', 'TecnicoController@userUpdate');
+Route::post('tecnicos/userDestroy', 'TecnicoController@userDestroy');
+
 //LIVROS Técnicos 
 
 Route::get('livros/{setor}/', 'LivroController@index');

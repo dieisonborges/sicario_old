@@ -16,6 +16,8 @@ use App\Http\Controllers\LogController;
 use App\Tutorial;
 use App\Livro;
 use App\Upload;
+use App\User;
+use App\Role;
 use DB;
 
 class TecnicoController extends Controller
@@ -1126,29 +1128,35 @@ class TecnicoController extends Controller
         //
         if(!(Gate::denies('read_'.$setor))){
 
-            $tickets = Ticket::where('status', '1')->paginate();
+            //Verifica se o usuário é chefe de Setor
+            if(auth()->user()->chefeSetor()->first()){
 
-            $setor = Setor::where('name', $setor)->first();
+                $tickets = Ticket::where('status', '1')->paginate();
 
-            foreach ($tickets as $ticket) {
-                $flagTicket[$ticket->id]=0;
-                $setors = $ticket->setors()->get();
-                foreach ($setors as $setor_get) {
-                    if(isset($setor_get->id)){
-                        $flagTicket[$ticket->id]=1;
+                $setor = Setor::where('name', $setor)->first();
+
+                foreach ($tickets as $ticket) {
+                    $flagTicket[$ticket->id]=0;
+                    $setors = $ticket->setors()->get();
+                    foreach ($setors as $setor_get) {
+                        if(isset($setor_get->id)){
+                            $flagTicket[$ticket->id]=1;
+                        }
                     }
                 }
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("tecnico.alocar");
+                //--------------------------------------------------------------------------------------------
+
+                return view('tecnico.alocar', compact(
+                                'tickets',
+                                'setor',
+                                'flagTicket'
+                            ));
+            }else{
+                return redirect('erro')->with('permission_error', '403');
             }
-
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocar");
-            //--------------------------------------------------------------------------------------------
-
-            return view('tecnico.alocar', compact(
-                            'tickets',
-                            'setor',
-                            'flagTicket'
-                        ));
 
         }
         else{
@@ -1162,28 +1170,34 @@ class TecnicoController extends Controller
 
         if(!(Gate::denies('read_'.$setor))){  
 
-            /* --------------- Verifica se o ticket não tem alocação ----------------- */
+            //Verifica se o usuário é chefe de Setor
+            if(auth()->user()->chefeSetor()->first()){
 
-            $ticket = $this->ticket->find($id);
+                /* --------------- Verifica se o ticket não tem alocação ----------------- */
 
-            //recuperar setors
-            $setors = $ticket->setors()->get();
+                $ticket = $this->ticket->find($id);
 
-            if(($ticket->setors()->count())>0){
-                return redirect('erro')->with('permission_error', '403');
+                //recuperar setors
+                $setors = $ticket->setors()->get();
 
+                if(($ticket->setors()->count())>0){
+                    return redirect('erro')->with('permission_error', '403');
+
+                }else{
+
+                    //todos setores
+                    $all_setors = Setor::all();
+
+                    //LOG ----------------------------------------------------------------------------------------
+                    $this->log("tecnico.alocarSetors:".$id);
+                    //--------------------------------------------------------------------------------------------
+
+                }
+
+                return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
             }else{
-
-                //todos setores
-                $all_setors = Setor::all();
-
-                //LOG ----------------------------------------------------------------------------------------
-                $this->log("tecnico.alocarSetors:".$id);
-                //--------------------------------------------------------------------------------------------
-
+                return redirect('erro')->with('permission_error', '403');
             }
-
-            return view('tecnico.alocarsetor', compact('ticket', 'setors', 'all_setors', 'my_setor'));
         }
         else{
             return redirect('erro')->with('permission_error', '403');
@@ -1195,23 +1209,30 @@ class TecnicoController extends Controller
 
         $my_setor = $request->input('my_setor');
 
-        if(!(Gate::denies('update_'.$my_setor))){              
+        if(!(Gate::denies('update_'.$my_setor))){   
+
+            //Verifica se o usuário é chefe de Setor
+                if(auth()->user()->chefeSetor()->first()){           
                     
-            $setor_id = $request->input('setor_id');
-            $ticket_id = $request->input('ticket_id');
+                $setor_id = $request->input('setor_id');
+                $ticket_id = $request->input('ticket_id');
 
-            $ticket  = Ticket::find($ticket_id);
+                $ticket  = Ticket::find($ticket_id);
 
-            $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
+                $status = Setor::find($setor_id)->setorTicket()->attach($ticket->id);
 
-            //LOG ----------------------------------------------------------------------------------------
-            $this->log("tecnico.alocarSetorsUpdate:".$setor_id."Ticket".$ticket_id);
-            //--------------------------------------------------------------------------------------------
-          
-            if(!$status){
-                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
-            }else{
-                return redirect('tecnicos/'.$my_setor.'/dashboard')->with('danger', 'Houve um problema, tente novamente.');
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("tecnico.alocarSetorsUpdate:".$setor_id."Ticket".$ticket_id);
+                //--------------------------------------------------------------------------------------------
+              
+                if(!$status){
+                    return redirect('tecnicos/'.$my_setor.'/dashboard')->with('success', 'Setor (Regra) atualizada com sucesso!');
+                }else{
+                    return redirect('tecnicos/'.$my_setor.'/dashboard')->with('danger', 'Houve um problema, tente novamente.');
+                }
+            }
+            else{
+                return redirect('erro')->with('permission_error', '403');
             }
         }
         else{
@@ -1359,6 +1380,266 @@ class TecnicoController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
     }
+
+
+    /* ------------------------------ ÁREA DO CHEFE --------------------------------------------------------------------------------------------------*/
+
+    /* ------------------------------ DASHBOARD CHEFE --------------------------*/
+    public function chefe($setor)
+    {
+        
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+
+                //Verifica se o usuário é chefe de Setor
+                if(auth()->user()->chefeSetor()->first()){
+
+
+                /* ======================== FILTRO SETOR ======================== */
+                $setor = Setor::where('name', $setor)->first();
+                /* ======================== END FILTRO SETOR ==================== */
+
+                /* .................... EQUIPE ...................*/
+                $equipe = $setor->users()->get();
+                $equipe_qtd = $setor->users()->count();     
+
+                /* .................... END QTD Tickets Abertos ................... */
+
+                /* .................... QTD Tickets Abertos ................... */
+                $qtd_tick_aber = $setor->tickets()                                
+                                    ->where('status', 1)
+                                    ->count();
+                /* .................... END QTD Tickets Abertos ................... */
+
+                /* .................... QTD Tickets FECHADOS ................... */
+                $qtd_tick_fech = $setor->tickets()                                
+                                    ->where('status', 0)
+                                    ->count();
+                /* .................... END QTD Tickets FECHADOS ................... */
+
+                /* .................... Tickets Abertos ................... */
+                $tickets = $setor->tickets()                                
+                                    ->where('status', 1)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
+                /* .................... END QTD Tickets Abertos ................... */
+
+                /* ........................ Última Ação do Ticket Aberto .............*/
+
+                foreach ($tickets as $ticket) {
+
+                    $ticket_prontuario = Ticket::find($ticket->id);
+                    $prontuarios[$ticket->id] = $ticket_prontuario->prontuarioTicketsShow()->orderBy('id', 'desc')->first();                
+                }
+
+
+
+                //dd($prontuarios);
+
+                /* ........................ Última Ação do Ticket Aberto .............*/
+
+                /* .................... Últimos Livros ................... */
+
+                $livros = $setor->livros()
+                                ->orderBy('id','DESC')
+                                ->limit(8)
+                                ->get();
+
+                /* .................... END Últimos Livros ................... */
+
+                /* WEEK */
+                $week = $this->weekBr();
+                /* END WEEK */
+
+                /* .................... QTD não alocados ................... */
+
+                $tickets_aloc = Ticket::where('status', '1')->get();
+
+                $cont_aloc = 0;
+
+                foreach ($tickets_aloc as $ticket_aloc) {
+                    $flagTicket=0;
+                    $setors_aloc = $ticket_aloc->setors()->get();
+                    foreach ($setors_aloc as $setor_aloc) {
+                        if(isset($setor_aloc->id)){
+                            $flagTicket=1;
+                        }
+                    }
+                    if($flagTicket==0){
+                        $cont_aloc+=1;
+                    }
+                }
+
+
+
+                /* .................... END QTD não alocados ................... */
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("tecnico.dashboard");
+                //--------------------------------------------------------------------------------------------
+
+
+
+                return view('tecnico.chefe', compact(
+                                'qtd_tick_fech', 
+                                'qtd_tick_aber', 
+                                'setor',
+                                'equipe',
+                                'equipe_qtd',
+                                'tickets',
+                                'livros',
+                                'week',
+                                'cont_aloc',
+                                'prontuarios'
+                            ));
+            }
+            else{
+                return redirect('erro')->with('permission_error', '403');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
+    /* ----------------------------- END DASHBOARD CHEFE ---------------------*/
+
+    //Adicionar usuários ao setor
+    public function users($setor){        
+        if(!(Gate::denies('update_'.$setor))){   
+
+            //Verifica se o usuário é chefe de Setor
+            if(auth()->user()->chefeSetor()->first()){  
+                    
+                    /* ======================== FILTRO SETOR ======================== */
+                    $setor = Setor::where('name', $setor)->first();
+                    /* ======================== END FILTRO SETOR ==================== */
+
+
+                    //Recupera Usuários
+                    $users = User::all();
+                    
+
+                    $equipe = $setor->users()->get();
+
+                    //LOG ----------------------------------------------------------------------------------------
+                    $this->log("tecnico.chefe.setor=".$setor);
+                    //--------------------------------------------------------------------------------------------
+
+                    return view('tecnico.user', compact('users', 'setor', 'equipe'));
+                }
+            else{
+                return redirect('erro')->with('permission_error', '403');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
+
+
+    public function userUpdate(Request $request){
+
+        $setor_id = $request->input('setor_id');
+        $setor = Setor::find($setor_id); 
+
+        if(!(Gate::denies('update_'.$setor))){   
+
+            //Verifica se o usuário é chefe de Setor
+            if(auth()->user()->chefeSetor()->first()){  
+
+                $users_id = $request->input('user_id');  
+                    
+                foreach ($users_id as $user_id ) {
+                    
+                    //Setor
+                    $status = $setor->users()->attach($user_id);   
+
+                    //Grupo
+                    $role = Role::where('name', $setor->name)->first();
+                    $status2 = $role->roleUser()->attach($user_id);
+
+
+                    //LOG ----------------------------------------------------------------------------------------
+                    $this->log("tecnico.chefe.user.setorUpdate.id=".$user_id."Setor".$setor_id);
+                    //--------------------------------------------------------------------------------------------
+
+                    }
+
+                }
+            else{
+                    return redirect('erro')->with('permission_error', '403');
+                }
+            
+            if(!$status){
+                return redirect('tecnicos/'.$setor->name.'/users')->with('success', 'Equipe atualizada com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$setor->name.'/users')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }
+
+    public function userDestroy(Request $request){
+
+        $setor_id = $request->input('setor_id');
+        $setor = Setor::find($setor_id); 
+
+
+        if(!(Gate::denies('update_'.$setor))){   
+
+            //Verifica se o usuário é chefe de Setor
+            if(auth()->user()->chefeSetor()->first()){  
+
+                
+                $user_id = $request->input('user_id');                   
+                    
+                //Setor
+                $status = $setor->users()->detach($user_id);
+
+
+
+                //Grupo                
+                $role = Role::where('name', $setor->name)->first();
+
+                if($role->roleUser()->where('user_id', $user_id)->first()){
+
+                   $status2 = $role->roleUser()->detach($user_id); 
+
+                }               
+               
+                            
+
+                //LOG ----------------------------------------------------------------------------------------
+                $this->log("tecnico.chefe.user.setorUpdate.id=".$user_id."Setor".$setor_id);
+                //--------------------------------------------------------------------------------------------
+
+
+                }
+            else{
+                    return redirect('erro')->with('permission_error', '403');
+                }
+            
+            if($status){
+                return redirect('tecnicos/'.$setor->name.'/users')->with('success', 'Equipe atualizada com sucesso!');
+            }else{
+                return redirect('tecnicos/'.$setor->name.'/users')->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+
+    }    
+
+
+    /* ------------------------------ END ÁREA DO CHEFE --------------------------------------------------------------------------------------------------*/
+
 
 
 }

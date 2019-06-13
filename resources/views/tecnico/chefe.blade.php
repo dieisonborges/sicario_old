@@ -8,12 +8,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{$setor->label}} <small>Dashboard
+        <i class="fa fa-star text-red"></i> {{$setor->label}} | <span style="color: red;">Chefe</span> <small>Dashboard
         <small>Painel de Controle</small></small>
       </h1>
-
-
-
       <ol class="breadcrumb">
         <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
@@ -50,10 +47,45 @@
             </form>
           </div>
         </div>
-        <!-- ---------------- FIM Super Busca -------------- -->
+        <!-- ---------------- FIM Super Busca -------------- -->        
 
+        <div class="col-lg-4 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3 class="text-center">Tutoriais</h3>
 
-        <div class="col-lg-3 col-xs-3">
+              <p class="text-center">Dicas e Manuais</p>
+            </div>
+            <a href="{{ url('tutorials/'.$setor->name) }}">
+              <div class="icon">
+                <i class="fa fa-graduation-cap"></i>
+              </div>
+            </a>
+            <a href="{{ url('tutorials/'.$setor->name) }}" class="small-box-footer"> Ver Tutoriais <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->  
+
+        <div class="col-lg-4 col-xs-4">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3 class="text-center">Livros</h3>
+
+              <p class="text-center">Todos</p>
+            </div>
+            <a href="{{url('livros/'.$setor->name.'/create')}}">
+              <div class="icon">
+                <i class="fa fa-book"></i>
+              </div>
+            </a>
+            <a href="{{url('livros/'.$setor->name.'/create')}}" class="small-box-footer"> Ver Livros <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
+        <div class="col-lg-4 col-xs-4">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
@@ -66,50 +98,28 @@
                 <i class="fa fa-wrench"></i>
               </div>
             </a>
-            <a href="{{url('equipamentos/dashboard')}}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('equipamentos/dashboard')}}" class="small-box-footer"> Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col --> 
-
-        
+        <!-- ./col -->       
 
         <div class="col-lg-2 col-xs-2">
           <!-- small box -->
-          <div class="small-box bg-blue">
+          <div class="small-box bg-red">
             <div class="inner">
-              <h3 class="text-center">Tutorial</h3>
+              <h3 class="text-center">{{$cont_aloc}}</h3>
 
-              <p class="text-center">Dicas e Manuais</p>
+              <p class="text-center">Não Alocados</p>
             </div>
-            <a href="{{ url('tutorials/'.$setor->name.'/create') }}">
-              <div class="icon">
-                <i class="fa fa-graduation-cap"></i>
+            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}">
+              <div class="icon">                
+                    <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{ url('tutorials/'.$setor->name.'/create') }}" class="small-box-footer">Novo Tutorial <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->  
-
-        <div class="col-lg-2 col-xs-2">
-          <!-- small box -->
-          <div class="small-box bg-purple">
-            <div class="inner">
-              <h3 class="text-center">Livro</h3>
-
-              <p class="text-center">Novo</p>
-            </div>
-            <a href="{{url('livros/'.$setor->name.'/create')}}">
-              <div class="icon">
-                <i class="fa fa-book"></i>
-              </div>
-            </a>
-            <a href="{{url('livros/'.$setor->name.'/create')}}" class="small-box-footer">Novo Livro <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('tecnicos/'.$setor->name.'/alocar')}}" class="small-box-footer"> Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-
-              
 
 
          <div class="col-lg-2 col-xs-2">
@@ -125,7 +135,7 @@
                     <i class="fa fa-ticket"></i>                
               </div>
             </a>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer">Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('tecnicos/'.$setor->name.'/tickets/1/status')}}" class="small-box-footer"> Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -144,30 +154,44 @@
                 <i class="fa fa-ticket"></i>
               </div>
             </a>
-            <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer">Visualizar Tickets<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('tecnicos/'.$setor->name.'/tickets/0/status')}}" class="small-box-footer"> Visualizar Tickets <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
 
+        <div class="col-lg-2 col-xs-2">
+          <!-- small box -->
+          <div class="small-box bg-purple">
+            <div class="inner">
+              <h3 class="text-center">Equipe</h3>
+
+              <p class="text-center">Gerenciar Equipe</p>
+            </div>
+            <a href="{{url('tecnicos/'.$setor->name.'/users')}}">
+              <div class="icon">
+                <i class="fa fa-users"></i>
+              </div>
+            </a>
+            <a href="{{url('tecnicos/'.$setor->name.'/users')}}" class="small-box-footer"> Gerenciar <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
+
       </div>
       <!-- /.row -->
-      <!-- Main row -->     
-
+      <!-- Main row -->  
    
       <!-- Info boxes -->
       <div class="row">
 
-        @if(auth()->user()->chefeSetor()->where('setor_id', $setor->id)->first())
-
         <div class="col-md-12">
 
-          <a class="btn btn-default" href="{{url('tecnicos/'.$setor->name.'/chefe') }}"><i class="fa fa-link"></i> Dashboard do Chefe</a>
+          <a class="btn btn-default" href="{{url('tecnicos/'.$setor->name.'/dashboard') }}"><i class="fa fa-link"></i> Dashboard do Técnico </a>
           
           <hr>
 
         </div>
-
-        @endif
         
 
         @foreach($tickets as $ticket)
@@ -395,6 +419,62 @@
           <!-- /.box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-12">
+              <!-- USERS LIST -->
+              <div class="box box-danger">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Equipe {{$setor->label}}</h3>
+
+                  <div class="box-tools pull-right">
+
+                    <span class="label label-danger">{{$equipe_qtd}} Alocado(s)</span>
+
+                    <a href="" class="btn btn-box-tool" ><i class="fa fa-cog"></i>
+                    </a>
+
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <ul class="users-list clearfix">
+                    @foreach($equipe as $membro)
+                    <li>
+
+
+                      @php
+
+                        $imagem_perfil = $membro->uploads()->orderBy('id', 'DESC')->first();
+
+                      @endphp
+
+                      @if($imagem_perfil)  
+                          <img src="{{ url('storage/'.$imagem_perfil->dir.'/'.$imagem_perfil->link) }}" class="img-circle" alt="User Image" style="width: 50px; height: 50px;" >
+                      @else
+                          <img src="{{ asset('img/default-user-image.png') }}" class="img-circle" alt="User Image" width="50px" height="50px">
+                      @endif
+
+                        <a class="users-list-name" href="#">{{$membro->name}}</a>
+                      <span class="users-list-date">{{strtoupper($membro->cargo)}}</span>
+                    </li>
+                    @endforeach
+                    
+                  </ul>
+                  <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                  <a href="javascript:void(0)" class="uppercase">Todos</a>
+                </div>
+                <!-- /.box-footer -->
+              </div>
+              <!--/.box -->
+            </div>
+            <!-- /.col -->
 
      
       </div>

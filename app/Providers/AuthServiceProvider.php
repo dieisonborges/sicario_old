@@ -82,8 +82,7 @@ class AuthServiceProvider extends ServiceProvider
                 if ($user->hasRole('adm')) {
                     return true;
                 }
-            });        
-        
+            });         
 
         }
         
@@ -95,6 +94,10 @@ class AuthServiceProvider extends ServiceProvider
         $setors = Setor::select('name', 'label')->get();
         session(['setors' => $setors]);
         /* ------------- Carega setores para MENUS ---------------------*/
+
+
+        
+
 
 
 

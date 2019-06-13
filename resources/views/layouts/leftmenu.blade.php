@@ -61,7 +61,7 @@
                       <a href="{{ url('tutorials/'.$sess_setors->name.'/') }}">
                           <i class="fa fa-graduation-cap"></i> Tutoriais
                       </a>
-                    </li>                   
+                    </li>                                 
                     
                   </ul>
             </li>              

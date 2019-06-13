@@ -8,8 +8,7 @@
   <div class="col-md-2">
     <a href="/">
         <b style="display:none;">SICARIO</b>
-        <br>
-        <img src="{{ asset('img/logo/sicario-logo-branco-no-preto-sem-slogan-transp.png') }}" width="100%">
+        <img src="{{ asset('img/logo/logo-preto-transp.png') }}" width="200px">
         
     </a>     
   </div>
