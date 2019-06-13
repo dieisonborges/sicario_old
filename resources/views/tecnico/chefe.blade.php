@@ -428,9 +428,9 @@
 
                   <div class="box-tools pull-right">
 
-                    <span class="label label-danger">{{$equipe_qtd}} Alocado(s)</span>
+                    <a href="{{url('tecnicos/'.$setor->name.'/users')}}" class="label label-danger">{{$equipe_qtd}} Alocado(s)</a>
 
-                    <a href="" class="btn btn-box-tool" ><i class="fa fa-cog"></i>
+                    <a href="{{url('tecnicos/'.$setor->name.'/users')}}" class="btn btn-box-tool" ><i class="fa fa-cog"></i>
                     </a>
 
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
