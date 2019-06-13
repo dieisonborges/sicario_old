@@ -1561,6 +1561,12 @@ class TecnicoController extends Controller
                     $role = Role::where('name', $setor->name)->first();
                     $status2 = $role->roleUser()->attach($user_id);
 
+                    //Ativa Usuário e zera as Tentativas de acesso
+                    $user = User::find($user_id);
+                    $user->status = 1;
+                    $user->login = 0;
+                    $user->save();                    
+
 
                     //LOG ----------------------------------------------------------------------------------------
                     $this->log("tecnico.chefe.user.setorUpdate.id=".$user_id."Setor".$setor_id);
