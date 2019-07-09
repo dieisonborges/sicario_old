@@ -408,6 +408,222 @@ class LivroController extends Controller
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeOld(Request $request)
+    {
+        
+        $setor = $request->input('setor');
+
+        //
+        if(!(Gate::denies('read_'.$setor))){
+
+            //Validação
+            $this->validate($request,[
+                    'inicio_hora' => 'required',
+                    'inicio_data' => 'required|date',
+                    'fim_hora' => 'required',
+                    'fim_data' => 'required|date',
+                    'tecnicos' => 'required',
+                    
+            ]);
+           
+
+            $livro = new Livro();
+
+            $livro->inicio = $request->input('inicio_data').' '.$request->input('inicio_hora');
+
+            $livro->fim = $request->input('fim_data').' '.$request->input('fim_hora');
+
+            $tecnicos = $request->input('tecnicos');
+
+            //dd($request->input('tecnicos'));
+
+            $livro->setor_id = $request->input('setor_id');
+
+            $livro->protocolo = $this->protocolo($setor);
+
+            $livro->autenticacao = $this->autenticacao();
+
+            //usuário
+            $livro->user_id = auth()->user()->id;
+
+            /* ------------------------------------Acoes para o proximo Serviço-------------------------------- */
+
+            //cabecalho
+            $acoes = "";
+
+            $setor = Setor::find($request->input('setor_id'));
+
+            //Tickets Abertos por setor
+            // 1 - Aberto/Ativo
+            // 0 - Fechado/Encerrado
+            $tickets = $setor->tickets()->where("status", "1")->get();
+            //lista os tickets
+            foreach($tickets as $ticket){
+                //Verifica se ticket está dentro do intervalo de data
+                        $acoes .= "<li> ";
+                        $acoes .= " Ticket: <b>".$ticket->protocolo."</b> ";
+                        $acoes .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> <br>";
+                        $acoes .= "<small>".$setor->name."</small> <br>";
+                        $user_ticket_acoes = User::find($ticket->user_id);
+                        $acoes .= strtoupper($user_ticket_acoes->cargo)." ".strtoupper($user_ticket_acoes->name)."<br>";
+                        $acoes .= "".$ticket->titulo."<br> ";
+                        $acoes .= "".preg_replace('/<[^>]*>/', '', $ticket->descricao)."<br>"; 
+                        $prontuarios = $ticket->prontuarioTicketsShow()->get();
+                        //lista os prontuarios dos tickets
+                        $acoes .= "<ul>";
+                        
+                        foreach($prontuarios as $prontuario){
+                            $acoes .= "<li>";
+                            $user_prontuario = User::find($prontuario->user_id);
+                            $acoes .= "<small><b>".$prontuario->created_at."</b></small> ";
+                            $acoes .= strtoupper($user_prontuario->cargo)." ".strtoupper($user_prontuario->name)."<br>";                            
+                            $acoes .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br>";
+                            $acoes .= "</li>";
+                        }
+
+                $acoes .= "</ul>";
+                $acoes .= "</li><br><br>";
+            }
+            /* ------------------------------------FIM Acoes para o proximo Serviço-------------------------------- */ 
+
+            //Caso Conteúdo vazio nenhuma Alteração
+            if(!$acoes){
+
+                $acoes = "Nenhuma alteração.";
+            }    
+
+            //Armazena para inserir no banco
+            $livro->acoes = $acoes;  
+
+            /* ------------------------------------Conteudo Livro -------------------------------- */     
+            //Verifica se o ticket ou alguma ação compreende o período do serviço
+            //$srvFlag = 0;
+
+            //cabecalho
+            $conteudo = "";
+
+            //$conteudo_temp = "";
+
+            $setor = Setor::find($request->input('setor_id'));
+
+            //Tickets Abertos por setor
+            // 1 - Aberto/Ativo
+            // 0 - Fechado/Encerrado
+            $tickets = $setor->tickets()
+                             ->where('status', '0')
+                             ->get();
+
+            
+            $livro_inicio = strtotime($livro->inicio);
+            $livro_fim = strtotime($livro->fim);
+
+            //Verificação de intervalo de data
+            $matchData=0;
+
+
+            //$conteudo .= "<ol>";
+            foreach ($tickets as $ticket) {
+
+                /* --------------------------- Verifica intervalo de data ---------------------- */
+                $created_at = strtotime(Carbon::parse($ticket->created_at)->format('Y-m-d H:i:s'));
+
+                if(($created_at>=$livro_inicio)and($created_at<=$livro_fim)){
+                    $matchData=1;
+                } 
+
+                $prontuarios = $ticket->prontuarioTicketsShow()->get();
+
+                foreach($prontuarios as $prontuario){
+
+                    $prontuario_created_at = strtotime(Carbon::parse($prontuario->created_at)->format('Y-m-d H:i:s'));
+
+                    if(($prontuario_created_at>=$livro_inicio)and($prontuario_created_at<=$livro_fim)){
+                        $matchData=1;
+                    } 
+
+                }
+
+
+                /* --------------------------- FIM Verifica intervalo de data ---------------------- */
+
+
+                /* --------------------- */
+
+                if($matchData==1){
+                    //HTML
+                    $conteudo .= "<li>";
+                    $conteudo .= " Ticket: <b>".$ticket->protocolo."</b><br>";
+                    $user_ticket = User::find($ticket->user_id);
+                    $conteudo .= strtoupper($user_ticket->cargo)." ".strtoupper($user_ticket->name)."<br>";
+                    $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small><br>";
+                    $conteudo .= "".$ticket->titulo."<br>";
+                    $conteudo .= "".preg_replace('/<[^>]*>/', '', $ticket->descricao)."<br>"; 
+
+                    $conteudo .= "<ul>";
+                    /* -----------------PRONTUARIO/ACOES---------------------*/
+                    foreach($prontuarios as $prontuario){
+
+                        $conteudo .= "<li>";
+                        $user_prontuario = User::find($prontuario->user_id);
+                        $conteudo .= "<small>".date('d/m/Y H:i:s', strtotime($ticket->created_at))."</small> ";
+                        $conteudo .= "<small>".$setor->name."</small> ";
+                        $conteudo .= strtoupper($user_prontuario->cargo)." ".strtoupper($user_prontuario->name)."<br> ";
+                        
+                        $conteudo .= "".preg_replace('/<[^>]*>/', '', $prontuario->descricao)."<br> ";
+                        $conteudo .= "</li>";
+
+                    }
+                    /* ----------------END PRONTUARIO/ACOES-------------------*/
+                    $conteudo .= "</ul>";
+                    $conteudo .= "</li>";
+                }
+
+                /* --------------------- */
+
+
+                //Zera verificação de intervalo de data
+                $matchData=0;
+                
+            }
+
+            //Caso Conteúdo vazio nenhuma Alteração
+            if(!$conteudo){
+
+                $conteudo = "Nenhuma alteração.";
+            }
+
+          
+            
+            //Armazena para inserir no banco
+            $livro->conteudo = $conteudo;  
+
+            //LOG ----------------------------------------------------------------------------------------
+            $this->log("livro.store");
+            //--------------------------------------------------------------------------------------------
+
+            if($livro->save()){
+                $livro_id = DB::getPdo()->lastInsertId();
+                //Vincula tecnicos ao livro
+                foreach ($tecnicos as $tecnico) {
+                    Livro::find($livro_id)->livroUser()->attach($tecnico);
+                }                
+
+                return redirect('livros/'.$setor->name.'/'.$livro_id.'/show')->with('success', 'Verifique o Livro!');
+            }else{
+                return redirect('livros/'.$setor->name)->with('danger', 'Houve um problema, tente novamente.');
+            }
+        }
+        else{
+            return redirect('erro')->with('permission_error', '403');
+        }
+    }
+
 
     /**
      * Display the specified resource.

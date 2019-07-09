@@ -1203,7 +1203,7 @@ class TecnicoController extends Controller
             return redirect('erro')->with('permission_error', '403');
         }
 
-    }
+    } 
 
     public function alocarSetorUpdate(Request $request){
 
@@ -1545,7 +1545,7 @@ class TecnicoController extends Controller
         $setor_id = $request->input('setor_id');
         $setor = Setor::find($setor_id); 
 
-        if(!(Gate::denies('update_'.$setor))){   
+        if(!(Gate::denies('update_'.$setor->name))){  
 
             //Verifica se o usuário é chefe de Setor
             if(auth()->user()->chefeSetor()->first()){  
@@ -1597,7 +1597,7 @@ class TecnicoController extends Controller
         $setor = Setor::find($setor_id); 
 
 
-        if(!(Gate::denies('update_'.$setor))){   
+        if(!(Gate::denies('update_'.$setor->name))){   
 
             //Verifica se o usuário é chefe de Setor
             if(auth()->user()->chefeSetor()->first()){  
