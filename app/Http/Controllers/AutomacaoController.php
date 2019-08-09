@@ -96,7 +96,7 @@ class AutomacaoController extends Controller
             // Fecha a comunicação serial
             fclose($fp);
 
-            return view('automacao.index');
+            return redirect()->back()->with('success','Comando executado com sucesso!');
         }
         else{
             return redirect('erro')->with('permission_error', '403');
