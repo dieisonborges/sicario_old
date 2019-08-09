@@ -75,6 +75,24 @@ class AutomacaoController extends Controller
 
             }
 
+            if($comando=="brilho2"){
+
+                fwrite($fp, "ONBRILHO2");
+
+            }
+
+            if($comando=="brilho3"){
+
+                fwrite($fp, "ONBRILHO3");
+
+            }
+
+            if($comando=="brilhooff"){
+
+                fwrite($fp, "OFFBRILHO");
+
+            }
+
             // Fecha a comunicação serial
             fclose($fp);
 
