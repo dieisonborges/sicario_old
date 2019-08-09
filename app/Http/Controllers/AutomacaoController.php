@@ -65,7 +65,7 @@ class AutomacaoController extends Controller
             //exec("stty -F $port raw speed 9600");
              
             // Inicia comunicação serial
-            $fp = fopen($port, 'c+');
+            $fp = fopen($port, 'w+');
                          
              
             
