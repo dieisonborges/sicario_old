@@ -62,7 +62,7 @@ class AutomacaoController extends Controller
             $port = "/dev/ttyACM0";
              
             // Configura velocidade de comunicação com a porta serial
-            exec("stty -F $port raw speed 9600");
+            //exec("stty -F $port raw speed 9600");
              
             // Inicia comunicação serial
             $fp = fopen($port, 'c+');
