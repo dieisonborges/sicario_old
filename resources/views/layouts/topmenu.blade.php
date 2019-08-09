@@ -55,6 +55,7 @@
               'read_log', 
               'read_equipamento', 
               'read_ticket',
+              'read_automacao',
               ])
 
               <li class="dropdown notifications-menu">
@@ -131,6 +132,16 @@
                         </a>                        
                       </li>
                       @endcan
+
+                      @can('read_automacao')
+                      <li>
+                        <a href="{{ url('automacao') }}">  
+                          <i class="fa fa-mixcloud"></i> <span>Automação</span>
+                        </a>                        
+                      </li>
+                      @endcan
+
+
 
                     </ul>
                   </li>

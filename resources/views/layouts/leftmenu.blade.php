@@ -7,6 +7,16 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
 
+         @can('read_automacao')
+          <li>
+            <a href="{{ url('automacao') }}">  
+              <i class="fa fa-mixcloud"></i> <span>Automação</span>
+            </a>                        
+          </li>
+          
+          @endcan
+
+
           @php
 
           $color_p=0;

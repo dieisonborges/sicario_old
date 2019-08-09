@@ -31,7 +31,7 @@ class TecnicoController extends Controller
         $log = new LogController;
         $log->store($filename, $info);
         return null;     
-    }
+    } 
 
     /* ----------------------- END LOGS --------------------*/
 

@@ -75,12 +75,12 @@
 
               <p class="text-center">Todos</p>
             </div>
-            <a href="{{url('livros/'.$setor->name.'/create')}}">
+            <a href="{{url('livros/'.$setor->name.'')}}">
               <div class="icon">
                 <i class="fa fa-book"></i>
               </div>
             </a>
-            <a href="{{url('livros/'.$setor->name.'/create')}}" class="small-box-footer"> Ver Livros <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{url('livros/'.$setor->name.'')}}" class="small-box-footer"> Ver Livros <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

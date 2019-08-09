@@ -191,3 +191,8 @@ Route::get('uploads/{id}/create/{area}', 'UploadController@create');
 //Visualizar arquivos com segurança
 Route::get('/storage/{fileName}', 'UploadController@fileStorageServe')
 ->where(['fileName' => '.*'])->name('storage.gallery.file');
+
+
+// AutomacaoController
+Route::get('automacao/comando/{comando}', 'AutomacaoController@comando');
+Route::resource('automacao', 'AutomacaoController');
