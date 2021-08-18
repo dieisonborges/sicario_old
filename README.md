@@ -4,7 +4,7 @@
 </p>
 
 # SICARIO
-Sistema de Controle, Análise e Relatórios de Interesse Operacional
+Sistema de Controle, Análise e Relatório de Informação Operacional
 
 ## Objetivo
 
